@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using PlayFab.Internal;
+using PlayFab.Serialization.JsonFx;
 
 namespace PlayFab.MatchmakerModels
 {
@@ -16,6 +17,15 @@ namespace PlayFab.MatchmakerModels
 		/// </summary>
 		
 		public string AuthorizationTicket { get; set;}
+		
+		public override void WriteJson(JsonWriter writer)
+		{
+			writer.Writer.Write(JsonReader.OperatorObjectStart);
+			
+			writer.WriteObjectProperty("AuthorizationTicket", AuthorizationTicket);
+			
+			writer.Writer.Write(JsonReader.OperatorObjectEnd);
+		}
 		
 		public override void Deserialize (Dictionary<string,object> json)
 		{
@@ -41,6 +51,19 @@ namespace PlayFab.MatchmakerModels
 		/// </summary>
 		
 		public string PlayFabId { get; set;}
+		
+		public override void WriteJson(JsonWriter writer)
+		{
+			writer.Writer.Write(JsonReader.OperatorObjectStart);
+			
+			writer.WriteObjectProperty("Authorized", Authorized);
+			
+			writer.Writer.Write(JsonReader.OperatorValueDelim);
+			
+			writer.WriteObjectProperty("PlayFabId", PlayFabId);
+			
+			writer.Writer.Write(JsonReader.OperatorObjectEnd);
+		}
 		
 		public override void Deserialize (Dictionary<string,object> json)
 		{
@@ -113,6 +136,47 @@ namespace PlayFab.MatchmakerModels
 		
 		public string BundleParent { get; set;}
 		
+		public override void WriteJson(JsonWriter writer)
+		{
+			writer.Writer.Write(JsonReader.OperatorObjectStart);
+			
+			writer.WriteObjectProperty("ItemId", ItemId);
+			
+			writer.Writer.Write(JsonReader.OperatorValueDelim);
+			
+			writer.WriteObjectProperty("ItemInstanceId", ItemInstanceId);
+			
+			writer.Writer.Write(JsonReader.OperatorValueDelim);
+			
+			writer.WriteObjectProperty("ItemClass", ItemClass);
+			
+			writer.Writer.Write(JsonReader.OperatorValueDelim);
+			
+			writer.WriteObjectProperty("PurchaseDate", PurchaseDate);
+			
+			writer.Writer.Write(JsonReader.OperatorValueDelim);
+			
+			writer.WriteObjectProperty("Expiration", Expiration);
+			
+			writer.Writer.Write(JsonReader.OperatorValueDelim);
+			
+			writer.WriteObjectProperty("RemainingUses", RemainingUses);
+			
+			writer.Writer.Write(JsonReader.OperatorValueDelim);
+			
+			writer.WriteObjectProperty("Annotation", Annotation);
+			
+			writer.Writer.Write(JsonReader.OperatorValueDelim);
+			
+			writer.WriteObjectProperty("CatalogVersion", CatalogVersion);
+			
+			writer.Writer.Write(JsonReader.OperatorValueDelim);
+			
+			writer.WriteObjectProperty("BundleParent", BundleParent);
+			
+			writer.Writer.Write(JsonReader.OperatorObjectEnd);
+		}
+		
 		public override void Deserialize (Dictionary<string,object> json)
 		{
 			
@@ -138,7 +202,7 @@ namespace PlayFab.MatchmakerModels
 		/// unique identifier of the Game Server Instance the user is joining
 		/// </summary>
 		
-		public string ServerId { get; set;}
+		public string LobbyId { get; set;}
 		
 		/// <summary>
 		/// PlayFab unique identifier for the user joining
@@ -146,10 +210,23 @@ namespace PlayFab.MatchmakerModels
 		
 		public string PlayFabId { get; set;}
 		
+		public override void WriteJson(JsonWriter writer)
+		{
+			writer.Writer.Write(JsonReader.OperatorObjectStart);
+			
+			writer.WriteObjectProperty("LobbyId", LobbyId);
+			
+			writer.Writer.Write(JsonReader.OperatorValueDelim);
+			
+			writer.WriteObjectProperty("PlayFabId", PlayFabId);
+			
+			writer.Writer.Write(JsonReader.OperatorObjectEnd);
+		}
+		
 		public override void Deserialize (Dictionary<string,object> json)
 		{
 			
-			ServerId = (string)JsonUtil.Get<string>(json, "ServerId");
+			LobbyId = (string)JsonUtil.Get<string>(json, "LobbyId");
 			PlayFabId = (string)JsonUtil.Get<string>(json, "PlayFabId");
 		}
 	}
@@ -159,6 +236,13 @@ namespace PlayFab.MatchmakerModels
 	public class PlayerJoinedResponse : PlayFabModelBase
 	{
 		
+		
+		public override void WriteJson(JsonWriter writer)
+		{
+			writer.Writer.Write(JsonReader.OperatorObjectStart);
+			
+			writer.Writer.Write(JsonReader.OperatorObjectEnd);
+		}
 		
 		public override void Deserialize (Dictionary<string,object> json)
 		{
@@ -176,7 +260,7 @@ namespace PlayFab.MatchmakerModels
 		/// unique identifier of the Game Server Instance the user is leaving
 		/// </summary>
 		
-		public string ServerId { get; set;}
+		public string LobbyId { get; set;}
 		
 		/// <summary>
 		/// PlayFab unique identifier for the user leaving
@@ -184,10 +268,23 @@ namespace PlayFab.MatchmakerModels
 		
 		public string PlayFabId { get; set;}
 		
+		public override void WriteJson(JsonWriter writer)
+		{
+			writer.Writer.Write(JsonReader.OperatorObjectStart);
+			
+			writer.WriteObjectProperty("LobbyId", LobbyId);
+			
+			writer.Writer.Write(JsonReader.OperatorValueDelim);
+			
+			writer.WriteObjectProperty("PlayFabId", PlayFabId);
+			
+			writer.Writer.Write(JsonReader.OperatorObjectEnd);
+		}
+		
 		public override void Deserialize (Dictionary<string,object> json)
 		{
 			
-			ServerId = (string)JsonUtil.Get<string>(json, "ServerId");
+			LobbyId = (string)JsonUtil.Get<string>(json, "LobbyId");
 			PlayFabId = (string)JsonUtil.Get<string>(json, "PlayFabId");
 		}
 	}
@@ -197,6 +294,13 @@ namespace PlayFab.MatchmakerModels
 	public class PlayerLeftResponse : PlayFabModelBase
 	{
 		
+		
+		public override void WriteJson(JsonWriter writer)
+		{
+			writer.Writer.Write(JsonReader.OperatorObjectStart);
+			
+			writer.Writer.Write(JsonReader.OperatorObjectEnd);
+		}
 		
 		public override void Deserialize (Dictionary<string,object> json)
 		{
@@ -253,6 +357,31 @@ namespace PlayFab.MatchmakerModels
 		
 		public string ExternalMatchmakerEventEndpoint { get; set;}
 		
+		public override void WriteJson(JsonWriter writer)
+		{
+			writer.Writer.Write(JsonReader.OperatorObjectStart);
+			
+			writer.WriteObjectProperty("Build", Build);
+			
+			writer.Writer.Write(JsonReader.OperatorValueDelim);
+			
+			writer.WriteObjectProperty("Region", Region);
+			
+			writer.Writer.Write(JsonReader.OperatorValueDelim);
+			
+			writer.WriteObjectProperty("GameMode", GameMode);
+			
+			writer.Writer.Write(JsonReader.OperatorValueDelim);
+			
+			writer.WriteObjectProperty("CustomCommandLineData", CustomCommandLineData);
+			
+			writer.Writer.Write(JsonReader.OperatorValueDelim);
+			
+			writer.WriteObjectProperty("ExternalMatchmakerEventEndpoint", ExternalMatchmakerEventEndpoint);
+			
+			writer.Writer.Write(JsonReader.OperatorObjectEnd);
+		}
+		
 		public override void Deserialize (Dictionary<string,object> json)
 		{
 			
@@ -288,6 +417,23 @@ namespace PlayFab.MatchmakerModels
 		
 		public uint ServerPort { get; set;}
 		
+		public override void WriteJson(JsonWriter writer)
+		{
+			writer.Writer.Write(JsonReader.OperatorObjectStart);
+			
+			writer.WriteObjectProperty("GameID", GameID);
+			
+			writer.Writer.Write(JsonReader.OperatorValueDelim);
+			
+			writer.WriteObjectProperty("ServerHostname", ServerHostname);
+			
+			writer.Writer.Write(JsonReader.OperatorValueDelim);
+			
+			writer.WriteObjectProperty("ServerPort", ServerPort);
+			
+			writer.Writer.Write(JsonReader.OperatorObjectEnd);
+		}
+		
 		public override void Deserialize (Dictionary<string,object> json)
 		{
 			
@@ -314,6 +460,19 @@ namespace PlayFab.MatchmakerModels
 		/// </summary>
 		
 		public int MinCatalogVersion { get; set;}
+		
+		public override void WriteJson(JsonWriter writer)
+		{
+			writer.Writer.Write(JsonReader.OperatorObjectStart);
+			
+			writer.WriteObjectProperty("PlayFabId", PlayFabId);
+			
+			writer.Writer.Write(JsonReader.OperatorValueDelim);
+			
+			writer.WriteObjectProperty("MinCatalogVersion", MinCatalogVersion);
+			
+			writer.Writer.Write(JsonReader.OperatorObjectEnd);
+		}
 		
 		public override void Deserialize (Dictionary<string,object> json)
 		{
@@ -370,6 +529,39 @@ namespace PlayFab.MatchmakerModels
 		/// </summary>
 		
 		public string SteamId { get; set;}
+		
+		public override void WriteJson(JsonWriter writer)
+		{
+			writer.Writer.Write(JsonReader.OperatorObjectStart);
+			
+			writer.WriteObjectProperty("PlayFabId", PlayFabId);
+			
+			writer.Writer.Write(JsonReader.OperatorValueDelim);
+			
+			writer.WriteObjectProperty("Username", Username);
+			
+			writer.Writer.Write(JsonReader.OperatorValueDelim);
+			
+			writer.WriteObjectProperty("TitleDisplayName", TitleDisplayName);
+			
+			writer.Writer.Write(JsonReader.OperatorValueDelim);
+			
+			writer.WriteObjectProperty("Inventory", Inventory);
+			
+			writer.Writer.Write(JsonReader.OperatorValueDelim);
+			
+			writer.WriteObjectProperty("VirtualCurrency", VirtualCurrency);
+			
+			writer.Writer.Write(JsonReader.OperatorValueDelim);
+			
+			writer.WriteObjectProperty("IsDeveloper", IsDeveloper);
+			
+			writer.Writer.Write(JsonReader.OperatorValueDelim);
+			
+			writer.WriteObjectProperty("SteamId", SteamId);
+			
+			writer.Writer.Write(JsonReader.OperatorObjectEnd);
+		}
 		
 		public override void Deserialize (Dictionary<string,object> json)
 		{

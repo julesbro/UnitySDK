@@ -12,8 +12,10 @@ namespace PlayFab
 	public class PlayFabAdminAPI
 	{
 		public delegate void GetUserAccountInfoCallback(LookupUserAccountInfoResult result);
+		public delegate void ResetUsersCallback(BlankResult result);
 		public delegate void SendAccountRecoveryEmailCallback(SendAccountRecoveryEmailResult result);
 		public delegate void UpdateUserTitleDisplayNameCallback(UpdateUserTitleDisplayNameResult result);
+		public delegate void GetDataReportCallback(GetDataReportResult result);
 		public delegate void GetUserDataCallback(GetUserDataResult result);
 		public delegate void GetUserInternalDataCallback(GetUserDataResult result);
 		public delegate void GetUserReadOnlyDataCallback(GetUserDataResult result);
@@ -82,6 +84,35 @@ namespace PlayFab
 		}
 		
 		/// <summary>
+		/// Resets all title-specific information about a particular account, including user data, virtual currency balances, inventory, purchase history, and statistics
+		/// </summary>
+		public static void ResetUsers(ResetUsersRequest request, ResetUsersCallback resultCallback, ErrorCallback errorCallback)
+		{
+			if (PlayFabSettings.DeveloperSecretKey == null) throw new Exception ("Must have PlayFabSettings.DeveloperSecretKey set to call this method");
+
+			string serializedJSON = JsonWriter.Serialize (request, Util.GlobalJsonWriterSettings);
+			PlayFabHTTP.HTTPCallback callback = delegate(string responseStr, string errorStr)
+			{
+				BlankResult result = null;
+				PlayFabError error = null;
+				ResultContainer<BlankResult>.HandleResults(responseStr, errorStr, out result, out error);
+				if(error != null && errorCallback != null)
+				{
+					errorCallback(error);
+				}
+				if(result != null)
+				{
+					
+					if(resultCallback != null)
+					{
+						resultCallback(result);
+					}
+				}
+			};
+			PlayFabHTTP.Post(PlayFabSettings.GetURL()+"/Admin/ResetUsers", serializedJSON, "X-SecretKey", PlayFabSettings.DeveloperSecretKey, callback);
+		}
+		
+		/// <summary>
 		/// Forces an email to be sent to the registered email address for the specified account, with a link allowing the user to change the password
 		/// </summary>
 		public static void SendAccountRecoveryEmail(SendAccountRecoveryEmailRequest request, SendAccountRecoveryEmailCallback resultCallback, ErrorCallback errorCallback)
@@ -137,6 +168,35 @@ namespace PlayFab
 				}
 			};
 			PlayFabHTTP.Post(PlayFabSettings.GetURL()+"/Admin/UpdateUserTitleDisplayName", serializedJSON, "X-SecretKey", PlayFabSettings.DeveloperSecretKey, callback);
+		}
+		
+		/// <summary>
+		/// Retrieves a download URL for the requested report
+		/// </summary>
+		public static void GetDataReport(GetDataReportRequest request, GetDataReportCallback resultCallback, ErrorCallback errorCallback)
+		{
+			if (PlayFabSettings.DeveloperSecretKey == null) throw new Exception ("Must have PlayFabSettings.DeveloperSecretKey set to call this method");
+
+			string serializedJSON = JsonWriter.Serialize (request, Util.GlobalJsonWriterSettings);
+			PlayFabHTTP.HTTPCallback callback = delegate(string responseStr, string errorStr)
+			{
+				GetDataReportResult result = null;
+				PlayFabError error = null;
+				ResultContainer<GetDataReportResult>.HandleResults(responseStr, errorStr, out result, out error);
+				if(error != null && errorCallback != null)
+				{
+					errorCallback(error);
+				}
+				if(result != null)
+				{
+					
+					if(resultCallback != null)
+					{
+						resultCallback(result);
+					}
+				}
+			};
+			PlayFabHTTP.Post(PlayFabSettings.GetURL()+"/Admin/GetDataReport", serializedJSON, "X-SecretKey", PlayFabSettings.DeveloperSecretKey, callback);
 		}
 		
 		/// <summary>
@@ -227,7 +287,7 @@ namespace PlayFab
 		}
 		
 		/// <summary>
-		/// Completely removes all statistics of the specified user, for this title
+		/// Completely removes all statistics for the specified user, for the current game
 		/// </summary>
 		public static void ResetUserStatistics(ResetUserStatisticsRequest request, ResetUserStatisticsCallback resultCallback, ErrorCallback errorCallback)
 		{

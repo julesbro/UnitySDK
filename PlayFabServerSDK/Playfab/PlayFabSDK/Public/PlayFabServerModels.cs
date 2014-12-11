@@ -1,9 +1,68 @@
 using System;
 using System.Collections.Generic;
 using PlayFab.Internal;
+using PlayFab.Serialization.JsonFx;
 
 namespace PlayFab.ServerModels
 {
+	
+	
+	
+	public class AddSharedGroupMembersRequest : PlayFabModelBase
+	{
+		
+		
+		/// <summary>
+		/// unique identifier for the shared group
+		/// </summary>
+		
+		public string SharedGroupId { get; set;}
+		
+		/// <summary>
+		/// list of PlayFabId identifiers of users to add as members of the shared group
+		/// </summary>
+		
+		public List<string> PlayFabIds { get; set;}
+		
+		public override void WriteJson(JsonWriter writer)
+		{
+			writer.Writer.Write(JsonReader.OperatorObjectStart);
+			
+			writer.WriteObjectProperty("SharedGroupId", SharedGroupId);
+			
+			writer.Writer.Write(JsonReader.OperatorValueDelim);
+			
+			writer.WriteObjectProperty("PlayFabIds", PlayFabIds);
+			
+			writer.Writer.Write(JsonReader.OperatorObjectEnd);
+		}
+		
+		public override void Deserialize (Dictionary<string,object> json)
+		{
+			
+			SharedGroupId = (string)JsonUtil.Get<string>(json, "SharedGroupId");
+			PlayFabIds = JsonUtil.GetList<string>(json, "PlayFabIds");
+		}
+	}
+	
+	
+	
+	public class AddSharedGroupMembersResult : PlayFabModelBase
+	{
+		
+		
+		public override void WriteJson(JsonWriter writer)
+		{
+			writer.Writer.Write(JsonReader.OperatorObjectStart);
+			
+			writer.Writer.Write(JsonReader.OperatorObjectEnd);
+		}
+		
+		public override void Deserialize (Dictionary<string,object> json)
+		{
+			
+		}
+	}
 	
 	
 	
@@ -29,12 +88,85 @@ namespace PlayFab.ServerModels
 		
 		public int Amount { get; set;}
 		
+		public override void WriteJson(JsonWriter writer)
+		{
+			writer.Writer.Write(JsonReader.OperatorObjectStart);
+			
+			writer.WriteObjectProperty("PlayFabId", PlayFabId);
+			
+			writer.Writer.Write(JsonReader.OperatorValueDelim);
+			
+			writer.WriteObjectProperty("VirtualCurrency", VirtualCurrency);
+			
+			writer.Writer.Write(JsonReader.OperatorValueDelim);
+			
+			writer.WriteObjectProperty("Amount", Amount);
+			
+			writer.Writer.Write(JsonReader.OperatorObjectEnd);
+		}
+		
 		public override void Deserialize (Dictionary<string,object> json)
 		{
 			
 			PlayFabId = (string)JsonUtil.Get<string>(json, "PlayFabId");
 			VirtualCurrency = (string)JsonUtil.Get<string>(json, "VirtualCurrency");
 			Amount = (int)JsonUtil.Get<double?>(json, "Amount");
+		}
+	}
+	
+	
+	
+	public class AuthenticateSessionTicketRequest : PlayFabModelBase
+	{
+		
+		
+		/// <summary>
+		/// Session ticket as issued by a PlayFab client login API
+		/// </summary>
+		
+		public string SessionTicket { get; set;}
+		
+		public override void WriteJson(JsonWriter writer)
+		{
+			writer.Writer.Write(JsonReader.OperatorObjectStart);
+			
+			writer.WriteObjectProperty("SessionTicket", SessionTicket);
+			
+			writer.Writer.Write(JsonReader.OperatorObjectEnd);
+		}
+		
+		public override void Deserialize (Dictionary<string,object> json)
+		{
+			
+			SessionTicket = (string)JsonUtil.Get<string>(json, "SessionTicket");
+		}
+	}
+	
+	
+	
+	public class AuthenticateSessionTicketResult : PlayFabModelBase
+	{
+		
+		
+		/// <summary>
+		/// account info for the user whose session ticket was supplied
+		/// </summary>
+		
+		public UserAccountInfo UserInfo { get; set;}
+		
+		public override void WriteJson(JsonWriter writer)
+		{
+			writer.Writer.Write(JsonReader.OperatorObjectStart);
+			
+			writer.WriteObjectProperty("UserInfo", UserInfo);
+			
+			writer.Writer.Write(JsonReader.OperatorObjectEnd);
+		}
+		
+		public override void Deserialize (Dictionary<string,object> json)
+		{
+			
+			UserInfo = JsonUtil.GetObject<UserAccountInfo>(json, "UserInfo");
 		}
 	}
 	
@@ -62,6 +194,23 @@ namespace PlayFab.ServerModels
 		
 		public bool Result { get; set;}
 		
+		public override void WriteJson(JsonWriter writer)
+		{
+			writer.Writer.Write(JsonReader.OperatorObjectStart);
+			
+			writer.WriteObjectProperty("PlayFabId", PlayFabId);
+			
+			writer.Writer.Write(JsonReader.OperatorValueDelim);
+			
+			writer.WriteObjectProperty("AchievementName", AchievementName);
+			
+			writer.Writer.Write(JsonReader.OperatorValueDelim);
+			
+			writer.WriteObjectProperty("Result", Result);
+			
+			writer.Writer.Write(JsonReader.OperatorObjectEnd);
+		}
+		
 		public override void Deserialize (Dictionary<string,object> json)
 		{
 			
@@ -83,6 +232,15 @@ namespace PlayFab.ServerModels
 		
 		public List<AwardSteamAchievementItem> Achievements { get; set;}
 		
+		public override void WriteJson(JsonWriter writer)
+		{
+			writer.Writer.Write(JsonReader.OperatorObjectStart);
+			
+			writer.WriteObjectProperty("Achievements", Achievements);
+			
+			writer.Writer.Write(JsonReader.OperatorObjectEnd);
+		}
+		
 		public override void Deserialize (Dictionary<string,object> json)
 		{
 			
@@ -101,6 +259,15 @@ namespace PlayFab.ServerModels
 		/// </summary>
 		
 		public List<AwardSteamAchievementItem> AchievementResults { get; set;}
+		
+		public override void WriteJson(JsonWriter writer)
+		{
+			writer.Writer.Write(JsonReader.OperatorObjectStart);
+			
+			writer.WriteObjectProperty("AchievementResults", AchievementResults);
+			
+			writer.Writer.Write(JsonReader.OperatorObjectEnd);
+		}
 		
 		public override void Deserialize (Dictionary<string,object> json)
 		{
@@ -161,36 +328,6 @@ namespace PlayFab.ServerModels
 		public Dictionary<string,uint> RealCurrencyPrices { get; set;}
 		
 		/// <summary>
-		/// the date this item becomes available for purchase
-		/// </summary>
-		
-		public DateTime? ReleaseDate { get; set;}
-		
-		/// <summary>
-		/// the date this item will no longer be available for purchase
-		/// </summary>
-		
-		public DateTime? ExpirationDate { get; set;}
-		
-		/// <summary>
-		/// (deprecated)
-		/// </summary>
-		
-		public bool? IsFree { get; set;}
-		
-		/// <summary>
-		/// can this item be purchased (if not, it can still be granted by a server-based operation, such as a loot drop from a monster)
-		/// </summary>
-		
-		public bool? NotForSale { get; set;}
-		
-		/// <summary>
-		/// can an instance of this item be exchanged between players?
-		/// </summary>
-		
-		public bool? NotForTrade { get; set;}
-		
-		/// <summary>
 		/// list of item tags
 		/// </summary>
 		
@@ -226,6 +363,63 @@ namespace PlayFab.ServerModels
 		
 		public CatalogItemBundleInfo Bundle { get; set;}
 		
+		public override void WriteJson(JsonWriter writer)
+		{
+			writer.Writer.Write(JsonReader.OperatorObjectStart);
+			
+			writer.WriteObjectProperty("ItemId", ItemId);
+			
+			writer.Writer.Write(JsonReader.OperatorValueDelim);
+			
+			writer.WriteObjectProperty("ItemClass", ItemClass);
+			
+			writer.Writer.Write(JsonReader.OperatorValueDelim);
+			
+			writer.WriteObjectProperty("CatalogVersion", CatalogVersion);
+			
+			writer.Writer.Write(JsonReader.OperatorValueDelim);
+			
+			writer.WriteObjectProperty("DisplayName", DisplayName);
+			
+			writer.Writer.Write(JsonReader.OperatorValueDelim);
+			
+			writer.WriteObjectProperty("Description", Description);
+			
+			writer.Writer.Write(JsonReader.OperatorValueDelim);
+			
+			writer.WriteObjectProperty("VirtualCurrencyPrices", VirtualCurrencyPrices);
+			
+			writer.Writer.Write(JsonReader.OperatorValueDelim);
+			
+			writer.WriteObjectProperty("RealCurrencyPrices", RealCurrencyPrices);
+			
+			writer.Writer.Write(JsonReader.OperatorValueDelim);
+			
+			writer.WriteObjectProperty("Tags", Tags);
+			
+			writer.Writer.Write(JsonReader.OperatorValueDelim);
+			
+			writer.WriteObjectProperty("CustomData", CustomData);
+			
+			writer.Writer.Write(JsonReader.OperatorValueDelim);
+			
+			writer.WriteObjectProperty("GrantedIfPlayerHas", GrantedIfPlayerHas);
+			
+			writer.Writer.Write(JsonReader.OperatorValueDelim);
+			
+			writer.WriteObjectProperty("Consumable", Consumable);
+			
+			writer.Writer.Write(JsonReader.OperatorValueDelim);
+			
+			writer.WriteObjectProperty("Container", Container);
+			
+			writer.Writer.Write(JsonReader.OperatorValueDelim);
+			
+			writer.WriteObjectProperty("Bundle", Bundle);
+			
+			writer.Writer.Write(JsonReader.OperatorObjectEnd);
+		}
+		
 		public override void Deserialize (Dictionary<string,object> json)
 		{
 			
@@ -236,11 +430,6 @@ namespace PlayFab.ServerModels
 			Description = (string)JsonUtil.Get<string>(json, "Description");
 			VirtualCurrencyPrices = JsonUtil.GetDictionaryUInt32(json, "VirtualCurrencyPrices");
 			RealCurrencyPrices = JsonUtil.GetDictionaryUInt32(json, "RealCurrencyPrices");
-			ReleaseDate = (DateTime?)JsonUtil.GetDateTime(json, "ReleaseDate");
-			ExpirationDate = (DateTime?)JsonUtil.GetDateTime(json, "ExpirationDate");
-			IsFree = (bool?)JsonUtil.Get<bool?>(json, "IsFree");
-			NotForSale = (bool?)JsonUtil.Get<bool?>(json, "NotForSale");
-			NotForTrade = (bool?)JsonUtil.Get<bool?>(json, "NotForTrade");
 			Tags = JsonUtil.GetList<string>(json, "Tags");
 			CustomData = (string)JsonUtil.Get<string>(json, "CustomData");
 			GrantedIfPlayerHas = JsonUtil.GetList<string>(json, "GrantedIfPlayerHas");
@@ -274,6 +463,23 @@ namespace PlayFab.ServerModels
 		
 		public Dictionary<string,uint> BundledVirtualCurrencies { get; set;}
 		
+		public override void WriteJson(JsonWriter writer)
+		{
+			writer.Writer.Write(JsonReader.OperatorObjectStart);
+			
+			writer.WriteObjectProperty("BundledItems", BundledItems);
+			
+			writer.Writer.Write(JsonReader.OperatorValueDelim);
+			
+			writer.WriteObjectProperty("BundledResultTables", BundledResultTables);
+			
+			writer.Writer.Write(JsonReader.OperatorValueDelim);
+			
+			writer.WriteObjectProperty("BundledVirtualCurrencies", BundledVirtualCurrencies);
+			
+			writer.Writer.Write(JsonReader.OperatorObjectEnd);
+		}
+		
 		public override void Deserialize (Dictionary<string,object> json)
 		{
 			
@@ -306,6 +512,23 @@ namespace PlayFab.ServerModels
 		/// </summary>
 		
 		public string UsagePeriodGroup { get; set;}
+		
+		public override void WriteJson(JsonWriter writer)
+		{
+			writer.Writer.Write(JsonReader.OperatorObjectStart);
+			
+			writer.WriteObjectProperty("UsageCount", UsageCount);
+			
+			writer.Writer.Write(JsonReader.OperatorValueDelim);
+			
+			writer.WriteObjectProperty("UsagePeriod", UsagePeriod);
+			
+			writer.Writer.Write(JsonReader.OperatorValueDelim);
+			
+			writer.WriteObjectProperty("UsagePeriodGroup", UsagePeriodGroup);
+			
+			writer.Writer.Write(JsonReader.OperatorObjectEnd);
+		}
 		
 		public override void Deserialize (Dictionary<string,object> json)
 		{
@@ -349,6 +572,27 @@ namespace PlayFab.ServerModels
 		
 		public Dictionary<string,uint> VirtualCurrencyContents { get; set;}
 		
+		public override void WriteJson(JsonWriter writer)
+		{
+			writer.Writer.Write(JsonReader.OperatorObjectStart);
+			
+			writer.WriteObjectProperty("KeyItemId", KeyItemId);
+			
+			writer.Writer.Write(JsonReader.OperatorValueDelim);
+			
+			writer.WriteObjectProperty("ItemContents", ItemContents);
+			
+			writer.Writer.Write(JsonReader.OperatorValueDelim);
+			
+			writer.WriteObjectProperty("ResultTableContents", ResultTableContents);
+			
+			writer.Writer.Write(JsonReader.OperatorValueDelim);
+			
+			writer.WriteObjectProperty("VirtualCurrencyContents", VirtualCurrencyContents);
+			
+			writer.Writer.Write(JsonReader.OperatorObjectEnd);
+		}
+		
 		public override void Deserialize (Dictionary<string,object> json)
 		{
 			
@@ -356,6 +600,62 @@ namespace PlayFab.ServerModels
 			ItemContents = JsonUtil.GetList<string>(json, "ItemContents");
 			ResultTableContents = JsonUtil.GetList<string>(json, "ResultTableContents");
 			VirtualCurrencyContents = JsonUtil.GetDictionaryUInt32(json, "VirtualCurrencyContents");
+		}
+	}
+	
+	
+	
+	public class CreateSharedGroupRequest : PlayFabModelBase
+	{
+		
+		
+		/// <summary>
+		/// unique identifier for the shared group (a random identifier will be assigned, if one is not specified)
+		/// </summary>
+		
+		public string SharedGroupId { get; set;}
+		
+		public override void WriteJson(JsonWriter writer)
+		{
+			writer.Writer.Write(JsonReader.OperatorObjectStart);
+			
+			writer.WriteObjectProperty("SharedGroupId", SharedGroupId);
+			
+			writer.Writer.Write(JsonReader.OperatorObjectEnd);
+		}
+		
+		public override void Deserialize (Dictionary<string,object> json)
+		{
+			
+			SharedGroupId = (string)JsonUtil.Get<string>(json, "SharedGroupId");
+		}
+	}
+	
+	
+	
+	public class CreateSharedGroupResult : PlayFabModelBase
+	{
+		
+		
+		/// <summary>
+		/// unique identifier for the shared group
+		/// </summary>
+		
+		public string SharedGroupId { get; set;}
+		
+		public override void WriteJson(JsonWriter writer)
+		{
+			writer.Writer.Write(JsonReader.OperatorObjectStart);
+			
+			writer.WriteObjectProperty("SharedGroupId", SharedGroupId);
+			
+			writer.Writer.Write(JsonReader.OperatorObjectEnd);
+		}
+		
+		public override void Deserialize (Dictionary<string,object> json)
+		{
+			
+			SharedGroupId = (string)JsonUtil.Get<string>(json, "SharedGroupId");
 		}
 	}
 	
@@ -374,6 +674,53 @@ namespace PlayFab.ServerModels
 	
 	
 	
+	public class DeleteSharedGroupRequest : PlayFabModelBase
+	{
+		
+		
+		/// <summary>
+		/// unique identifier for the shared group
+		/// </summary>
+		
+		public string SharedGroupId { get; set;}
+		
+		public override void WriteJson(JsonWriter writer)
+		{
+			writer.Writer.Write(JsonReader.OperatorObjectStart);
+			
+			writer.WriteObjectProperty("SharedGroupId", SharedGroupId);
+			
+			writer.Writer.Write(JsonReader.OperatorObjectEnd);
+		}
+		
+		public override void Deserialize (Dictionary<string,object> json)
+		{
+			
+			SharedGroupId = (string)JsonUtil.Get<string>(json, "SharedGroupId");
+		}
+	}
+	
+	
+	
+	public class EmptyResult : PlayFabModelBase
+	{
+		
+		
+		public override void WriteJson(JsonWriter writer)
+		{
+			writer.Writer.Write(JsonReader.OperatorObjectStart);
+			
+			writer.Writer.Write(JsonReader.OperatorObjectEnd);
+		}
+		
+		public override void Deserialize (Dictionary<string,object> json)
+		{
+			
+		}
+	}
+	
+	
+	
 	public class GetCatalogItemsRequest : PlayFabModelBase
 	{
 		
@@ -383,6 +730,15 @@ namespace PlayFab.ServerModels
 		/// </summary>
 		
 		public string CatalogVersion { get; set;}
+		
+		public override void WriteJson(JsonWriter writer)
+		{
+			writer.Writer.Write(JsonReader.OperatorObjectStart);
+			
+			writer.WriteObjectProperty("CatalogVersion", CatalogVersion);
+			
+			writer.Writer.Write(JsonReader.OperatorObjectEnd);
+		}
 		
 		public override void Deserialize (Dictionary<string,object> json)
 		{
@@ -402,6 +758,15 @@ namespace PlayFab.ServerModels
 		/// </summary>
 		
 		public List<CatalogItem> Catalog { get; set;}
+		
+		public override void WriteJson(JsonWriter writer)
+		{
+			writer.Writer.Write(JsonReader.OperatorObjectStart);
+			
+			writer.WriteObjectProperty("Catalog", Catalog);
+			
+			writer.Writer.Write(JsonReader.OperatorObjectEnd);
+		}
 		
 		public override void Deserialize (Dictionary<string,object> json)
 		{
@@ -434,6 +799,23 @@ namespace PlayFab.ServerModels
 		
 		public int MaxResultsCount { get; set;}
 		
+		public override void WriteJson(JsonWriter writer)
+		{
+			writer.Writer.Write(JsonReader.OperatorObjectStart);
+			
+			writer.WriteObjectProperty("StatisticName", StatisticName);
+			
+			writer.Writer.Write(JsonReader.OperatorValueDelim);
+			
+			writer.WriteObjectProperty("PlayFabId", PlayFabId);
+			
+			writer.Writer.Write(JsonReader.OperatorValueDelim);
+			
+			writer.WriteObjectProperty("MaxResultsCount", MaxResultsCount);
+			
+			writer.Writer.Write(JsonReader.OperatorObjectEnd);
+		}
+		
 		public override void Deserialize (Dictionary<string,object> json)
 		{
 			
@@ -454,6 +836,15 @@ namespace PlayFab.ServerModels
 		/// </summary>
 		
 		public List<PlayerLeaderboardEntry> Leaderboard { get; set;}
+		
+		public override void WriteJson(JsonWriter writer)
+		{
+			writer.Writer.Write(JsonReader.OperatorObjectStart);
+			
+			writer.WriteObjectProperty("Leaderboard", Leaderboard);
+			
+			writer.Writer.Write(JsonReader.OperatorObjectEnd);
+		}
 		
 		public override void Deserialize (Dictionary<string,object> json)
 		{
@@ -486,6 +877,23 @@ namespace PlayFab.ServerModels
 		
 		public int MaxResultsCount { get; set;}
 		
+		public override void WriteJson(JsonWriter writer)
+		{
+			writer.Writer.Write(JsonReader.OperatorObjectStart);
+			
+			writer.WriteObjectProperty("StatisticName", StatisticName);
+			
+			writer.Writer.Write(JsonReader.OperatorValueDelim);
+			
+			writer.WriteObjectProperty("StartPosition", StartPosition);
+			
+			writer.Writer.Write(JsonReader.OperatorValueDelim);
+			
+			writer.WriteObjectProperty("MaxResultsCount", MaxResultsCount);
+			
+			writer.Writer.Write(JsonReader.OperatorObjectEnd);
+		}
+		
 		public override void Deserialize (Dictionary<string,object> json)
 		{
 			
@@ -507,10 +915,108 @@ namespace PlayFab.ServerModels
 		
 		public List<PlayerLeaderboardEntry> Leaderboard { get; set;}
 		
+		public override void WriteJson(JsonWriter writer)
+		{
+			writer.Writer.Write(JsonReader.OperatorObjectStart);
+			
+			writer.WriteObjectProperty("Leaderboard", Leaderboard);
+			
+			writer.Writer.Write(JsonReader.OperatorObjectEnd);
+		}
+		
 		public override void Deserialize (Dictionary<string,object> json)
 		{
 			
 			Leaderboard = JsonUtil.GetObjectList<PlayerLeaderboardEntry>(json, "Leaderboard");
+		}
+	}
+	
+	
+	
+	public class GetSharedGroupDataRequest : PlayFabModelBase
+	{
+		
+		
+		/// <summary>
+		/// unique identifier for the shared group
+		/// </summary>
+		
+		public string SharedGroupId { get; set;}
+		
+		/// <summary>
+		/// specific keys to retrieve from the shared group (if not specified, all keys will be returned, while an empty array indicates that no keys should be returned)
+		/// </summary>
+		
+		public List<string> Keys { get; set;}
+		
+		/// <summary>
+		/// if true, return the list of all members of the shared group
+		/// </summary>
+		
+		public bool? GetMembers { get; set;}
+		
+		public override void WriteJson(JsonWriter writer)
+		{
+			writer.Writer.Write(JsonReader.OperatorObjectStart);
+			
+			writer.WriteObjectProperty("SharedGroupId", SharedGroupId);
+			
+			writer.Writer.Write(JsonReader.OperatorValueDelim);
+			
+			writer.WriteObjectProperty("Keys", Keys);
+			
+			writer.Writer.Write(JsonReader.OperatorValueDelim);
+			
+			writer.WriteObjectProperty("GetMembers", GetMembers);
+			
+			writer.Writer.Write(JsonReader.OperatorObjectEnd);
+		}
+		
+		public override void Deserialize (Dictionary<string,object> json)
+		{
+			
+			SharedGroupId = (string)JsonUtil.Get<string>(json, "SharedGroupId");
+			Keys = JsonUtil.GetList<string>(json, "Keys");
+			GetMembers = (bool?)JsonUtil.Get<bool?>(json, "GetMembers");
+		}
+	}
+	
+	
+	
+	public class GetSharedGroupDataResult : PlayFabModelBase
+	{
+		
+		
+		/// <summary>
+		/// data for the requested keys
+		/// </summary>
+		
+		public Dictionary<string,SharedGroupDataRecord> Data { get; set;}
+		
+		/// <summary>
+		/// list of PlayFabId identifiers for the members of this group, if requested
+		/// </summary>
+		
+		public List<string> Members { get; set;}
+		
+		public override void WriteJson(JsonWriter writer)
+		{
+			writer.Writer.Write(JsonReader.OperatorObjectStart);
+			
+			writer.WriteObjectProperty("Data", Data);
+			
+			writer.Writer.Write(JsonReader.OperatorValueDelim);
+			
+			writer.WriteObjectProperty("Members", Members);
+			
+			writer.Writer.Write(JsonReader.OperatorObjectEnd);
+		}
+		
+		public override void Deserialize (Dictionary<string,object> json)
+		{
+			
+			Data = JsonUtil.GetObjectDictionary<SharedGroupDataRecord>(json, "Data");
+			Members = JsonUtil.GetList<string>(json, "Members");
 		}
 	}
 	
@@ -525,6 +1031,15 @@ namespace PlayFab.ServerModels
 		/// </summary>
 		
 		public List<string> Keys { get; set;}
+		
+		public override void WriteJson(JsonWriter writer)
+		{
+			writer.Writer.Write(JsonReader.OperatorObjectStart);
+			
+			writer.WriteObjectProperty("Keys", Keys);
+			
+			writer.Writer.Write(JsonReader.OperatorObjectEnd);
+		}
 		
 		public override void Deserialize (Dictionary<string,object> json)
 		{
@@ -545,6 +1060,15 @@ namespace PlayFab.ServerModels
 		
 		public Dictionary<string,string> Data { get; set;}
 		
+		public override void WriteJson(JsonWriter writer)
+		{
+			writer.Writer.Write(JsonReader.OperatorObjectStart);
+			
+			writer.WriteObjectProperty("Data", Data);
+			
+			writer.Writer.Write(JsonReader.OperatorObjectEnd);
+		}
+		
 		public override void Deserialize (Dictionary<string,object> json)
 		{
 			
@@ -564,6 +1088,15 @@ namespace PlayFab.ServerModels
 		
 		public string PlayFabId { get; set;}
 		
+		public override void WriteJson(JsonWriter writer)
+		{
+			writer.Writer.Write(JsonReader.OperatorObjectStart);
+			
+			writer.WriteObjectProperty("PlayFabId", PlayFabId);
+			
+			writer.Writer.Write(JsonReader.OperatorObjectEnd);
+		}
+		
 		public override void Deserialize (Dictionary<string,object> json)
 		{
 			
@@ -578,10 +1111,19 @@ namespace PlayFab.ServerModels
 		
 		
 		/// <summary>
-		/// PlayFab unique identifier of the user whose information was requested
+		/// account info for the user whose information was requested
 		/// </summary>
 		
 		public UserAccountInfo UserInfo { get; set;}
+		
+		public override void WriteJson(JsonWriter writer)
+		{
+			writer.Writer.Write(JsonReader.OperatorObjectStart);
+			
+			writer.WriteObjectProperty("UserInfo", UserInfo);
+			
+			writer.Writer.Write(JsonReader.OperatorObjectEnd);
+		}
 		
 		public override void Deserialize (Dictionary<string,object> json)
 		{
@@ -607,6 +1149,19 @@ namespace PlayFab.ServerModels
 		/// </summary>
 		
 		public List<string> Keys { get; set;}
+		
+		public override void WriteJson(JsonWriter writer)
+		{
+			writer.Writer.Write(JsonReader.OperatorObjectStart);
+			
+			writer.WriteObjectProperty("PlayFabId", PlayFabId);
+			
+			writer.Writer.Write(JsonReader.OperatorValueDelim);
+			
+			writer.WriteObjectProperty("Keys", Keys);
+			
+			writer.Writer.Write(JsonReader.OperatorObjectEnd);
+		}
 		
 		public override void Deserialize (Dictionary<string,object> json)
 		{
@@ -634,6 +1189,19 @@ namespace PlayFab.ServerModels
 		
 		public Dictionary<string,UserDataRecord> Data { get; set;}
 		
+		public override void WriteJson(JsonWriter writer)
+		{
+			writer.Writer.Write(JsonReader.OperatorObjectStart);
+			
+			writer.WriteObjectProperty("PlayFabId", PlayFabId);
+			
+			writer.Writer.Write(JsonReader.OperatorValueDelim);
+			
+			writer.WriteObjectProperty("Data", Data);
+			
+			writer.Writer.Write(JsonReader.OperatorObjectEnd);
+		}
+		
 		public override void Deserialize (Dictionary<string,object> json)
 		{
 			
@@ -659,6 +1227,19 @@ namespace PlayFab.ServerModels
 		/// </summary>
 		
 		public string CatalogVersion { get; set;}
+		
+		public override void WriteJson(JsonWriter writer)
+		{
+			writer.Writer.Write(JsonReader.OperatorObjectStart);
+			
+			writer.WriteObjectProperty("PlayFabId", PlayFabId);
+			
+			writer.Writer.Write(JsonReader.OperatorValueDelim);
+			
+			writer.WriteObjectProperty("CatalogVersion", CatalogVersion);
+			
+			writer.Writer.Write(JsonReader.OperatorObjectEnd);
+		}
 		
 		public override void Deserialize (Dictionary<string,object> json)
 		{
@@ -686,6 +1267,19 @@ namespace PlayFab.ServerModels
 		
 		public Dictionary<string,int> VirtualCurrency { get; set;}
 		
+		public override void WriteJson(JsonWriter writer)
+		{
+			writer.Writer.Write(JsonReader.OperatorObjectStart);
+			
+			writer.WriteObjectProperty("Inventory", Inventory);
+			
+			writer.Writer.Write(JsonReader.OperatorValueDelim);
+			
+			writer.WriteObjectProperty("VirtualCurrency", VirtualCurrency);
+			
+			writer.Writer.Write(JsonReader.OperatorObjectEnd);
+		}
+		
 		public override void Deserialize (Dictionary<string,object> json)
 		{
 			
@@ -706,6 +1300,15 @@ namespace PlayFab.ServerModels
 		
 		public string PlayFabId { get; set;}
 		
+		public override void WriteJson(JsonWriter writer)
+		{
+			writer.Writer.Write(JsonReader.OperatorObjectStart);
+			
+			writer.WriteObjectProperty("PlayFabId", PlayFabId);
+			
+			writer.Writer.Write(JsonReader.OperatorObjectEnd);
+		}
+		
 		public override void Deserialize (Dictionary<string,object> json)
 		{
 			
@@ -725,10 +1328,108 @@ namespace PlayFab.ServerModels
 		
 		public Dictionary<string,int> UserStatistics { get; set;}
 		
+		public override void WriteJson(JsonWriter writer)
+		{
+			writer.Writer.Write(JsonReader.OperatorObjectStart);
+			
+			writer.WriteObjectProperty("UserStatistics", UserStatistics);
+			
+			writer.Writer.Write(JsonReader.OperatorObjectEnd);
+		}
+		
 		public override void Deserialize (Dictionary<string,object> json)
 		{
 			
 			UserStatistics = JsonUtil.GetDictionaryInt32(json, "UserStatistics");
+		}
+	}
+	
+	
+	
+	public class GrantItemsToUserRequest : PlayFabModelBase
+	{
+		
+		
+		/// <summary>
+		/// catalog version from which items are to be granted
+		/// </summary>
+		
+		public string CatalogVersion { get; set;}
+		
+		/// <summary>
+		/// PlayFab unique identifier of the user to whom the catalog items are to be granted
+		/// </summary>
+		
+		public string PlayFabId { get; set;}
+		
+		/// <summary>
+		/// string detailing any additional information concerning this operation
+		/// </summary>
+		
+		public string Annotation { get; set;}
+		
+		/// <summary>
+		/// array of itemIds to grant to the user
+		/// </summary>
+		
+		public List<string> ItemIds { get; set;}
+		
+		public override void WriteJson(JsonWriter writer)
+		{
+			writer.Writer.Write(JsonReader.OperatorObjectStart);
+			
+			writer.WriteObjectProperty("CatalogVersion", CatalogVersion);
+			
+			writer.Writer.Write(JsonReader.OperatorValueDelim);
+			
+			writer.WriteObjectProperty("PlayFabId", PlayFabId);
+			
+			writer.Writer.Write(JsonReader.OperatorValueDelim);
+			
+			writer.WriteObjectProperty("Annotation", Annotation);
+			
+			writer.Writer.Write(JsonReader.OperatorValueDelim);
+			
+			writer.WriteObjectProperty("ItemIds", ItemIds);
+			
+			writer.Writer.Write(JsonReader.OperatorObjectEnd);
+		}
+		
+		public override void Deserialize (Dictionary<string,object> json)
+		{
+			
+			CatalogVersion = (string)JsonUtil.Get<string>(json, "CatalogVersion");
+			PlayFabId = (string)JsonUtil.Get<string>(json, "PlayFabId");
+			Annotation = (string)JsonUtil.Get<string>(json, "Annotation");
+			ItemIds = JsonUtil.GetList<string>(json, "ItemIds");
+		}
+	}
+	
+	
+	
+	public class GrantItemsToUserResult : PlayFabModelBase
+	{
+		
+		
+		/// <summary>
+		/// array of items granted to users
+		/// </summary>
+		
+		public List<ItemGrantResult> ItemGrantResults { get; set;}
+		
+		public override void WriteJson(JsonWriter writer)
+		{
+			writer.Writer.Write(JsonReader.OperatorObjectStart);
+			
+			writer.WriteObjectProperty("ItemGrantResults", ItemGrantResults);
+			
+			writer.Writer.Write(JsonReader.OperatorObjectEnd);
+		}
+		
+		public override void Deserialize (Dictionary<string,object> json)
+		{
+			
+			ItemGrantResults = JsonUtil.GetObjectList<ItemGrantResult>(json, "ItemGrantResults");
 		}
 	}
 	
@@ -750,6 +1451,19 @@ namespace PlayFab.ServerModels
 		
 		public List<ItemGrant> ItemGrants { get; set;}
 		
+		public override void WriteJson(JsonWriter writer)
+		{
+			writer.Writer.Write(JsonReader.OperatorObjectStart);
+			
+			writer.WriteObjectProperty("CatalogVersion", CatalogVersion);
+			
+			writer.Writer.Write(JsonReader.OperatorValueDelim);
+			
+			writer.WriteObjectProperty("ItemGrants", ItemGrants);
+			
+			writer.Writer.Write(JsonReader.OperatorObjectEnd);
+		}
+		
 		public override void Deserialize (Dictionary<string,object> json)
 		{
 			
@@ -769,6 +1483,15 @@ namespace PlayFab.ServerModels
 		/// </summary>
 		
 		public List<ItemGrantResult> ItemGrantResults { get; set;}
+		
+		public override void WriteJson(JsonWriter writer)
+		{
+			writer.Writer.Write(JsonReader.OperatorObjectStart);
+			
+			writer.WriteObjectProperty("ItemGrantResults", ItemGrantResults);
+			
+			writer.Writer.Write(JsonReader.OperatorObjectEnd);
+		}
 		
 		public override void Deserialize (Dictionary<string,object> json)
 		{
@@ -800,6 +1523,23 @@ namespace PlayFab.ServerModels
 		/// </summary>
 		
 		public string Annotation { get; set;}
+		
+		public override void WriteJson(JsonWriter writer)
+		{
+			writer.Writer.Write(JsonReader.OperatorObjectStart);
+			
+			writer.WriteObjectProperty("PlayFabId", PlayFabId);
+			
+			writer.Writer.Write(JsonReader.OperatorValueDelim);
+			
+			writer.WriteObjectProperty("ItemId", ItemId);
+			
+			writer.Writer.Write(JsonReader.OperatorValueDelim);
+			
+			writer.WriteObjectProperty("Annotation", Annotation);
+			
+			writer.Writer.Write(JsonReader.OperatorObjectEnd);
+		}
 		
 		public override void Deserialize (Dictionary<string,object> json)
 		{
@@ -848,6 +1588,31 @@ namespace PlayFab.ServerModels
 		/// </summary>
 		
 		public bool Result { get; set;}
+		
+		public override void WriteJson(JsonWriter writer)
+		{
+			writer.Writer.Write(JsonReader.OperatorObjectStart);
+			
+			writer.WriteObjectProperty("PlayFabId", PlayFabId);
+			
+			writer.Writer.Write(JsonReader.OperatorValueDelim);
+			
+			writer.WriteObjectProperty("ItemId", ItemId);
+			
+			writer.Writer.Write(JsonReader.OperatorValueDelim);
+			
+			writer.WriteObjectProperty("ItemInstanceId", ItemInstanceId);
+			
+			writer.Writer.Write(JsonReader.OperatorValueDelim);
+			
+			writer.WriteObjectProperty("Annotation", Annotation);
+			
+			writer.Writer.Write(JsonReader.OperatorValueDelim);
+			
+			writer.WriteObjectProperty("Result", Result);
+			
+			writer.Writer.Write(JsonReader.OperatorObjectEnd);
+		}
 		
 		public override void Deserialize (Dictionary<string,object> json)
 		{
@@ -923,6 +1688,47 @@ namespace PlayFab.ServerModels
 		
 		public string BundleParent { get; set;}
 		
+		public override void WriteJson(JsonWriter writer)
+		{
+			writer.Writer.Write(JsonReader.OperatorObjectStart);
+			
+			writer.WriteObjectProperty("ItemId", ItemId);
+			
+			writer.Writer.Write(JsonReader.OperatorValueDelim);
+			
+			writer.WriteObjectProperty("ItemInstanceId", ItemInstanceId);
+			
+			writer.Writer.Write(JsonReader.OperatorValueDelim);
+			
+			writer.WriteObjectProperty("ItemClass", ItemClass);
+			
+			writer.Writer.Write(JsonReader.OperatorValueDelim);
+			
+			writer.WriteObjectProperty("PurchaseDate", PurchaseDate);
+			
+			writer.Writer.Write(JsonReader.OperatorValueDelim);
+			
+			writer.WriteObjectProperty("Expiration", Expiration);
+			
+			writer.Writer.Write(JsonReader.OperatorValueDelim);
+			
+			writer.WriteObjectProperty("RemainingUses", RemainingUses);
+			
+			writer.Writer.Write(JsonReader.OperatorValueDelim);
+			
+			writer.WriteObjectProperty("Annotation", Annotation);
+			
+			writer.Writer.Write(JsonReader.OperatorValueDelim);
+			
+			writer.WriteObjectProperty("CatalogVersion", CatalogVersion);
+			
+			writer.Writer.Write(JsonReader.OperatorValueDelim);
+			
+			writer.WriteObjectProperty("BundleParent", BundleParent);
+			
+			writer.Writer.Write(JsonReader.OperatorObjectEnd);
+		}
+		
 		public override void Deserialize (Dictionary<string,object> json)
 		{
 			
@@ -935,6 +1741,95 @@ namespace PlayFab.ServerModels
 			Annotation = (string)JsonUtil.Get<string>(json, "Annotation");
 			CatalogVersion = (string)JsonUtil.Get<string>(json, "CatalogVersion");
 			BundleParent = (string)JsonUtil.Get<string>(json, "BundleParent");
+		}
+	}
+	
+	
+	
+	public class ModifyItemUsesRequest : PlayFabModelBase
+	{
+		
+		
+		/// <summary>
+		/// PlayFab unique identifier of the user whose item is being modified
+		/// </summary>
+		
+		public string PlayFabId { get; set;}
+		
+		/// <summary>
+		/// unique instance identifier of the item to be modified
+		/// </summary>
+		
+		public string ItemInstanceId { get; set;}
+		
+		/// <summary>
+		/// number of uses to add to the item. Can be negative to remove uses.
+		/// </summary>
+		
+		public int UsesToAdd { get; set;}
+		
+		public override void WriteJson(JsonWriter writer)
+		{
+			writer.Writer.Write(JsonReader.OperatorObjectStart);
+			
+			writer.WriteObjectProperty("PlayFabId", PlayFabId);
+			
+			writer.Writer.Write(JsonReader.OperatorValueDelim);
+			
+			writer.WriteObjectProperty("ItemInstanceId", ItemInstanceId);
+			
+			writer.Writer.Write(JsonReader.OperatorValueDelim);
+			
+			writer.WriteObjectProperty("UsesToAdd", UsesToAdd);
+			
+			writer.Writer.Write(JsonReader.OperatorObjectEnd);
+		}
+		
+		public override void Deserialize (Dictionary<string,object> json)
+		{
+			
+			PlayFabId = (string)JsonUtil.Get<string>(json, "PlayFabId");
+			ItemInstanceId = (string)JsonUtil.Get<string>(json, "ItemInstanceId");
+			UsesToAdd = (int)JsonUtil.Get<double?>(json, "UsesToAdd");
+		}
+	}
+	
+	
+	
+	public class ModifyItemUsesResult : PlayFabModelBase
+	{
+		
+		
+		/// <summary>
+		/// unique instance identifier of the item with uses consumed
+		/// </summary>
+		
+		public string ItemInstanceId { get; set;}
+		
+		/// <summary>
+		/// number of uses remaining on the item
+		/// </summary>
+		
+		public int RemainingUses { get; set;}
+		
+		public override void WriteJson(JsonWriter writer)
+		{
+			writer.Writer.Write(JsonReader.OperatorObjectStart);
+			
+			writer.WriteObjectProperty("ItemInstanceId", ItemInstanceId);
+			
+			writer.Writer.Write(JsonReader.OperatorValueDelim);
+			
+			writer.WriteObjectProperty("RemainingUses", RemainingUses);
+			
+			writer.Writer.Write(JsonReader.OperatorObjectEnd);
+		}
+		
+		public override void Deserialize (Dictionary<string,object> json)
+		{
+			
+			ItemInstanceId = (string)JsonUtil.Get<string>(json, "ItemInstanceId");
+			RemainingUses = (int)JsonUtil.Get<double?>(json, "RemainingUses");
 		}
 	}
 	
@@ -956,6 +1851,19 @@ namespace PlayFab.ServerModels
 		
 		public int Balance { get; set;}
 		
+		public override void WriteJson(JsonWriter writer)
+		{
+			writer.Writer.Write(JsonReader.OperatorObjectStart);
+			
+			writer.WriteObjectProperty("VirtualCurrency", VirtualCurrency);
+			
+			writer.Writer.Write(JsonReader.OperatorValueDelim);
+			
+			writer.WriteObjectProperty("Balance", Balance);
+			
+			writer.Writer.Write(JsonReader.OperatorObjectEnd);
+		}
+		
 		public override void Deserialize (Dictionary<string,object> json)
 		{
 			
@@ -971,10 +1879,10 @@ namespace PlayFab.ServerModels
 		
 		
 		/// <summary>
-		/// unique identifier of the Game Server Instance the user is leaving
+		/// unique identifier of the Game Instance the user is leaving
 		/// </summary>
 		
-		public string ServerId { get; set;}
+		public string LobbyId { get; set;}
 		
 		/// <summary>
 		/// PlayFab unique identifier of the user that is leaving the Game Server Instance
@@ -982,10 +1890,23 @@ namespace PlayFab.ServerModels
 		
 		public string PlayFabId { get; set;}
 		
+		public override void WriteJson(JsonWriter writer)
+		{
+			writer.Writer.Write(JsonReader.OperatorObjectStart);
+			
+			writer.WriteObjectProperty("LobbyId", LobbyId);
+			
+			writer.Writer.Write(JsonReader.OperatorValueDelim);
+			
+			writer.WriteObjectProperty("PlayFabId", PlayFabId);
+			
+			writer.Writer.Write(JsonReader.OperatorObjectEnd);
+		}
+		
 		public override void Deserialize (Dictionary<string,object> json)
 		{
 			
-			ServerId = (string)JsonUtil.Get<string>(json, "ServerId");
+			LobbyId = (string)JsonUtil.Get<string>(json, "LobbyId");
 			PlayFabId = (string)JsonUtil.Get<string>(json, "PlayFabId");
 		}
 	}
@@ -1001,6 +1922,15 @@ namespace PlayFab.ServerModels
 		/// </summary>
 		
 		public PlayerConnectionState? PlayerState { get; set;}
+		
+		public override void WriteJson(JsonWriter writer)
+		{
+			writer.Writer.Write(JsonReader.OperatorObjectStart);
+			
+			writer.WriteObjectProperty("PlayerState", PlayerState);
+			
+			writer.Writer.Write(JsonReader.OperatorObjectEnd);
+		}
 		
 		public override void Deserialize (Dictionary<string,object> json)
 		{
@@ -1050,6 +1980,27 @@ namespace PlayFab.ServerModels
 		
 		public int Position { get; set;}
 		
+		public override void WriteJson(JsonWriter writer)
+		{
+			writer.Writer.Write(JsonReader.OperatorObjectStart);
+			
+			writer.WriteObjectProperty("PlayFabId", PlayFabId);
+			
+			writer.Writer.Write(JsonReader.OperatorValueDelim);
+			
+			writer.WriteObjectProperty("DisplayName", DisplayName);
+			
+			writer.Writer.Write(JsonReader.OperatorValueDelim);
+			
+			writer.WriteObjectProperty("StatValue", StatValue);
+			
+			writer.Writer.Write(JsonReader.OperatorValueDelim);
+			
+			writer.WriteObjectProperty("Position", Position);
+			
+			writer.Writer.Write(JsonReader.OperatorObjectEnd);
+		}
+		
 		public override void Deserialize (Dictionary<string,object> json)
 		{
 			
@@ -1082,14 +2033,31 @@ namespace PlayFab.ServerModels
 		/// unique identifier of the Game Server Instance that is asking for validation of the authorization ticket
 		/// </summary>
 		
-		public string ServerId { get; set;}
+		public string LobbyId { get; set;}
+		
+		public override void WriteJson(JsonWriter writer)
+		{
+			writer.Writer.Write(JsonReader.OperatorObjectStart);
+			
+			writer.WriteObjectProperty("Ticket", Ticket);
+			
+			writer.Writer.Write(JsonReader.OperatorValueDelim);
+			
+			writer.WriteObjectProperty("IP", IP);
+			
+			writer.Writer.Write(JsonReader.OperatorValueDelim);
+			
+			writer.WriteObjectProperty("LobbyId", LobbyId);
+			
+			writer.Writer.Write(JsonReader.OperatorObjectEnd);
+		}
 		
 		public override void Deserialize (Dictionary<string,object> json)
 		{
 			
 			Ticket = (string)JsonUtil.Get<string>(json, "Ticket");
 			IP = (string)JsonUtil.Get<string>(json, "IP");
-			ServerId = (string)JsonUtil.Get<string>(json, "ServerId");
+			LobbyId = (string)JsonUtil.Get<string>(json, "LobbyId");
 		}
 	}
 	
@@ -1117,12 +2085,87 @@ namespace PlayFab.ServerModels
 		
 		public UserAccountInfo UserInfo { get; set;}
 		
+		public override void WriteJson(JsonWriter writer)
+		{
+			writer.Writer.Write(JsonReader.OperatorObjectStart);
+			
+			writer.WriteObjectProperty("TicketIsValid", TicketIsValid);
+			
+			writer.Writer.Write(JsonReader.OperatorValueDelim);
+			
+			writer.WriteObjectProperty("Error", Error);
+			
+			writer.Writer.Write(JsonReader.OperatorValueDelim);
+			
+			writer.WriteObjectProperty("UserInfo", UserInfo);
+			
+			writer.Writer.Write(JsonReader.OperatorObjectEnd);
+		}
+		
 		public override void Deserialize (Dictionary<string,object> json)
 		{
 			
 			TicketIsValid = (bool)JsonUtil.Get<bool?>(json, "TicketIsValid");
 			Error = (string)JsonUtil.Get<string>(json, "Error");
 			UserInfo = JsonUtil.GetObject<UserAccountInfo>(json, "UserInfo");
+		}
+	}
+	
+	
+	
+	public class RemoveSharedGroupMembersRequest : PlayFabModelBase
+	{
+		
+		
+		/// <summary>
+		/// unique identifier for the shared group
+		/// </summary>
+		
+		public string SharedGroupId { get; set;}
+		
+		/// <summary>
+		/// list of PlayFabId identifiers of users to remove from the shared group
+		/// </summary>
+		
+		public List<string> PlayFabIds { get; set;}
+		
+		public override void WriteJson(JsonWriter writer)
+		{
+			writer.Writer.Write(JsonReader.OperatorObjectStart);
+			
+			writer.WriteObjectProperty("SharedGroupId", SharedGroupId);
+			
+			writer.Writer.Write(JsonReader.OperatorValueDelim);
+			
+			writer.WriteObjectProperty("PlayFabIds", PlayFabIds);
+			
+			writer.Writer.Write(JsonReader.OperatorObjectEnd);
+		}
+		
+		public override void Deserialize (Dictionary<string,object> json)
+		{
+			
+			SharedGroupId = (string)JsonUtil.Get<string>(json, "SharedGroupId");
+			PlayFabIds = JsonUtil.GetList<string>(json, "PlayFabIds");
+		}
+	}
+	
+	
+	
+	public class RemoveSharedGroupMembersResult : PlayFabModelBase
+	{
+		
+		
+		public override void WriteJson(JsonWriter writer)
+		{
+			writer.Writer.Write(JsonReader.OperatorObjectStart);
+			
+			writer.Writer.Write(JsonReader.OperatorObjectEnd);
+		}
+		
+		public override void Deserialize (Dictionary<string,object> json)
+		{
+			
 		}
 	}
 	
@@ -1144,6 +2187,19 @@ namespace PlayFab.ServerModels
 		
 		public string Message { get; set;}
 		
+		public override void WriteJson(JsonWriter writer)
+		{
+			writer.Writer.Write(JsonReader.OperatorObjectStart);
+			
+			writer.WriteObjectProperty("Recipient", Recipient);
+			
+			writer.Writer.Write(JsonReader.OperatorValueDelim);
+			
+			writer.WriteObjectProperty("Message", Message);
+			
+			writer.Writer.Write(JsonReader.OperatorObjectEnd);
+		}
+		
 		public override void Deserialize (Dictionary<string,object> json)
 		{
 			
@@ -1157,6 +2213,13 @@ namespace PlayFab.ServerModels
 	public class SendPushNotificationResult : PlayFabModelBase
 	{
 		
+		
+		public override void WriteJson(JsonWriter writer)
+		{
+			writer.Writer.Write(JsonReader.OperatorObjectStart);
+			
+			writer.Writer.Write(JsonReader.OperatorObjectEnd);
+		}
 		
 		public override void Deserialize (Dictionary<string,object> json)
 		{
@@ -1182,6 +2245,19 @@ namespace PlayFab.ServerModels
 		
 		public string Value { get; set;}
 		
+		public override void WriteJson(JsonWriter writer)
+		{
+			writer.Writer.Write(JsonReader.OperatorObjectStart);
+			
+			writer.WriteObjectProperty("Key", Key);
+			
+			writer.Writer.Write(JsonReader.OperatorValueDelim);
+			
+			writer.WriteObjectProperty("Value", Value);
+			
+			writer.Writer.Write(JsonReader.OperatorObjectEnd);
+		}
+		
 		public override void Deserialize (Dictionary<string,object> json)
 		{
 			
@@ -1196,9 +2272,77 @@ namespace PlayFab.ServerModels
 	{
 		
 		
+		public override void WriteJson(JsonWriter writer)
+		{
+			writer.Writer.Write(JsonReader.OperatorObjectStart);
+			
+			writer.Writer.Write(JsonReader.OperatorObjectEnd);
+		}
+		
 		public override void Deserialize (Dictionary<string,object> json)
 		{
 			
+		}
+	}
+	
+	
+	
+	public class SharedGroupDataRecord : PlayFabModelBase
+	{
+		
+		
+		/// <summary>
+		/// data stored for the specified group data key
+		/// </summary>
+		
+		public string Value { get; set;}
+		
+		/// <summary>
+		/// PlayFabId of the user to last update this value
+		/// </summary>
+		
+		public string LastUpdatedBy { get; set;}
+		
+		/// <summary>
+		/// timestamp for when this data was last updated
+		/// </summary>
+		
+		public DateTime LastUpdated { get; set;}
+		
+		/// <summary>
+		/// indicates whether this data can be read by all users (public) or only members of the group (private)
+		/// </summary>
+		
+		public UserDataPermission? Permission { get; set;}
+		
+		public override void WriteJson(JsonWriter writer)
+		{
+			writer.Writer.Write(JsonReader.OperatorObjectStart);
+			
+			writer.WriteObjectProperty("Value", Value);
+			
+			writer.Writer.Write(JsonReader.OperatorValueDelim);
+			
+			writer.WriteObjectProperty("LastUpdatedBy", LastUpdatedBy);
+			
+			writer.Writer.Write(JsonReader.OperatorValueDelim);
+			
+			writer.WriteObjectProperty("LastUpdated", LastUpdated);
+			
+			writer.Writer.Write(JsonReader.OperatorValueDelim);
+			
+			writer.WriteObjectProperty("Permission", Permission);
+			
+			writer.Writer.Write(JsonReader.OperatorObjectEnd);
+		}
+		
+		public override void Deserialize (Dictionary<string,object> json)
+		{
+			
+			Value = (string)JsonUtil.Get<string>(json, "Value");
+			LastUpdatedBy = (string)JsonUtil.Get<string>(json, "LastUpdatedBy");
+			LastUpdated = (DateTime)JsonUtil.GetDateTime(json, "LastUpdated");
+			Permission = (UserDataPermission?)JsonUtil.GetEnum<UserDataPermission>(json, "Permission");
 		}
 	}
 	
@@ -1226,6 +2370,23 @@ namespace PlayFab.ServerModels
 		
 		public int Amount { get; set;}
 		
+		public override void WriteJson(JsonWriter writer)
+		{
+			writer.Writer.Write(JsonReader.OperatorObjectStart);
+			
+			writer.WriteObjectProperty("PlayFabId", PlayFabId);
+			
+			writer.Writer.Write(JsonReader.OperatorValueDelim);
+			
+			writer.WriteObjectProperty("VirtualCurrency", VirtualCurrency);
+			
+			writer.Writer.Write(JsonReader.OperatorValueDelim);
+			
+			writer.WriteObjectProperty("Amount", Amount);
+			
+			writer.Writer.Write(JsonReader.OperatorObjectEnd);
+		}
+		
 		public override void Deserialize (Dictionary<string,object> json)
 		{
 			
@@ -1244,6 +2405,75 @@ namespace PlayFab.ServerModels
 		PendingSteam,
 		ActivatedSteam,
 		RevokedSteam
+	}
+	
+	
+	
+	public class UpdateSharedGroupDataRequest : PlayFabModelBase
+	{
+		
+		
+		/// <summary>
+		/// unique identifier for the shared group
+		/// </summary>
+		
+		public string SharedGroupId { get; set;}
+		
+		/// <summary>
+		/// key value pairs to be stored in the shared group - note that keys will be trimmed of whitespace, must not begin with a '!' character, and that null values will result in the removal of the key from the data set
+		/// </summary>
+		
+		public Dictionary<string,string> Data { get; set;}
+		
+		/// <summary>
+		/// permission to be applied to all user data keys in this request
+		/// </summary>
+		
+		public UserDataPermission? Permission { get; set;}
+		
+		public override void WriteJson(JsonWriter writer)
+		{
+			writer.Writer.Write(JsonReader.OperatorObjectStart);
+			
+			writer.WriteObjectProperty("SharedGroupId", SharedGroupId);
+			
+			writer.Writer.Write(JsonReader.OperatorValueDelim);
+			
+			writer.WriteObjectProperty("Data", Data);
+			
+			writer.Writer.Write(JsonReader.OperatorValueDelim);
+			
+			writer.WriteObjectProperty("Permission", Permission);
+			
+			writer.Writer.Write(JsonReader.OperatorObjectEnd);
+		}
+		
+		public override void Deserialize (Dictionary<string,object> json)
+		{
+			
+			SharedGroupId = (string)JsonUtil.Get<string>(json, "SharedGroupId");
+			Data = JsonUtil.GetDictionary<string>(json, "Data");
+			Permission = (UserDataPermission?)JsonUtil.GetEnum<UserDataPermission>(json, "Permission");
+		}
+	}
+	
+	
+	
+	public class UpdateSharedGroupDataResult : PlayFabModelBase
+	{
+		
+		
+		public override void WriteJson(JsonWriter writer)
+		{
+			writer.Writer.Write(JsonReader.OperatorObjectStart);
+			
+			writer.Writer.Write(JsonReader.OperatorObjectEnd);
+		}
+		
+		public override void Deserialize (Dictionary<string,object> json)
+		{
+			
+		}
 	}
 	
 	
@@ -1270,6 +2500,23 @@ namespace PlayFab.ServerModels
 		
 		public UserDataPermission? Permission { get; set;}
 		
+		public override void WriteJson(JsonWriter writer)
+		{
+			writer.Writer.Write(JsonReader.OperatorObjectStart);
+			
+			writer.WriteObjectProperty("PlayFabId", PlayFabId);
+			
+			writer.Writer.Write(JsonReader.OperatorValueDelim);
+			
+			writer.WriteObjectProperty("Data", Data);
+			
+			writer.Writer.Write(JsonReader.OperatorValueDelim);
+			
+			writer.WriteObjectProperty("Permission", Permission);
+			
+			writer.Writer.Write(JsonReader.OperatorObjectEnd);
+		}
+		
 		public override void Deserialize (Dictionary<string,object> json)
 		{
 			
@@ -1284,6 +2531,13 @@ namespace PlayFab.ServerModels
 	public class UpdateUserDataResult : PlayFabModelBase
 	{
 		
+		
+		public override void WriteJson(JsonWriter writer)
+		{
+			writer.Writer.Write(JsonReader.OperatorObjectStart);
+			
+			writer.Writer.Write(JsonReader.OperatorObjectEnd);
+		}
 		
 		public override void Deserialize (Dictionary<string,object> json)
 		{
@@ -1308,6 +2562,19 @@ namespace PlayFab.ServerModels
 		/// </summary>
 		
 		public Dictionary<string,string> Data { get; set;}
+		
+		public override void WriteJson(JsonWriter writer)
+		{
+			writer.Writer.Write(JsonReader.OperatorObjectStart);
+			
+			writer.WriteObjectProperty("PlayFabId", PlayFabId);
+			
+			writer.Writer.Write(JsonReader.OperatorValueDelim);
+			
+			writer.WriteObjectProperty("Data", Data);
+			
+			writer.Writer.Write(JsonReader.OperatorObjectEnd);
+		}
 		
 		public override void Deserialize (Dictionary<string,object> json)
 		{
@@ -1335,6 +2602,19 @@ namespace PlayFab.ServerModels
 		
 		public Dictionary<string,int> UserStatistics { get; set;}
 		
+		public override void WriteJson(JsonWriter writer)
+		{
+			writer.Writer.Write(JsonReader.OperatorObjectStart);
+			
+			writer.WriteObjectProperty("PlayFabId", PlayFabId);
+			
+			writer.Writer.Write(JsonReader.OperatorValueDelim);
+			
+			writer.WriteObjectProperty("UserStatistics", UserStatistics);
+			
+			writer.Writer.Write(JsonReader.OperatorObjectEnd);
+		}
+		
 		public override void Deserialize (Dictionary<string,object> json)
 		{
 			
@@ -1348,6 +2628,13 @@ namespace PlayFab.ServerModels
 	public class UpdateUserStatisticsResult : PlayFabModelBase
 	{
 		
+		
+		public override void WriteJson(JsonWriter writer)
+		{
+			writer.Writer.Write(JsonReader.OperatorObjectStart);
+			
+			writer.Writer.Write(JsonReader.OperatorObjectEnd);
+		}
 		
 		public override void Deserialize (Dictionary<string,object> json)
 		{
@@ -1409,6 +2696,43 @@ namespace PlayFab.ServerModels
 		
 		public UserGameCenterInfo GameCenterInfo { get; set;}
 		
+		public override void WriteJson(JsonWriter writer)
+		{
+			writer.Writer.Write(JsonReader.OperatorObjectStart);
+			
+			writer.WriteObjectProperty("PlayFabId", PlayFabId);
+			
+			writer.Writer.Write(JsonReader.OperatorValueDelim);
+			
+			writer.WriteObjectProperty("Created", Created);
+			
+			writer.Writer.Write(JsonReader.OperatorValueDelim);
+			
+			writer.WriteObjectProperty("Username", Username);
+			
+			writer.Writer.Write(JsonReader.OperatorValueDelim);
+			
+			writer.WriteObjectProperty("TitleInfo", TitleInfo);
+			
+			writer.Writer.Write(JsonReader.OperatorValueDelim);
+			
+			writer.WriteObjectProperty("PrivateInfo", PrivateInfo);
+			
+			writer.Writer.Write(JsonReader.OperatorValueDelim);
+			
+			writer.WriteObjectProperty("FacebookInfo", FacebookInfo);
+			
+			writer.Writer.Write(JsonReader.OperatorValueDelim);
+			
+			writer.WriteObjectProperty("SteamInfo", SteamInfo);
+			
+			writer.Writer.Write(JsonReader.OperatorValueDelim);
+			
+			writer.WriteObjectProperty("GameCenterInfo", GameCenterInfo);
+			
+			writer.Writer.Write(JsonReader.OperatorObjectEnd);
+		}
+		
 		public override void Deserialize (Dictionary<string,object> json)
 		{
 			
@@ -1455,6 +2779,23 @@ namespace PlayFab.ServerModels
 		
 		public UserDataPermission? Permission { get; set;}
 		
+		public override void WriteJson(JsonWriter writer)
+		{
+			writer.Writer.Write(JsonReader.OperatorObjectStart);
+			
+			writer.WriteObjectProperty("Value", Value);
+			
+			writer.Writer.Write(JsonReader.OperatorValueDelim);
+			
+			writer.WriteObjectProperty("LastUpdated", LastUpdated);
+			
+			writer.Writer.Write(JsonReader.OperatorValueDelim);
+			
+			writer.WriteObjectProperty("Permission", Permission);
+			
+			writer.Writer.Write(JsonReader.OperatorObjectEnd);
+		}
+		
 		public override void Deserialize (Dictionary<string,object> json)
 		{
 			
@@ -1488,6 +2829,23 @@ namespace PlayFab.ServerModels
 		
 		public string FacebookDisplayname { get; set;}
 		
+		public override void WriteJson(JsonWriter writer)
+		{
+			writer.Writer.Write(JsonReader.OperatorObjectStart);
+			
+			writer.WriteObjectProperty("FacebookId", FacebookId);
+			
+			writer.Writer.Write(JsonReader.OperatorValueDelim);
+			
+			writer.WriteObjectProperty("FacebookUsername", FacebookUsername);
+			
+			writer.Writer.Write(JsonReader.OperatorValueDelim);
+			
+			writer.WriteObjectProperty("FacebookDisplayname", FacebookDisplayname);
+			
+			writer.Writer.Write(JsonReader.OperatorObjectEnd);
+		}
+		
 		public override void Deserialize (Dictionary<string,object> json)
 		{
 			
@@ -1508,6 +2866,15 @@ namespace PlayFab.ServerModels
 		/// </summary>
 		
 		public string GameCenterId { get; set;}
+		
+		public override void WriteJson(JsonWriter writer)
+		{
+			writer.Writer.Write(JsonReader.OperatorObjectStart);
+			
+			writer.WriteObjectProperty("GameCenterId", GameCenterId);
+			
+			writer.Writer.Write(JsonReader.OperatorObjectEnd);
+		}
 		
 		public override void Deserialize (Dictionary<string,object> json)
 		{
@@ -1547,6 +2914,15 @@ namespace PlayFab.ServerModels
 		
 		public string Email { get; set;}
 		
+		public override void WriteJson(JsonWriter writer)
+		{
+			writer.Writer.Write(JsonReader.OperatorObjectStart);
+			
+			writer.WriteObjectProperty("Email", Email);
+			
+			writer.Writer.Write(JsonReader.OperatorObjectEnd);
+		}
+		
 		public override void Deserialize (Dictionary<string,object> json)
 		{
 			
@@ -1583,6 +2959,27 @@ namespace PlayFab.ServerModels
 		/// </summary>
 		
 		public TitleActivationStatus? SteamActivationStatus { get; set;}
+		
+		public override void WriteJson(JsonWriter writer)
+		{
+			writer.Writer.Write(JsonReader.OperatorObjectStart);
+			
+			writer.WriteObjectProperty("SteamId", SteamId);
+			
+			writer.Writer.Write(JsonReader.OperatorValueDelim);
+			
+			writer.WriteObjectProperty("SteamCountry", SteamCountry);
+			
+			writer.Writer.Write(JsonReader.OperatorValueDelim);
+			
+			writer.WriteObjectProperty("SteamCurrency", SteamCurrency);
+			
+			writer.Writer.Write(JsonReader.OperatorValueDelim);
+			
+			writer.WriteObjectProperty("SteamActivationStatus", SteamActivationStatus);
+			
+			writer.Writer.Write(JsonReader.OperatorObjectEnd);
+		}
 		
 		public override void Deserialize (Dictionary<string,object> json)
 		{
@@ -1635,6 +3032,35 @@ namespace PlayFab.ServerModels
 		/// </summary>
 		
 		public bool? isBanned { get; set;}
+		
+		public override void WriteJson(JsonWriter writer)
+		{
+			writer.Writer.Write(JsonReader.OperatorObjectStart);
+			
+			writer.WriteObjectProperty("DisplayName", DisplayName);
+			
+			writer.Writer.Write(JsonReader.OperatorValueDelim);
+			
+			writer.WriteObjectProperty("Origination", Origination);
+			
+			writer.Writer.Write(JsonReader.OperatorValueDelim);
+			
+			writer.WriteObjectProperty("Created", Created);
+			
+			writer.Writer.Write(JsonReader.OperatorValueDelim);
+			
+			writer.WriteObjectProperty("LastLogin", LastLogin);
+			
+			writer.Writer.Write(JsonReader.OperatorValueDelim);
+			
+			writer.WriteObjectProperty("FirstLogin", FirstLogin);
+			
+			writer.Writer.Write(JsonReader.OperatorValueDelim);
+			
+			writer.WriteObjectProperty("isBanned", isBanned);
+			
+			writer.Writer.Write(JsonReader.OperatorObjectEnd);
+		}
 		
 		public override void Deserialize (Dictionary<string,object> json)
 		{
