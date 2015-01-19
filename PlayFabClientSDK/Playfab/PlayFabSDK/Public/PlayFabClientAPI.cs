@@ -23,12 +23,16 @@ namespace PlayFab
 		public delegate void GetAccountInfoCallback(GetAccountInfoResult result);
 		public delegate void GetPlayFabIDsFromFacebookIDsCallback(GetPlayFabIDsFromFacebookIDsResult result);
 		public delegate void GetUserCombinedInfoCallback(GetUserCombinedInfoResult result);
+		public delegate void LinkAndroidDeviceIDCallback(LinkAndroidDeviceIDResult result);
 		public delegate void LinkFacebookAccountCallback(LinkFacebookAccountResult result);
 		public delegate void LinkGameCenterAccountCallback(LinkGameCenterAccountResult result);
+		public delegate void LinkIOSDeviceIDCallback(LinkIOSDeviceIDResult result);
 		public delegate void LinkSteamAccountCallback(LinkSteamAccountResult result);
 		public delegate void SendAccountRecoveryEmailCallback(SendAccountRecoveryEmailResult result);
+		public delegate void UnlinkAndroidDeviceIDCallback(UnlinkAndroidDeviceIDResult result);
 		public delegate void UnlinkFacebookAccountCallback(UnlinkFacebookAccountResult result);
 		public delegate void UnlinkGameCenterAccountCallback(UnlinkGameCenterAccountResult result);
+		public delegate void UnlinkIOSDeviceIDCallback(UnlinkIOSDeviceIDResult result);
 		public delegate void UnlinkSteamAccountCallback(UnlinkSteamAccountResult result);
 		public delegate void UpdateEmailAddressCallback(UpdateEmailAddressResult result);
 		public delegate void UpdatePasswordCallback(UpdatePasswordResult result);
@@ -37,9 +41,12 @@ namespace PlayFab
 		public delegate void GetLeaderboardCallback(GetLeaderboardResult result);
 		public delegate void GetLeaderboardAroundCurrentUserCallback(GetLeaderboardAroundCurrentUserResult result);
 		public delegate void GetUserDataCallback(GetUserDataResult result);
+		public delegate void GetUserPublisherDataCallback(GetUserDataResult result);
+		public delegate void GetUserPublisherReadOnlyDataCallback(GetUserDataResult result);
 		public delegate void GetUserReadOnlyDataCallback(GetUserDataResult result);
 		public delegate void GetUserStatisticsCallback(GetUserStatisticsResult result);
 		public delegate void UpdateUserDataCallback(UpdateUserDataResult result);
+		public delegate void UpdateUserPublisherDataCallback(UpdateUserDataResult result);
 		public delegate void UpdateUserStatisticsCallback(UpdateUserStatisticsResult result);
 		public delegate void GetCatalogItemsCallback(GetCatalogItemsResult result);
 		public delegate void GetStoreItemsCallback(GetStoreItemsResult result);
@@ -52,6 +59,7 @@ namespace PlayFab
 		public delegate void PayForPurchaseCallback(PayForPurchaseResult result);
 		public delegate void PurchaseItemCallback(PurchaseItemResult result);
 		public delegate void RedeemCouponCallback(RedeemCouponResult result);
+		public delegate void ReportPlayerCallback(ReportPlayerClientResult result);
 		public delegate void StartPurchaseCallback(StartPurchaseResult result);
 		public delegate void SubtractUserVirtualCurrencyCallback(ModifyUserVirtualCurrencyResult result);
 		public delegate void UnlockContainerItemCallback(UnlockContainerItemResult result);
@@ -60,6 +68,7 @@ namespace PlayFab
 		public delegate void RemoveFriendCallback(RemoveFriendResult result);
 		public delegate void SetFriendTagsCallback(SetFriendTagsResult result);
 		public delegate void RegisterForIOSPushNotificationCallback(RegisterForIOSPushNotificationResult result);
+		public delegate void RestoreIOSPurchasesCallback(RestoreIOSPurchasesResult result);
 		public delegate void ValidateIOSReceiptCallback(ValidateIOSReceiptResult result);
 		public delegate void GetCurrentGamesCallback(CurrentGamesResult result);
 		public delegate void GetGameServerRegionsCallback(GameServerRegionsResult result);
@@ -70,9 +79,11 @@ namespace PlayFab
 		public delegate void LogEventCallback(LogEventResult result);
 		public delegate void AddSharedGroupMembersCallback(AddSharedGroupMembersResult result);
 		public delegate void CreateSharedGroupCallback(CreateSharedGroupResult result);
+		public delegate void GetPublisherDataCallback(GetPublisherDataResult result);
 		public delegate void GetSharedGroupDataCallback(GetSharedGroupDataResult result);
 		public delegate void RemoveSharedGroupMembersCallback(RemoveSharedGroupMembersResult result);
 		public delegate void UpdateSharedGroupDataCallback(UpdateSharedGroupDataResult result);
+		public delegate void RefreshPSNAuthTokenCallback(EmptyResult result);
 		public delegate void GetCloudScriptUrlCallback(GetCloudScriptUrlResult result);
 		public delegate void RunCloudScriptCallback(RunCloudScriptResult result);
 		
@@ -444,6 +455,35 @@ namespace PlayFab
 		}
 		
 		/// <summary>
+		/// Links the Android device identifier to the user's PlayFab account
+		/// </summary>
+		public static void LinkAndroidDeviceID(LinkAndroidDeviceIDRequest request, LinkAndroidDeviceIDCallback resultCallback, ErrorCallback errorCallback)
+		{
+			if (AuthKey == null) throw new Exception ("Must be logged in to call this method");
+
+			string serializedJSON = JsonWriter.Serialize (request, Util.GlobalJsonWriterSettings);
+			PlayFabHTTP.HTTPCallback callback = delegate(string responseStr, string errorStr)
+			{
+				LinkAndroidDeviceIDResult result = null;
+				PlayFabError error = null;
+				ResultContainer<LinkAndroidDeviceIDResult>.HandleResults(responseStr, errorStr, out result, out error);
+				if(error != null && errorCallback != null)
+				{
+					errorCallback(error);
+				}
+				if(result != null)
+				{
+					
+					if(resultCallback != null)
+					{
+						resultCallback(result);
+					}
+				}
+			};
+			PlayFabHTTP.Post(PlayFabSettings.GetURL()+"/Client/LinkAndroidDeviceID", serializedJSON, "X-Authorization", AuthKey, callback);
+		}
+		
+		/// <summary>
 		/// Links the Facebook account associated with the provided Facebook access token to the user's PlayFab account
 		/// </summary>
 		public static void LinkFacebookAccount(LinkFacebookAccountRequest request, LinkFacebookAccountCallback resultCallback, ErrorCallback errorCallback)
@@ -499,6 +539,35 @@ namespace PlayFab
 				}
 			};
 			PlayFabHTTP.Post(PlayFabSettings.GetURL()+"/Client/LinkGameCenterAccount", serializedJSON, "X-Authorization", AuthKey, callback);
+		}
+		
+		/// <summary>
+		/// Links the vendor-specific iOS device identifier to the user's PlayFab account
+		/// </summary>
+		public static void LinkIOSDeviceID(LinkIOSDeviceIDRequest request, LinkIOSDeviceIDCallback resultCallback, ErrorCallback errorCallback)
+		{
+			if (AuthKey == null) throw new Exception ("Must be logged in to call this method");
+
+			string serializedJSON = JsonWriter.Serialize (request, Util.GlobalJsonWriterSettings);
+			PlayFabHTTP.HTTPCallback callback = delegate(string responseStr, string errorStr)
+			{
+				LinkIOSDeviceIDResult result = null;
+				PlayFabError error = null;
+				ResultContainer<LinkIOSDeviceIDResult>.HandleResults(responseStr, errorStr, out result, out error);
+				if(error != null && errorCallback != null)
+				{
+					errorCallback(error);
+				}
+				if(result != null)
+				{
+					
+					if(resultCallback != null)
+					{
+						resultCallback(result);
+					}
+				}
+			};
+			PlayFabHTTP.Post(PlayFabSettings.GetURL()+"/Client/LinkIOSDeviceID", serializedJSON, "X-Authorization", AuthKey, callback);
 		}
 		
 		/// <summary>
@@ -559,6 +628,35 @@ namespace PlayFab
 		}
 		
 		/// <summary>
+		/// Unlinks the related Android device identifier from the user's PlayFab account
+		/// </summary>
+		public static void UnlinkAndroidDeviceID(UnlinkAndroidDeviceIDRequest request, UnlinkAndroidDeviceIDCallback resultCallback, ErrorCallback errorCallback)
+		{
+			if (AuthKey == null) throw new Exception ("Must be logged in to call this method");
+
+			string serializedJSON = JsonWriter.Serialize (request, Util.GlobalJsonWriterSettings);
+			PlayFabHTTP.HTTPCallback callback = delegate(string responseStr, string errorStr)
+			{
+				UnlinkAndroidDeviceIDResult result = null;
+				PlayFabError error = null;
+				ResultContainer<UnlinkAndroidDeviceIDResult>.HandleResults(responseStr, errorStr, out result, out error);
+				if(error != null && errorCallback != null)
+				{
+					errorCallback(error);
+				}
+				if(result != null)
+				{
+					
+					if(resultCallback != null)
+					{
+						resultCallback(result);
+					}
+				}
+			};
+			PlayFabHTTP.Post(PlayFabSettings.GetURL()+"/Client/UnlinkAndroidDeviceID", serializedJSON, "X-Authorization", AuthKey, callback);
+		}
+		
+		/// <summary>
 		/// Unlinks the related Facebook account from the user's PlayFab account
 		/// </summary>
 		public static void UnlinkFacebookAccount(UnlinkFacebookAccountRequest request, UnlinkFacebookAccountCallback resultCallback, ErrorCallback errorCallback)
@@ -614,6 +712,35 @@ namespace PlayFab
 				}
 			};
 			PlayFabHTTP.Post(PlayFabSettings.GetURL()+"/Client/UnlinkGameCenterAccount", serializedJSON, "X-Authorization", AuthKey, callback);
+		}
+		
+		/// <summary>
+		/// Unlinks the related iOS device identifier from the user's PlayFab account
+		/// </summary>
+		public static void UnlinkIOSDeviceID(UnlinkIOSDeviceIDRequest request, UnlinkIOSDeviceIDCallback resultCallback, ErrorCallback errorCallback)
+		{
+			if (AuthKey == null) throw new Exception ("Must be logged in to call this method");
+
+			string serializedJSON = JsonWriter.Serialize (request, Util.GlobalJsonWriterSettings);
+			PlayFabHTTP.HTTPCallback callback = delegate(string responseStr, string errorStr)
+			{
+				UnlinkIOSDeviceIDResult result = null;
+				PlayFabError error = null;
+				ResultContainer<UnlinkIOSDeviceIDResult>.HandleResults(responseStr, errorStr, out result, out error);
+				if(error != null && errorCallback != null)
+				{
+					errorCallback(error);
+				}
+				if(result != null)
+				{
+					
+					if(resultCallback != null)
+					{
+						resultCallback(result);
+					}
+				}
+			};
+			PlayFabHTTP.Post(PlayFabSettings.GetURL()+"/Client/UnlinkIOSDeviceID", serializedJSON, "X-Authorization", AuthKey, callback);
 		}
 		
 		/// <summary>
@@ -849,6 +976,64 @@ namespace PlayFab
 		}
 		
 		/// <summary>
+		/// Retrieves the publisher-specific custom data for the user which is readable and writable by the client
+		/// </summary>
+		public static void GetUserPublisherData(GetUserDataRequest request, GetUserPublisherDataCallback resultCallback, ErrorCallback errorCallback)
+		{
+			if (AuthKey == null) throw new Exception ("Must be logged in to call this method");
+
+			string serializedJSON = JsonWriter.Serialize (request, Util.GlobalJsonWriterSettings);
+			PlayFabHTTP.HTTPCallback callback = delegate(string responseStr, string errorStr)
+			{
+				GetUserDataResult result = null;
+				PlayFabError error = null;
+				ResultContainer<GetUserDataResult>.HandleResults(responseStr, errorStr, out result, out error);
+				if(error != null && errorCallback != null)
+				{
+					errorCallback(error);
+				}
+				if(result != null)
+				{
+					
+					if(resultCallback != null)
+					{
+						resultCallback(result);
+					}
+				}
+			};
+			PlayFabHTTP.Post(PlayFabSettings.GetURL()+"/Client/GetUserPublisherData", serializedJSON, "X-Authorization", AuthKey, callback);
+		}
+		
+		/// <summary>
+		/// Retrieves the publisher-specific custom data for the user which can only be read by the client
+		/// </summary>
+		public static void GetUserPublisherReadOnlyData(GetUserDataRequest request, GetUserPublisherReadOnlyDataCallback resultCallback, ErrorCallback errorCallback)
+		{
+			if (AuthKey == null) throw new Exception ("Must be logged in to call this method");
+
+			string serializedJSON = JsonWriter.Serialize (request, Util.GlobalJsonWriterSettings);
+			PlayFabHTTP.HTTPCallback callback = delegate(string responseStr, string errorStr)
+			{
+				GetUserDataResult result = null;
+				PlayFabError error = null;
+				ResultContainer<GetUserDataResult>.HandleResults(responseStr, errorStr, out result, out error);
+				if(error != null && errorCallback != null)
+				{
+					errorCallback(error);
+				}
+				if(result != null)
+				{
+					
+					if(resultCallback != null)
+					{
+						resultCallback(result);
+					}
+				}
+			};
+			PlayFabHTTP.Post(PlayFabSettings.GetURL()+"/Client/GetUserPublisherReadOnlyData", serializedJSON, "X-Authorization", AuthKey, callback);
+		}
+		
+		/// <summary>
 		/// Retrieves the title-specific custom data for the user which can only be read by the client
 		/// </summary>
 		public static void GetUserReadOnlyData(GetUserDataRequest request, GetUserReadOnlyDataCallback resultCallback, ErrorCallback errorCallback)
@@ -933,6 +1118,35 @@ namespace PlayFab
 				}
 			};
 			PlayFabHTTP.Post(PlayFabSettings.GetURL()+"/Client/UpdateUserData", serializedJSON, "X-Authorization", AuthKey, callback);
+		}
+		
+		/// <summary>
+		/// Creates and updates the publisher-specific custom data for the user which is readable and writable by the client
+		/// </summary>
+		public static void UpdateUserPublisherData(UpdateUserDataRequest request, UpdateUserPublisherDataCallback resultCallback, ErrorCallback errorCallback)
+		{
+			if (AuthKey == null) throw new Exception ("Must be logged in to call this method");
+
+			string serializedJSON = JsonWriter.Serialize (request, Util.GlobalJsonWriterSettings);
+			PlayFabHTTP.HTTPCallback callback = delegate(string responseStr, string errorStr)
+			{
+				UpdateUserDataResult result = null;
+				PlayFabError error = null;
+				ResultContainer<UpdateUserDataResult>.HandleResults(responseStr, errorStr, out result, out error);
+				if(error != null && errorCallback != null)
+				{
+					errorCallback(error);
+				}
+				if(result != null)
+				{
+					
+					if(resultCallback != null)
+					{
+						resultCallback(result);
+					}
+				}
+			};
+			PlayFabHTTP.Post(PlayFabSettings.GetURL()+"/Client/UpdateUserPublisherData", serializedJSON, "X-Authorization", AuthKey, callback);
 		}
 		
 		/// <summary>
@@ -1284,6 +1498,35 @@ namespace PlayFab
 		}
 		
 		/// <summary>
+		/// Report a player
+		/// </summary>
+		public static void ReportPlayer(ReportPlayerClientRequest request, ReportPlayerCallback resultCallback, ErrorCallback errorCallback)
+		{
+			if (AuthKey == null) throw new Exception ("Must be logged in to call this method");
+
+			string serializedJSON = JsonWriter.Serialize (request, Util.GlobalJsonWriterSettings);
+			PlayFabHTTP.HTTPCallback callback = delegate(string responseStr, string errorStr)
+			{
+				ReportPlayerClientResult result = null;
+				PlayFabError error = null;
+				ResultContainer<ReportPlayerClientResult>.HandleResults(responseStr, errorStr, out result, out error);
+				if(error != null && errorCallback != null)
+				{
+					errorCallback(error);
+				}
+				if(result != null)
+				{
+					
+					if(resultCallback != null)
+					{
+						resultCallback(result);
+					}
+				}
+			};
+			PlayFabHTTP.Post(PlayFabSettings.GetURL()+"/Client/ReportPlayer", serializedJSON, "X-Authorization", AuthKey, callback);
+		}
+		
+		/// <summary>
 		/// Creates an order for a list of items from the title catalog
 		/// </summary>
 		public static void StartPurchase(StartPurchaseRequest request, StartPurchaseCallback resultCallback, ErrorCallback errorCallback)
@@ -1516,6 +1759,35 @@ namespace PlayFab
 		}
 		
 		/// <summary>
+		/// Restores all in-app purchases based on the given refresh receipt.
+		/// </summary>
+		public static void RestoreIOSPurchases(RestoreIOSPurchasesRequest request, RestoreIOSPurchasesCallback resultCallback, ErrorCallback errorCallback)
+		{
+			if (AuthKey == null) throw new Exception ("Must be logged in to call this method");
+
+			string serializedJSON = JsonWriter.Serialize (request, Util.GlobalJsonWriterSettings);
+			PlayFabHTTP.HTTPCallback callback = delegate(string responseStr, string errorStr)
+			{
+				RestoreIOSPurchasesResult result = null;
+				PlayFabError error = null;
+				ResultContainer<RestoreIOSPurchasesResult>.HandleResults(responseStr, errorStr, out result, out error);
+				if(error != null && errorCallback != null)
+				{
+					errorCallback(error);
+				}
+				if(result != null)
+				{
+					
+					if(resultCallback != null)
+					{
+						resultCallback(result);
+					}
+				}
+			};
+			PlayFabHTTP.Post(PlayFabSettings.GetURL()+"/Client/RestoreIOSPurchases", serializedJSON, "X-Authorization", AuthKey, callback);
+		}
+		
+		/// <summary>
 		/// Validates with the Apple store that the receipt for an iOS in-app purchase is valid and that it matches the purchased catalog item
 		/// </summary>
 		public static void ValidateIOSReceipt(ValidateIOSReceiptRequest request, ValidateIOSReceiptCallback resultCallback, ErrorCallback errorCallback)
@@ -1549,8 +1821,7 @@ namespace PlayFab
 		/// </summary>
 		public static void GetCurrentGames(CurrentGamesRequest request, GetCurrentGamesCallback resultCallback, ErrorCallback errorCallback)
 		{
-			if (AuthKey == null) throw new Exception ("Must be logged in to call this method");
-
+			
 			string serializedJSON = JsonWriter.Serialize (request, Util.GlobalJsonWriterSettings);
 			PlayFabHTTP.HTTPCallback callback = delegate(string responseStr, string errorStr)
 			{
@@ -1570,7 +1841,7 @@ namespace PlayFab
 					}
 				}
 			};
-			PlayFabHTTP.Post(PlayFabSettings.GetURL()+"/Client/GetCurrentGames", serializedJSON, "X-Authorization", AuthKey, callback);
+			PlayFabHTTP.Post(PlayFabSettings.GetURL()+"/Client/GetCurrentGames", serializedJSON, null, null, callback);
 		}
 		
 		/// <summary>
@@ -1723,8 +1994,7 @@ namespace PlayFab
 		/// </summary>
 		public static void LogEvent(LogEventRequest request, LogEventCallback resultCallback, ErrorCallback errorCallback)
 		{
-			if (AuthKey == null) throw new Exception ("Must be logged in to call this method");
-
+			
 			string serializedJSON = JsonWriter.Serialize (request, Util.GlobalJsonWriterSettings);
 			PlayFabHTTP.HTTPCallback callback = delegate(string responseStr, string errorStr)
 			{
@@ -1744,7 +2014,7 @@ namespace PlayFab
 					}
 				}
 			};
-			PlayFabHTTP.Post(PlayFabSettings.GetURL()+"/Client/LogEvent", serializedJSON, "X-Authorization", AuthKey, callback);
+			PlayFabHTTP.Post(PlayFabSettings.GetURL()+"/Client/LogEvent", serializedJSON, null, null, callback);
 		}
 		
 		/// <summary>
@@ -1803,6 +2073,35 @@ namespace PlayFab
 				}
 			};
 			PlayFabHTTP.Post(PlayFabSettings.GetURL()+"/Client/CreateSharedGroup", serializedJSON, "X-Authorization", AuthKey, callback);
+		}
+		
+		/// <summary>
+		/// Retrieves the key-value store of custom publisher settings
+		/// </summary>
+		public static void GetPublisherData(GetPublisherDataRequest request, GetPublisherDataCallback resultCallback, ErrorCallback errorCallback)
+		{
+			if (AuthKey == null) throw new Exception ("Must be logged in to call this method");
+
+			string serializedJSON = JsonWriter.Serialize (request, Util.GlobalJsonWriterSettings);
+			PlayFabHTTP.HTTPCallback callback = delegate(string responseStr, string errorStr)
+			{
+				GetPublisherDataResult result = null;
+				PlayFabError error = null;
+				ResultContainer<GetPublisherDataResult>.HandleResults(responseStr, errorStr, out result, out error);
+				if(error != null && errorCallback != null)
+				{
+					errorCallback(error);
+				}
+				if(result != null)
+				{
+					
+					if(resultCallback != null)
+					{
+						resultCallback(result);
+					}
+				}
+			};
+			PlayFabHTTP.Post(PlayFabSettings.GetURL()+"/Client/GetPublisherData", serializedJSON, "X-Authorization", AuthKey, callback);
 		}
 		
 		/// <summary>
@@ -1890,6 +2189,35 @@ namespace PlayFab
 				}
 			};
 			PlayFabHTTP.Post(PlayFabSettings.GetURL()+"/Client/UpdateSharedGroupData", serializedJSON, "X-Authorization", AuthKey, callback);
+		}
+		
+		/// <summary>
+		/// Uses the supplied OAuth code to refresh the internally cached player PSN auth token
+		/// </summary>
+		public static void RefreshPSNAuthToken(RefreshPSNAuthTokenRequest request, RefreshPSNAuthTokenCallback resultCallback, ErrorCallback errorCallback)
+		{
+			if (AuthKey == null) throw new Exception ("Must be logged in to call this method");
+
+			string serializedJSON = JsonWriter.Serialize (request, Util.GlobalJsonWriterSettings);
+			PlayFabHTTP.HTTPCallback callback = delegate(string responseStr, string errorStr)
+			{
+				EmptyResult result = null;
+				PlayFabError error = null;
+				ResultContainer<EmptyResult>.HandleResults(responseStr, errorStr, out result, out error);
+				if(error != null && errorCallback != null)
+				{
+					errorCallback(error);
+				}
+				if(result != null)
+				{
+					
+					if(resultCallback != null)
+					{
+						resultCallback(result);
+					}
+				}
+			};
+			PlayFabHTTP.Post(PlayFabSettings.GetURL()+"/Client/RefreshPSNAuthToken", serializedJSON, "X-Authorization", AuthKey, callback);
 		}
 		
 		/// <summary>

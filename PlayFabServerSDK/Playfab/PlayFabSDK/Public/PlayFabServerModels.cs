@@ -176,9 +176,6 @@ namespace PlayFab.ServerModels
 	{
 		
 		
-		/// <summary>
-		/// PlayFab unique identifier of the user who is to be granted the specified Steam achievement
-		/// </summary>
 		
 		public string PlayFabId { get; set;}
 		
@@ -787,9 +784,6 @@ namespace PlayFab.ServerModels
 		
 		public string StatisticName { get; set;}
 		
-		/// <summary>
-		/// PlayFab unique identifier of the user to be centered in the list of entries
-		/// </summary>
 		
 		public string PlayFabId { get; set;}
 		
@@ -928,6 +922,62 @@ namespace PlayFab.ServerModels
 		{
 			
 			Leaderboard = JsonUtil.GetObjectList<PlayerLeaderboardEntry>(json, "Leaderboard");
+		}
+	}
+	
+	
+	
+	public class GetPublisherDataRequest : PlayFabModelBase
+	{
+		
+		
+		/// <summary>
+		///  array of keys to get back data from the Publisher data blob, set by the admin tools
+		/// </summary>
+		
+		public List<string> Keys { get; set;}
+		
+		public override void WriteJson(JsonWriter writer)
+		{
+			writer.Writer.Write(JsonReader.OperatorObjectStart);
+			
+			writer.WriteObjectProperty("Keys", Keys);
+			
+			writer.Writer.Write(JsonReader.OperatorObjectEnd);
+		}
+		
+		public override void Deserialize (Dictionary<string,object> json)
+		{
+			
+			Keys = JsonUtil.GetList<string>(json, "Keys");
+		}
+	}
+	
+	
+	
+	public class GetPublisherDataResult : PlayFabModelBase
+	{
+		
+		
+		/// <summary>
+		/// a dictionary object of key / value pairs
+		/// </summary>
+		
+		public Dictionary<string,string> Data { get; set;}
+		
+		public override void WriteJson(JsonWriter writer)
+		{
+			writer.Writer.Write(JsonReader.OperatorObjectStart);
+			
+			writer.WriteObjectProperty("Data", Data);
+			
+			writer.Writer.Write(JsonReader.OperatorObjectEnd);
+		}
+		
+		public override void Deserialize (Dictionary<string,object> json)
+		{
+			
+			Data = JsonUtil.GetDictionary<string>(json, "Data");
 		}
 	}
 	
@@ -1082,9 +1132,6 @@ namespace PlayFab.ServerModels
 	{
 		
 		
-		/// <summary>
-		/// PlayFab unique identifier of the user whose information is being requested
-		/// </summary>
 		
 		public string PlayFabId { get; set;}
 		
@@ -1884,9 +1931,6 @@ namespace PlayFab.ServerModels
 		
 		public string LobbyId { get; set;}
 		
-		/// <summary>
-		/// PlayFab unique identifier of the user that is leaving the Game Server Instance
-		/// </summary>
 		
 		public string PlayFabId { get; set;}
 		
@@ -2024,12 +2068,6 @@ namespace PlayFab.ServerModels
 		public string Ticket { get; set;}
 		
 		/// <summary>
-		/// IP Address of the Game Server Instance that is asking for validation of the authorization ticket
-		/// </summary>
-		
-		public string IP { get; set;}
-		
-		/// <summary>
 		/// unique identifier of the Game Server Instance that is asking for validation of the authorization ticket
 		/// </summary>
 		
@@ -2043,10 +2081,6 @@ namespace PlayFab.ServerModels
 			
 			writer.Writer.Write(JsonReader.OperatorValueDelim);
 			
-			writer.WriteObjectProperty("IP", IP);
-			
-			writer.Writer.Write(JsonReader.OperatorValueDelim);
-			
 			writer.WriteObjectProperty("LobbyId", LobbyId);
 			
 			writer.Writer.Write(JsonReader.OperatorObjectEnd);
@@ -2056,7 +2090,6 @@ namespace PlayFab.ServerModels
 		{
 			
 			Ticket = (string)JsonUtil.Get<string>(json, "Ticket");
-			IP = (string)JsonUtil.Get<string>(json, "IP");
 			LobbyId = (string)JsonUtil.Get<string>(json, "LobbyId");
 		}
 	}
@@ -2171,6 +2204,100 @@ namespace PlayFab.ServerModels
 	
 	
 	
+	public class ReportPlayerServerRequest : PlayFabModelBase
+	{
+		
+		
+		/// <summary>
+		/// PlayFabId of the reporting player
+		/// </summary>
+		
+		public string ReporterId { get; set;}
+		
+		/// <summary>
+		/// PlayFabId of the reported player
+		/// </summary>
+		
+		public string ReporteeId { get; set;}
+		
+		/// <summary>
+		/// title player was reported in, optional if report not for specific title
+		/// </summary>
+		
+		public string TitleId { get; set;}
+		
+		/// <summary>
+		/// Optional additional comment by reporting player
+		/// </summary>
+		
+		public string Comment { get; set;}
+		
+		public override void WriteJson(JsonWriter writer)
+		{
+			writer.Writer.Write(JsonReader.OperatorObjectStart);
+			
+			writer.WriteObjectProperty("ReporterId", ReporterId);
+			
+			writer.Writer.Write(JsonReader.OperatorValueDelim);
+			
+			writer.WriteObjectProperty("ReporteeId", ReporteeId);
+			
+			writer.Writer.Write(JsonReader.OperatorValueDelim);
+			
+			writer.WriteObjectProperty("TitleId", TitleId);
+			
+			writer.Writer.Write(JsonReader.OperatorValueDelim);
+			
+			writer.WriteObjectProperty("Comment", Comment);
+			
+			writer.Writer.Write(JsonReader.OperatorObjectEnd);
+		}
+		
+		public override void Deserialize (Dictionary<string,object> json)
+		{
+			
+			ReporterId = (string)JsonUtil.Get<string>(json, "ReporterId");
+			ReporteeId = (string)JsonUtil.Get<string>(json, "ReporteeId");
+			TitleId = (string)JsonUtil.Get<string>(json, "TitleId");
+			Comment = (string)JsonUtil.Get<string>(json, "Comment");
+		}
+	}
+	
+	
+	
+	public class ReportPlayerServerResult : PlayFabModelBase
+	{
+		
+		
+		
+		public bool Updated { get; set;}
+		
+		
+		public int SubmissionsRemaining { get; set;}
+		
+		public override void WriteJson(JsonWriter writer)
+		{
+			writer.Writer.Write(JsonReader.OperatorObjectStart);
+			
+			writer.WriteObjectProperty("Updated", Updated);
+			
+			writer.Writer.Write(JsonReader.OperatorValueDelim);
+			
+			writer.WriteObjectProperty("SubmissionsRemaining", SubmissionsRemaining);
+			
+			writer.Writer.Write(JsonReader.OperatorObjectEnd);
+		}
+		
+		public override void Deserialize (Dictionary<string,object> json)
+		{
+			
+			Updated = (bool)JsonUtil.Get<bool?>(json, "Updated");
+			SubmissionsRemaining = (int)JsonUtil.Get<double?>(json, "SubmissionsRemaining");
+		}
+	}
+	
+	
+	
 	public class SendPushNotificationRequest : PlayFabModelBase
 	{
 		
@@ -2229,6 +2356,64 @@ namespace PlayFab.ServerModels
 	
 	
 	
+	public class SetPublisherDataRequest : PlayFabModelBase
+	{
+		
+		
+		/// <summary>
+		/// key we want to set a value on (note, this is additive - will only replace an existing key's value if they are the same name.) Keys are trimmed of whitespace. Keys may not begin with the '!' character.
+		/// </summary>
+		
+		public string Key { get; set;}
+		
+		/// <summary>
+		/// new value to set. Set to null to remove a value
+		/// </summary>
+		
+		public string Value { get; set;}
+		
+		public override void WriteJson(JsonWriter writer)
+		{
+			writer.Writer.Write(JsonReader.OperatorObjectStart);
+			
+			writer.WriteObjectProperty("Key", Key);
+			
+			writer.Writer.Write(JsonReader.OperatorValueDelim);
+			
+			writer.WriteObjectProperty("Value", Value);
+			
+			writer.Writer.Write(JsonReader.OperatorObjectEnd);
+		}
+		
+		public override void Deserialize (Dictionary<string,object> json)
+		{
+			
+			Key = (string)JsonUtil.Get<string>(json, "Key");
+			Value = (string)JsonUtil.Get<string>(json, "Value");
+		}
+	}
+	
+	
+	
+	public class SetPublisherDataResult : PlayFabModelBase
+	{
+		
+		
+		public override void WriteJson(JsonWriter writer)
+		{
+			writer.Writer.Write(JsonReader.OperatorObjectStart);
+			
+			writer.Writer.Write(JsonReader.OperatorObjectEnd);
+		}
+		
+		public override void Deserialize (Dictionary<string,object> json)
+		{
+			
+		}
+	}
+	
+	
+	
 	public class SetTitleDataRequest : PlayFabModelBase
 	{
 		
@@ -2240,7 +2425,7 @@ namespace PlayFab.ServerModels
 		public string Key { get; set;}
 		
 		/// <summary>
-		/// new value to set
+		/// new value to set. Set to null to remove a value
 		/// </summary>
 		
 		public string Value { get; set;}

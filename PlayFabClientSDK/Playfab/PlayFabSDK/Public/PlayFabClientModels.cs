@@ -159,21 +159,12 @@ namespace PlayFab.ClientModels
 	{
 		
 		
-		/// <summary>
-		/// PlayFab username for the account to be signed in (3-24 characters)
-		/// </summary>
 		
 		public string Username { get; set;}
 		
-		/// <summary>
-		/// user email address, used for account password recovery
-		/// </summary>
 		
 		public string Email { get; set;}
 		
-		/// <summary>
-		/// password for the account to be signed in (6-24 characters)
-		/// </summary>
 		
 		public string Password { get; set;}
 		
@@ -1087,6 +1078,25 @@ namespace PlayFab.ClientModels
 	
 	
 	
+	public class EmptyResult : PlayFabModelBase
+	{
+		
+		
+		public override void WriteJson(JsonWriter writer)
+		{
+			writer.Writer.Write(JsonReader.OperatorObjectStart);
+			
+			writer.Writer.Write(JsonReader.OperatorObjectEnd);
+		}
+		
+		public override void Deserialize (Dictionary<string,object> json)
+		{
+			
+		}
+	}
+	
+	
+	
 	public class FacebookPlayFabIdPair : PlayFabModelBase
 	{
 		
@@ -1346,9 +1356,6 @@ namespace PlayFab.ClientModels
 		
 		public string BuildVersion { get; set;}
 		
-		/// <summary>
-		/// unique identifier for the title, found in the Settings > Game Properties section of the PlayFab developer site when a title has been selected
-		/// </summary>
 		
 		public string TitleId { get; set;}
 		
@@ -1520,7 +1527,7 @@ namespace PlayFab.ClientModels
 		
 		
 		/// <summary>
-		/// Server version to use. The most recent production version will be returned if this is left null
+		/// Server version to use. Defaults to 1 if left null
 		/// </summary>
 		
 		public int? Version { get; set;}
@@ -1884,6 +1891,62 @@ namespace PlayFab.ClientModels
 		{
 			
 			Data = JsonUtil.GetObjectList<FacebookPlayFabIdPair>(json, "Data");
+		}
+	}
+	
+	
+	
+	public class GetPublisherDataRequest : PlayFabModelBase
+	{
+		
+		
+		/// <summary>
+		///  array of keys to get back data from the Publisher data blob, set by the admin tools
+		/// </summary>
+		
+		public List<string> Keys { get; set;}
+		
+		public override void WriteJson(JsonWriter writer)
+		{
+			writer.Writer.Write(JsonReader.OperatorObjectStart);
+			
+			writer.WriteObjectProperty("Keys", Keys);
+			
+			writer.Writer.Write(JsonReader.OperatorObjectEnd);
+		}
+		
+		public override void Deserialize (Dictionary<string,object> json)
+		{
+			
+			Keys = JsonUtil.GetList<string>(json, "Keys");
+		}
+	}
+	
+	
+	
+	public class GetPublisherDataResult : PlayFabModelBase
+	{
+		
+		
+		/// <summary>
+		/// a dictionary object of key / value pairs
+		/// </summary>
+		
+		public Dictionary<string,string> Data { get; set;}
+		
+		public override void WriteJson(JsonWriter writer)
+		{
+			writer.Writer.Write(JsonReader.OperatorObjectStart);
+			
+			writer.WriteObjectProperty("Data", Data);
+			
+			writer.Writer.Write(JsonReader.OperatorObjectEnd);
+		}
+		
+		public override void Deserialize (Dictionary<string,object> json)
+		{
+			
+			Data = JsonUtil.GetDictionary<string>(json, "Data");
 		}
 	}
 	
@@ -2686,6 +2749,75 @@ namespace PlayFab.ClientModels
 	
 	
 	
+	public class LinkAndroidDeviceIDRequest : PlayFabModelBase
+	{
+		
+		
+		/// <summary>
+		/// Android device identifier for the user's device
+		/// </summary>
+		
+		public string AndroidDeviceId { get; set;}
+		
+		/// <summary>
+		/// specific Operating System version for the user's device
+		/// </summary>
+		
+		public string OS { get; set;}
+		
+		/// <summary>
+		/// specific model of the user's device
+		/// </summary>
+		
+		public string AndroidDevice { get; set;}
+		
+		public override void WriteJson(JsonWriter writer)
+		{
+			writer.Writer.Write(JsonReader.OperatorObjectStart);
+			
+			writer.WriteObjectProperty("AndroidDeviceId", AndroidDeviceId);
+			
+			writer.Writer.Write(JsonReader.OperatorValueDelim);
+			
+			writer.WriteObjectProperty("OS", OS);
+			
+			writer.Writer.Write(JsonReader.OperatorValueDelim);
+			
+			writer.WriteObjectProperty("AndroidDevice", AndroidDevice);
+			
+			writer.Writer.Write(JsonReader.OperatorObjectEnd);
+		}
+		
+		public override void Deserialize (Dictionary<string,object> json)
+		{
+			
+			AndroidDeviceId = (string)JsonUtil.Get<string>(json, "AndroidDeviceId");
+			OS = (string)JsonUtil.Get<string>(json, "OS");
+			AndroidDevice = (string)JsonUtil.Get<string>(json, "AndroidDevice");
+		}
+	}
+	
+	
+	
+	public class LinkAndroidDeviceIDResult : PlayFabModelBase
+	{
+		
+		
+		public override void WriteJson(JsonWriter writer)
+		{
+			writer.Writer.Write(JsonReader.OperatorObjectStart);
+			
+			writer.Writer.Write(JsonReader.OperatorObjectEnd);
+		}
+		
+		public override void Deserialize (Dictionary<string,object> json)
+		{
+			
+		}
+	}
+	
+	
+	
 	public class LinkFacebookAccountRequest : PlayFabModelBase
 	{
 		
@@ -2762,6 +2894,75 @@ namespace PlayFab.ClientModels
 	
 	
 	public class LinkGameCenterAccountResult : PlayFabModelBase
+	{
+		
+		
+		public override void WriteJson(JsonWriter writer)
+		{
+			writer.Writer.Write(JsonReader.OperatorObjectStart);
+			
+			writer.Writer.Write(JsonReader.OperatorObjectEnd);
+		}
+		
+		public override void Deserialize (Dictionary<string,object> json)
+		{
+			
+		}
+	}
+	
+	
+	
+	public class LinkIOSDeviceIDRequest : PlayFabModelBase
+	{
+		
+		
+		/// <summary>
+		/// vendor-specific iOS identifier for the user's device
+		/// </summary>
+		
+		public string DeviceId { get; set;}
+		
+		/// <summary>
+		/// specific Operating System version for the user's device
+		/// </summary>
+		
+		public string OS { get; set;}
+		
+		/// <summary>
+		/// specific model of the user's device
+		/// </summary>
+		
+		public string DeviceModel { get; set;}
+		
+		public override void WriteJson(JsonWriter writer)
+		{
+			writer.Writer.Write(JsonReader.OperatorObjectStart);
+			
+			writer.WriteObjectProperty("DeviceId", DeviceId);
+			
+			writer.Writer.Write(JsonReader.OperatorValueDelim);
+			
+			writer.WriteObjectProperty("OS", OS);
+			
+			writer.Writer.Write(JsonReader.OperatorValueDelim);
+			
+			writer.WriteObjectProperty("DeviceModel", DeviceModel);
+			
+			writer.Writer.Write(JsonReader.OperatorObjectEnd);
+		}
+		
+		public override void Deserialize (Dictionary<string,object> json)
+		{
+			
+			DeviceId = (string)JsonUtil.Get<string>(json, "DeviceId");
+			OS = (string)JsonUtil.Get<string>(json, "OS");
+			DeviceModel = (string)JsonUtil.Get<string>(json, "DeviceModel");
+		}
+	}
+	
+	
+	
+	public class LinkIOSDeviceIDResult : PlayFabModelBase
 	{
 		
 		
@@ -2939,9 +3140,6 @@ namespace PlayFab.ClientModels
 	{
 		
 		
-		/// <summary>
-		/// unique identifier for the title, found in the Settings > Game Properties section of the PlayFab developer site when a title has been selected
-		/// </summary>
 		
 		public string TitleId { get; set;}
 		
@@ -3011,9 +3209,6 @@ namespace PlayFab.ClientModels
 	{
 		
 		
-		/// <summary>
-		/// unique identifier for the title, found in the Settings > Game Properties section of the PlayFab developer site when a title has been selected
-		/// </summary>
 		
 		public string TitleId { get; set;}
 		
@@ -3061,9 +3256,6 @@ namespace PlayFab.ClientModels
 	{
 		
 		
-		/// <summary>
-		/// unique identifier for the title, found in the Settings > Game Properties section of the PlayFab developer site when a title has been selected
-		/// </summary>
 		
 		public string TitleId { get; set;}
 		
@@ -3111,9 +3303,6 @@ namespace PlayFab.ClientModels
 	{
 		
 		
-		/// <summary>
-		/// unique identifier for the title, found in the Settings > Game Properties section of the PlayFab developer site when a title has been selected
-		/// </summary>
 		
 		public string TitleId { get; set;}
 		
@@ -3161,9 +3350,6 @@ namespace PlayFab.ClientModels
 	{
 		
 		
-		/// <summary>
-		/// unique identifier for the title, found in the Settings > Game Properties section of the PlayFab developer site when a title has been selected
-		/// </summary>
 		
 		public string TitleId { get; set;}
 		
@@ -3233,21 +3419,12 @@ namespace PlayFab.ClientModels
 	{
 		
 		
-		/// <summary>
-		/// unique identifier for the title, found in the Settings > Game Properties section of the PlayFab developer site when a title has been selected
-		/// </summary>
 		
 		public string TitleId { get; set;}
 		
-		/// <summary>
-		/// PlayFab username for the account to be signed in (3-24 characters)
-		/// </summary>
 		
 		public string Username { get; set;}
 		
-		/// <summary>
-		/// password for the account to be signed in (6-24 characters)
-		/// </summary>
 		
 		public string Password { get; set;}
 		
@@ -3283,9 +3460,6 @@ namespace PlayFab.ClientModels
 	{
 		
 		
-		/// <summary>
-		/// unique identifier for the title, found in the Settings > Game Properties section of the PlayFab developer site when a title has been selected
-		/// </summary>
 		
 		public string TitleId { get; set;}
 		
@@ -4092,6 +4266,34 @@ namespace PlayFab.ClientModels
 	
 	
 	
+	public class RefreshPSNAuthTokenRequest : PlayFabModelBase
+	{
+		
+		
+		/// <summary>
+		/// Auth code returned by PSN OAuth system
+		/// </summary>
+		
+		public string AuthCode { get; set;}
+		
+		public override void WriteJson(JsonWriter writer)
+		{
+			writer.Writer.Write(JsonReader.OperatorObjectStart);
+			
+			writer.WriteObjectProperty("AuthCode", AuthCode);
+			
+			writer.Writer.Write(JsonReader.OperatorObjectEnd);
+		}
+		
+		public override void Deserialize (Dictionary<string,object> json)
+		{
+			
+			AuthCode = (string)JsonUtil.Get<string>(json, "AuthCode");
+		}
+	}
+	
+	
+	
 	public enum Region
 	{
 		USCentral,
@@ -4186,7 +4388,7 @@ namespace PlayFab.ClientModels
 		/// Message to display when confirming push notification.
 		/// </summary>
 		
-		public string ConfirmationMessege { get; set;}
+		public string ConfirmationMessage { get; set;}
 		
 		public override void WriteJson(JsonWriter writer)
 		{
@@ -4200,7 +4402,7 @@ namespace PlayFab.ClientModels
 			
 			writer.Writer.Write(JsonReader.OperatorValueDelim);
 			
-			writer.WriteObjectProperty("ConfirmationMessege", ConfirmationMessege);
+			writer.WriteObjectProperty("ConfirmationMessage", ConfirmationMessage);
 			
 			writer.Writer.Write(JsonReader.OperatorObjectEnd);
 		}
@@ -4210,7 +4412,7 @@ namespace PlayFab.ClientModels
 			
 			DeviceToken = (string)JsonUtil.Get<string>(json, "DeviceToken");
 			SendPushNotificationConfirmation = (bool?)JsonUtil.Get<bool?>(json, "SendPushNotificationConfirmation");
-			ConfirmationMessege = (string)JsonUtil.Get<string>(json, "ConfirmationMessege");
+			ConfirmationMessage = (string)JsonUtil.Get<string>(json, "ConfirmationMessage");
 		}
 	}
 	
@@ -4239,27 +4441,15 @@ namespace PlayFab.ClientModels
 	{
 		
 		
-		/// <summary>
-		/// unique identifier for the title, found in the Settings > Game Properties section of the PlayFab developer site when a title has been selected
-		/// </summary>
 		
 		public string TitleId { get; set;}
 		
-		/// <summary>
-		/// PlayFab username for the account to be signed in (3-24 characters)
-		/// </summary>
 		
 		public string Username { get; set;}
 		
-		/// <summary>
-		/// user email address, used for account password recovery
-		/// </summary>
 		
 		public string Email { get; set;}
 		
-		/// <summary>
-		/// password for the account to be signed in (6-24 characters)
-		/// </summary>
 		
 		public string Password { get; set;}
 		
@@ -4462,6 +4652,136 @@ namespace PlayFab.ClientModels
 	
 	
 	
+	public class ReportPlayerClientRequest : PlayFabModelBase
+	{
+		
+		
+		/// <summary>
+		/// PlayFabId of the reported player
+		/// </summary>
+		
+		public string ReporteeId { get; set;}
+		
+		/// <summary>
+		/// title player was reported in, optional if report not for specific title
+		/// </summary>
+		
+		public string TitleId { get; set;}
+		
+		/// <summary>
+		/// Optional additional comment by reporting player
+		/// </summary>
+		
+		public string Comment { get; set;}
+		
+		public override void WriteJson(JsonWriter writer)
+		{
+			writer.Writer.Write(JsonReader.OperatorObjectStart);
+			
+			writer.WriteObjectProperty("ReporteeId", ReporteeId);
+			
+			writer.Writer.Write(JsonReader.OperatorValueDelim);
+			
+			writer.WriteObjectProperty("TitleId", TitleId);
+			
+			writer.Writer.Write(JsonReader.OperatorValueDelim);
+			
+			writer.WriteObjectProperty("Comment", Comment);
+			
+			writer.Writer.Write(JsonReader.OperatorObjectEnd);
+		}
+		
+		public override void Deserialize (Dictionary<string,object> json)
+		{
+			
+			ReporteeId = (string)JsonUtil.Get<string>(json, "ReporteeId");
+			TitleId = (string)JsonUtil.Get<string>(json, "TitleId");
+			Comment = (string)JsonUtil.Get<string>(json, "Comment");
+		}
+	}
+	
+	
+	
+	public class ReportPlayerClientResult : PlayFabModelBase
+	{
+		
+		
+		
+		public bool Updated { get; set;}
+		
+		
+		public int SubmissionsRemaining { get; set;}
+		
+		public override void WriteJson(JsonWriter writer)
+		{
+			writer.Writer.Write(JsonReader.OperatorObjectStart);
+			
+			writer.WriteObjectProperty("Updated", Updated);
+			
+			writer.Writer.Write(JsonReader.OperatorValueDelim);
+			
+			writer.WriteObjectProperty("SubmissionsRemaining", SubmissionsRemaining);
+			
+			writer.Writer.Write(JsonReader.OperatorObjectEnd);
+		}
+		
+		public override void Deserialize (Dictionary<string,object> json)
+		{
+			
+			Updated = (bool)JsonUtil.Get<bool?>(json, "Updated");
+			SubmissionsRemaining = (int)JsonUtil.Get<double?>(json, "SubmissionsRemaining");
+		}
+	}
+	
+	
+	
+	public class RestoreIOSPurchasesRequest : PlayFabModelBase
+	{
+		
+		
+		/// <summary>
+		/// base64 encoded receipt data, passed back by the App Store as a result of a successful purchase
+		/// </summary>
+		
+		public string ReceiptData { get; set;}
+		
+		public override void WriteJson(JsonWriter writer)
+		{
+			writer.Writer.Write(JsonReader.OperatorObjectStart);
+			
+			writer.WriteObjectProperty("ReceiptData", ReceiptData);
+			
+			writer.Writer.Write(JsonReader.OperatorObjectEnd);
+		}
+		
+		public override void Deserialize (Dictionary<string,object> json)
+		{
+			
+			ReceiptData = (string)JsonUtil.Get<string>(json, "ReceiptData");
+		}
+	}
+	
+	
+	
+	public class RestoreIOSPurchasesResult : PlayFabModelBase
+	{
+		
+		
+		public override void WriteJson(JsonWriter writer)
+		{
+			writer.Writer.Write(JsonReader.OperatorObjectStart);
+			
+			writer.Writer.Write(JsonReader.OperatorObjectEnd);
+		}
+		
+		public override void Deserialize (Dictionary<string,object> json)
+		{
+			
+		}
+	}
+	
+	
+	
 	public class RunCloudScriptRequest : PlayFabModelBase
 	{
 		
@@ -4517,6 +4837,24 @@ namespace PlayFab.ClientModels
 		
 		
 		/// <summary>
+		/// id of Cloud Script run
+		/// </summary>
+		
+		public string ActionId { get; set;}
+		
+		/// <summary>
+		/// version of Cloud Script run
+		/// </summary>
+		
+		public int Version { get; set;}
+		
+		/// <summary>
+		/// revision of Cloud Script run
+		/// </summary>
+		
+		public int Revision { get; set;}
+		
+		/// <summary>
 		/// return values from the server action as a dynamic object
 		/// </summary>
 		
@@ -4534,9 +4872,27 @@ namespace PlayFab.ClientModels
 		
 		public string ActionLog { get; set;}
 		
+		/// <summary>
+		/// time this script took to run, in seconds
+		/// </summary>
+		
+		public double ExecutionTime { get; set;}
+		
 		public override void WriteJson(JsonWriter writer)
 		{
 			writer.Writer.Write(JsonReader.OperatorObjectStart);
+			
+			writer.WriteObjectProperty("ActionId", ActionId);
+			
+			writer.Writer.Write(JsonReader.OperatorValueDelim);
+			
+			writer.WriteObjectProperty("Version", Version);
+			
+			writer.Writer.Write(JsonReader.OperatorValueDelim);
+			
+			writer.WriteObjectProperty("Revision", Revision);
+			
+			writer.Writer.Write(JsonReader.OperatorValueDelim);
 			
 			writer.WriteObjectProperty("Results", Results);
 			
@@ -4548,15 +4904,23 @@ namespace PlayFab.ClientModels
 			
 			writer.WriteObjectProperty("ActionLog", ActionLog);
 			
+			writer.Writer.Write(JsonReader.OperatorValueDelim);
+			
+			writer.WriteObjectProperty("ExecutionTime", ExecutionTime);
+			
 			writer.Writer.Write(JsonReader.OperatorObjectEnd);
 		}
 		
 		public override void Deserialize (Dictionary<string,object> json)
 		{
 			
+			ActionId = (string)JsonUtil.Get<string>(json, "ActionId");
+			Version = (int)JsonUtil.Get<double?>(json, "Version");
+			Revision = (int)JsonUtil.Get<double?>(json, "Revision");
 			Results = JsonUtil.GetObjectRaw(json, "Results");
 			ResultsEncoded = (string)JsonUtil.Get<string>(json, "ResultsEncoded");
 			ActionLog = (string)JsonUtil.Get<string>(json, "ActionLog");
+			ExecutionTime = (double)JsonUtil.Get<double?>(json, "ExecutionTime");
 		}
 	}
 	
@@ -4566,15 +4930,9 @@ namespace PlayFab.ClientModels
 	{
 		
 		
-		/// <summary>
-		/// user email address, used for account password recovery
-		/// </summary>
 		
 		public string Email { get; set;}
 		
-		/// <summary>
-		/// unique identifier for the title, found in the Settings > Game Properties section of the PlayFab developer site when a title has been selected
-		/// </summary>
 		
 		public string TitleId { get; set;}
 		
@@ -5201,6 +5559,44 @@ namespace PlayFab.ClientModels
 	
 	
 	
+	public class UnlinkAndroidDeviceIDRequest : PlayFabModelBase
+	{
+		
+		
+		public override void WriteJson(JsonWriter writer)
+		{
+			writer.Writer.Write(JsonReader.OperatorObjectStart);
+			
+			writer.Writer.Write(JsonReader.OperatorObjectEnd);
+		}
+		
+		public override void Deserialize (Dictionary<string,object> json)
+		{
+			
+		}
+	}
+	
+	
+	
+	public class UnlinkAndroidDeviceIDResult : PlayFabModelBase
+	{
+		
+		
+		public override void WriteJson(JsonWriter writer)
+		{
+			writer.Writer.Write(JsonReader.OperatorObjectStart);
+			
+			writer.Writer.Write(JsonReader.OperatorObjectEnd);
+		}
+		
+		public override void Deserialize (Dictionary<string,object> json)
+		{
+			
+		}
+	}
+	
+	
+	
 	public class UnlinkFacebookAccountRequest : PlayFabModelBase
 	{
 		
@@ -5259,6 +5655,44 @@ namespace PlayFab.ClientModels
 	
 	
 	public class UnlinkGameCenterAccountResult : PlayFabModelBase
+	{
+		
+		
+		public override void WriteJson(JsonWriter writer)
+		{
+			writer.Writer.Write(JsonReader.OperatorObjectStart);
+			
+			writer.Writer.Write(JsonReader.OperatorObjectEnd);
+		}
+		
+		public override void Deserialize (Dictionary<string,object> json)
+		{
+			
+		}
+	}
+	
+	
+	
+	public class UnlinkIOSDeviceIDRequest : PlayFabModelBase
+	{
+		
+		
+		public override void WriteJson(JsonWriter writer)
+		{
+			writer.Writer.Write(JsonReader.OperatorObjectStart);
+			
+			writer.Writer.Write(JsonReader.OperatorObjectEnd);
+		}
+		
+		public override void Deserialize (Dictionary<string,object> json)
+		{
+			
+		}
+	}
+	
+	
+	
+	public class UnlinkIOSDeviceIDResult : PlayFabModelBase
 	{
 		
 		
@@ -5419,9 +5853,6 @@ namespace PlayFab.ClientModels
 	{
 		
 		
-		/// <summary>
-		/// user email address, used for account password recovery
-		/// </summary>
 		
 		public string Email { get; set;}
 		
@@ -5466,9 +5897,6 @@ namespace PlayFab.ClientModels
 	{
 		
 		
-		/// <summary>
-		/// password for the account to be signed in (6-24 characters)
-		/// </summary>
 		
 		public string Password { get; set;}
 		
