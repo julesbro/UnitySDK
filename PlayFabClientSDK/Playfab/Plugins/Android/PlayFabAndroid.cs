@@ -31,7 +31,7 @@ namespace PlayFab
 			PushMessageClass.CallStatic ("unregister");
 		}
 
-		public static bool isRegistered(string senderIds)
+		public static bool isRegistered()
 		{
 			return PushMessageClass.CallStatic<bool>("isRegistered");
 		}
@@ -85,7 +85,7 @@ namespace PlayFab
 
 		}
 		
-		public static bool isRegistered(string senderIds)
+		public static bool isRegistered()
 		{
 			return false;
 		}
