@@ -48,12 +48,12 @@ namespace PlayFab
 
 #if PLAYFAB_ANDROID_PLUGIN
 
-		bool isPlayServicesAvailable()
+		public static bool isPlayServicesAvailable()
 		{
 			return PlayServicesUtils.CallStatic<bool> ("isPlayServicesAvailable");
 		}
 #else
-		bool isPlayServicesAvailable()
+		public static bool isPlayServicesAvailable()
 		{
 			return false;
 		}
