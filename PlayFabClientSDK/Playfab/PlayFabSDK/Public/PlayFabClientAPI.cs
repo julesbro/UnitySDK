@@ -35,7 +35,6 @@ namespace PlayFab
 		public delegate void UnlinkIOSDeviceIDCallback(UnlinkIOSDeviceIDResult result);
 		public delegate void UnlinkSteamAccountCallback(UnlinkSteamAccountResult result);
 		public delegate void UpdateEmailAddressCallback(UpdateEmailAddressResult result);
-		public delegate void UpdatePasswordCallback(UpdatePasswordResult result);
 		public delegate void UpdateUserTitleDisplayNameCallback(UpdateUserTitleDisplayNameResult result);
 		public delegate void GetFriendLeaderboardCallback(GetLeaderboardResult result);
 		public delegate void GetLeaderboardCallback(GetLeaderboardResult result);
@@ -799,35 +798,6 @@ namespace PlayFab
 				}
 			};
 			PlayFabHTTP.Post(PlayFabSettings.GetURL()+"/Client/UpdateEmailAddress", serializedJSON, "X-Authorization", AuthKey, callback);
-		}
-		
-		/// <summary>
-		/// Updates the local user's password in PlayFab
-		/// </summary>
-		public static void UpdatePassword(UpdatePasswordRequest request, UpdatePasswordCallback resultCallback, ErrorCallback errorCallback)
-		{
-			if (AuthKey == null) throw new Exception ("Must be logged in to call this method");
-
-			string serializedJSON = JsonWriter.Serialize (request, Util.GlobalJsonWriterSettings);
-			PlayFabHTTP.HTTPCallback callback = delegate(string responseStr, string errorStr)
-			{
-				UpdatePasswordResult result = null;
-				PlayFabError error = null;
-				ResultContainer<UpdatePasswordResult>.HandleResults(responseStr, errorStr, out result, out error);
-				if(error != null && errorCallback != null)
-				{
-					errorCallback(error);
-				}
-				if(result != null)
-				{
-					
-					if(resultCallback != null)
-					{
-						resultCallback(result);
-					}
-				}
-			};
-			PlayFabHTTP.Post(PlayFabSettings.GetURL()+"/Client/UpdatePassword", serializedJSON, "X-Authorization", AuthKey, callback);
 		}
 		
 		/// <summary>
@@ -1821,7 +1791,8 @@ namespace PlayFab
 		/// </summary>
 		public static void GetCurrentGames(CurrentGamesRequest request, GetCurrentGamesCallback resultCallback, ErrorCallback errorCallback)
 		{
-			
+			if (AuthKey == null) throw new Exception ("Must be logged in to call this method");
+
 			string serializedJSON = JsonWriter.Serialize (request, Util.GlobalJsonWriterSettings);
 			PlayFabHTTP.HTTPCallback callback = delegate(string responseStr, string errorStr)
 			{
@@ -1841,7 +1812,7 @@ namespace PlayFab
 					}
 				}
 			};
-			PlayFabHTTP.Post(PlayFabSettings.GetURL()+"/Client/GetCurrentGames", serializedJSON, null, null, callback);
+			PlayFabHTTP.Post(PlayFabSettings.GetURL()+"/Client/GetCurrentGames", serializedJSON, "X-Authorization", AuthKey, callback);
 		}
 		
 		/// <summary>
@@ -2221,7 +2192,7 @@ namespace PlayFab
 		}
 		
 		/// <summary>
-		/// Gets the title-specific url for Cloud Script servers. Must be called before making any calls to RunCloudScript.
+		/// Retrieves the title-specific URL for Cloud Script servers. This must be queried once, prior  to making any calls to RunCloudScript.
 		/// </summary>
 		public static void GetCloudScriptUrl(GetCloudScriptUrlRequest request, GetCloudScriptUrlCallback resultCallback, ErrorCallback errorCallback)
 		{
@@ -2251,7 +2222,7 @@ namespace PlayFab
 		}
 		
 		/// <summary>
-		/// Triggers a particular server action
+		/// Triggers a particular server action, passing the provided inputs to the hosted Cloud Script. An action in this context is a handler in the JavaScript.
 		/// </summary>
 		public static void RunCloudScript(RunCloudScriptRequest request, RunCloudScriptCallback resultCallback, ErrorCallback errorCallback)
 		{

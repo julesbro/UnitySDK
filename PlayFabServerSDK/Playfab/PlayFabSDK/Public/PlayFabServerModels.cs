@@ -2314,6 +2314,12 @@ namespace PlayFab.ServerModels
 		
 		public string Message { get; set;}
 		
+		/// <summary>
+		/// subject of message to send (may not be displayed in all platforms
+		/// </summary>
+		
+		public string Subject { get; set;}
+		
 		public override void WriteJson(JsonWriter writer)
 		{
 			writer.Writer.Write(JsonReader.OperatorObjectStart);
@@ -2324,6 +2330,10 @@ namespace PlayFab.ServerModels
 			
 			writer.WriteObjectProperty("Message", Message);
 			
+			writer.Writer.Write(JsonReader.OperatorValueDelim);
+			
+			writer.WriteObjectProperty("Subject", Subject);
+			
 			writer.Writer.Write(JsonReader.OperatorObjectEnd);
 		}
 		
@@ -2332,6 +2342,7 @@ namespace PlayFab.ServerModels
 			
 			Recipient = (string)JsonUtil.Get<string>(json, "Recipient");
 			Message = (string)JsonUtil.Get<string>(json, "Message");
+			Subject = (string)JsonUtil.Get<string>(json, "Subject");
 		}
 	}
 	
@@ -3002,31 +3013,11 @@ namespace PlayFab.ServerModels
 		
 		public string FacebookId { get; set;}
 		
-		/// <summary>
-		/// Facebook username
-		/// </summary>
-		
-		public string FacebookUsername { get; set;}
-		
-		/// <summary>
-		/// Facebook display name
-		/// </summary>
-		
-		public string FacebookDisplayname { get; set;}
-		
 		public override void WriteJson(JsonWriter writer)
 		{
 			writer.Writer.Write(JsonReader.OperatorObjectStart);
 			
 			writer.WriteObjectProperty("FacebookId", FacebookId);
-			
-			writer.Writer.Write(JsonReader.OperatorValueDelim);
-			
-			writer.WriteObjectProperty("FacebookUsername", FacebookUsername);
-			
-			writer.Writer.Write(JsonReader.OperatorValueDelim);
-			
-			writer.WriteObjectProperty("FacebookDisplayname", FacebookDisplayname);
 			
 			writer.Writer.Write(JsonReader.OperatorObjectEnd);
 		}
@@ -3035,8 +3026,6 @@ namespace PlayFab.ServerModels
 		{
 			
 			FacebookId = (string)JsonUtil.Get<string>(json, "FacebookId");
-			FacebookUsername = (string)JsonUtil.Get<string>(json, "FacebookUsername");
-			FacebookDisplayname = (string)JsonUtil.Get<string>(json, "FacebookDisplayname");
 		}
 	}
 	

@@ -706,6 +706,95 @@ namespace PlayFab.AdminModels
 	
 	
 	
+	public class CloudScriptFile : PlayFabModelBase
+	{
+		
+		
+		/// <summary>
+		/// Name of the javascript file. These names are not used internally by the server, they are only for developer organizational purposes.
+		/// </summary>
+		
+		public string Filename { get; set;}
+		
+		/// <summary>
+		/// Contents of the Cloud Script javascript. Must be string-escaped javascript.
+		/// </summary>
+		
+		public string FileContents { get; set;}
+		
+		public override void WriteJson(JsonWriter writer)
+		{
+			writer.Writer.Write(JsonReader.OperatorObjectStart);
+			
+			writer.WriteObjectProperty("Filename", Filename);
+			
+			writer.Writer.Write(JsonReader.OperatorValueDelim);
+			
+			writer.WriteObjectProperty("FileContents", FileContents);
+			
+			writer.Writer.Write(JsonReader.OperatorObjectEnd);
+		}
+		
+		public override void Deserialize (Dictionary<string,object> json)
+		{
+			
+			Filename = (string)JsonUtil.Get<string>(json, "Filename");
+			FileContents = (string)JsonUtil.Get<string>(json, "FileContents");
+		}
+	}
+	
+	
+	
+	public class CloudScriptVersionStatus : PlayFabModelBase
+	{
+		
+		
+		/// <summary>
+		/// Version number
+		/// </summary>
+		
+		public int Version { get; set;}
+		
+		/// <summary>
+		/// Published code revision for this Cloud Script version
+		/// </summary>
+		
+		public int PublishedRevision { get; set;}
+		
+		/// <summary>
+		/// Most recent revision for this Cloud Script version
+		/// </summary>
+		
+		public int LatestRevision { get; set;}
+		
+		public override void WriteJson(JsonWriter writer)
+		{
+			writer.Writer.Write(JsonReader.OperatorObjectStart);
+			
+			writer.WriteObjectProperty("Version", Version);
+			
+			writer.Writer.Write(JsonReader.OperatorValueDelim);
+			
+			writer.WriteObjectProperty("PublishedRevision", PublishedRevision);
+			
+			writer.Writer.Write(JsonReader.OperatorValueDelim);
+			
+			writer.WriteObjectProperty("LatestRevision", LatestRevision);
+			
+			writer.Writer.Write(JsonReader.OperatorObjectEnd);
+		}
+		
+		public override void Deserialize (Dictionary<string,object> json)
+		{
+			
+			Version = (int)JsonUtil.Get<double?>(json, "Version");
+			PublishedRevision = (int)JsonUtil.Get<double?>(json, "PublishedRevision");
+			LatestRevision = (int)JsonUtil.Get<double?>(json, "LatestRevision");
+		}
+	}
+	
+	
+	
 	public enum Currency
 	{
 		USD,
@@ -831,6 +920,164 @@ namespace PlayFab.AdminModels
 		{
 			
 			Catalog = JsonUtil.GetObjectList<CatalogItem>(json, "Catalog");
+		}
+	}
+	
+	
+	
+	public class GetCloudScriptRevisionRequest : PlayFabModelBase
+	{
+		
+		
+		/// <summary>
+		/// Version number. If left null, defaults to the latest version
+		/// </summary>
+		
+		public int? Version { get; set;}
+		
+		/// <summary>
+		/// Revision number. If left null, defaults to the latest revision
+		/// </summary>
+		
+		public int? Revision { get; set;}
+		
+		public override void WriteJson(JsonWriter writer)
+		{
+			writer.Writer.Write(JsonReader.OperatorObjectStart);
+			
+			writer.WriteObjectProperty("Version", Version);
+			
+			writer.Writer.Write(JsonReader.OperatorValueDelim);
+			
+			writer.WriteObjectProperty("Revision", Revision);
+			
+			writer.Writer.Write(JsonReader.OperatorObjectEnd);
+		}
+		
+		public override void Deserialize (Dictionary<string,object> json)
+		{
+			
+			Version = (int?)JsonUtil.Get<double?>(json, "Version");
+			Revision = (int?)JsonUtil.Get<double?>(json, "Revision");
+		}
+	}
+	
+	
+	
+	public class GetCloudScriptRevisionResult : PlayFabModelBase
+	{
+		
+		
+		/// <summary>
+		/// Version number.
+		/// </summary>
+		
+		public int Version { get; set;}
+		
+		/// <summary>
+		/// Revision number.
+		/// </summary>
+		
+		public int Revision { get; set;}
+		
+		/// <summary>
+		/// Time this revision was created
+		/// </summary>
+		
+		public DateTime CreatedAt { get; set;}
+		
+		/// <summary>
+		/// List of Cloud Script files in this revision.
+		/// </summary>
+		
+		public List<CloudScriptFile> Files { get; set;}
+		
+		/// <summary>
+		/// True if this is the currently published revision
+		/// </summary>
+		
+		public bool IsPublished { get; set;}
+		
+		public override void WriteJson(JsonWriter writer)
+		{
+			writer.Writer.Write(JsonReader.OperatorObjectStart);
+			
+			writer.WriteObjectProperty("Version", Version);
+			
+			writer.Writer.Write(JsonReader.OperatorValueDelim);
+			
+			writer.WriteObjectProperty("Revision", Revision);
+			
+			writer.Writer.Write(JsonReader.OperatorValueDelim);
+			
+			writer.WriteObjectProperty("CreatedAt", CreatedAt);
+			
+			writer.Writer.Write(JsonReader.OperatorValueDelim);
+			
+			writer.WriteObjectProperty("Files", Files);
+			
+			writer.Writer.Write(JsonReader.OperatorValueDelim);
+			
+			writer.WriteObjectProperty("IsPublished", IsPublished);
+			
+			writer.Writer.Write(JsonReader.OperatorObjectEnd);
+		}
+		
+		public override void Deserialize (Dictionary<string,object> json)
+		{
+			
+			Version = (int)JsonUtil.Get<double?>(json, "Version");
+			Revision = (int)JsonUtil.Get<double?>(json, "Revision");
+			CreatedAt = (DateTime)JsonUtil.GetDateTime(json, "CreatedAt");
+			Files = JsonUtil.GetObjectList<CloudScriptFile>(json, "Files");
+			IsPublished = (bool)JsonUtil.Get<bool?>(json, "IsPublished");
+		}
+	}
+	
+	
+	
+	public class GetCloudScriptVersionsRequest : PlayFabModelBase
+	{
+		
+		
+		public override void WriteJson(JsonWriter writer)
+		{
+			writer.Writer.Write(JsonReader.OperatorObjectStart);
+			
+			writer.Writer.Write(JsonReader.OperatorObjectEnd);
+		}
+		
+		public override void Deserialize (Dictionary<string,object> json)
+		{
+			
+		}
+	}
+	
+	
+	
+	public class GetCloudScriptVersionsResult : PlayFabModelBase
+	{
+		
+		
+		/// <summary>
+		/// List of versions
+		/// </summary>
+		
+		public List<CloudScriptVersionStatus> Versions { get; set;}
+		
+		public override void WriteJson(JsonWriter writer)
+		{
+			writer.Writer.Write(JsonReader.OperatorObjectStart);
+			
+			writer.WriteObjectProperty("Versions", Versions);
+			
+			writer.Writer.Write(JsonReader.OperatorObjectEnd);
+		}
+		
+		public override void Deserialize (Dictionary<string,object> json)
+		{
+			
+			Versions = JsonUtil.GetObjectList<CloudScriptVersionStatus>(json, "Versions");
 		}
 	}
 	
@@ -2825,6 +3072,64 @@ namespace PlayFab.AdminModels
 	
 	
 	
+	public class SetPublishedRevisionRequest : PlayFabModelBase
+	{
+		
+		
+		/// <summary>
+		/// Version number
+		/// </summary>
+		
+		public int Version { get; set;}
+		
+		/// <summary>
+		/// Revision to make the current published revision
+		/// </summary>
+		
+		public int Revision { get; set;}
+		
+		public override void WriteJson(JsonWriter writer)
+		{
+			writer.Writer.Write(JsonReader.OperatorObjectStart);
+			
+			writer.WriteObjectProperty("Version", Version);
+			
+			writer.Writer.Write(JsonReader.OperatorValueDelim);
+			
+			writer.WriteObjectProperty("Revision", Revision);
+			
+			writer.Writer.Write(JsonReader.OperatorObjectEnd);
+		}
+		
+		public override void Deserialize (Dictionary<string,object> json)
+		{
+			
+			Version = (int)JsonUtil.Get<double?>(json, "Version");
+			Revision = (int)JsonUtil.Get<double?>(json, "Revision");
+		}
+	}
+	
+	
+	
+	public class SetPublishedRevisionResult : PlayFabModelBase
+	{
+		
+		
+		public override void WriteJson(JsonWriter writer)
+		{
+			writer.Writer.Write(JsonReader.OperatorObjectStart);
+			
+			writer.Writer.Write(JsonReader.OperatorObjectEnd);
+		}
+		
+		public override void Deserialize (Dictionary<string,object> json)
+		{
+			
+		}
+	}
+	
+	
+	
 	public class SetPublisherDataRequest : PlayFabModelBase
 	{
 		
@@ -3219,6 +3524,84 @@ namespace PlayFab.AdminModels
 		public override void Deserialize (Dictionary<string,object> json)
 		{
 			
+		}
+	}
+	
+	
+	
+	public class UpdateCloudScriptRequest : PlayFabModelBase
+	{
+		
+		
+		/// <summary>
+		/// Cloud Script version to update. If null, defaults to most recent version
+		/// </summary>
+		
+		public int? Version { get; set;}
+		
+		/// <summary>
+		/// List of Cloud Script files to upload to create the new revision. Must have at least one file.
+		/// </summary>
+		
+		public List<CloudScriptFile> Files { get; set;}
+		
+		public override void WriteJson(JsonWriter writer)
+		{
+			writer.Writer.Write(JsonReader.OperatorObjectStart);
+			
+			writer.WriteObjectProperty("Version", Version);
+			
+			writer.Writer.Write(JsonReader.OperatorValueDelim);
+			
+			writer.WriteObjectProperty("Files", Files);
+			
+			writer.Writer.Write(JsonReader.OperatorObjectEnd);
+		}
+		
+		public override void Deserialize (Dictionary<string,object> json)
+		{
+			
+			Version = (int?)JsonUtil.Get<double?>(json, "Version");
+			Files = JsonUtil.GetObjectList<CloudScriptFile>(json, "Files");
+		}
+	}
+	
+	
+	
+	public class UpdateCloudScriptResult : PlayFabModelBase
+	{
+		
+		
+		/// <summary>
+		/// Cloud Script version updated
+		/// </summary>
+		
+		public int Version { get; set;}
+		
+		/// <summary>
+		/// New revision number created
+		/// </summary>
+		
+		public int Revision { get; set;}
+		
+		public override void WriteJson(JsonWriter writer)
+		{
+			writer.Writer.Write(JsonReader.OperatorObjectStart);
+			
+			writer.WriteObjectProperty("Version", Version);
+			
+			writer.Writer.Write(JsonReader.OperatorValueDelim);
+			
+			writer.WriteObjectProperty("Revision", Revision);
+			
+			writer.Writer.Write(JsonReader.OperatorObjectEnd);
+		}
+		
+		public override void Deserialize (Dictionary<string,object> json)
+		{
+			
+			Version = (int)JsonUtil.Get<double?>(json, "Version");
+			Revision = (int)JsonUtil.Get<double?>(json, "Revision");
 		}
 	}
 	
@@ -3713,31 +4096,11 @@ namespace PlayFab.AdminModels
 		
 		public string FacebookId { get; set;}
 		
-		/// <summary>
-		/// Facebook username
-		/// </summary>
-		
-		public string FacebookUsername { get; set;}
-		
-		/// <summary>
-		/// Facebook display name
-		/// </summary>
-		
-		public string FacebookDisplayname { get; set;}
-		
 		public override void WriteJson(JsonWriter writer)
 		{
 			writer.Writer.Write(JsonReader.OperatorObjectStart);
 			
 			writer.WriteObjectProperty("FacebookId", FacebookId);
-			
-			writer.Writer.Write(JsonReader.OperatorValueDelim);
-			
-			writer.WriteObjectProperty("FacebookUsername", FacebookUsername);
-			
-			writer.Writer.Write(JsonReader.OperatorValueDelim);
-			
-			writer.WriteObjectProperty("FacebookDisplayname", FacebookDisplayname);
 			
 			writer.Writer.Write(JsonReader.OperatorObjectEnd);
 		}
@@ -3746,8 +4109,6 @@ namespace PlayFab.AdminModels
 		{
 			
 			FacebookId = (string)JsonUtil.Get<string>(json, "FacebookId");
-			FacebookUsername = (string)JsonUtil.Get<string>(json, "FacebookUsername");
-			FacebookDisplayname = (string)JsonUtil.Get<string>(json, "FacebookDisplayname");
 		}
 	}
 	
