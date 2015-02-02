@@ -1985,7 +1985,7 @@ namespace PlayFab
 					}
 				}
 			};
-			PlayFabHTTP.Post(PlayFabSettings.GetURL()+"/Client/LogEvent", serializedJSON, null, null, callback);
+            PlayFabHTTP.Post(PlayFabSettings.GetURL() + "/Client/LogEvent", serializedJSON, "X-Authorization", AuthKey, callback);
 		}
 		
 		/// <summary>
