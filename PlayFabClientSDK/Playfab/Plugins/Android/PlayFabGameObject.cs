@@ -17,7 +17,7 @@ namespace PlayFab
 
 		public void GCMMessageReceived(string message)
 		{
-
+			PlayFabGoogleCloudMessaging.messageReceived (message);
 		}
 	}
 

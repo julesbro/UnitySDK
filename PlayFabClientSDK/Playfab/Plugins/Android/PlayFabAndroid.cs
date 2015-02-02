@@ -63,8 +63,20 @@ namespace PlayFab
 	public class PlayFabGoogleCloudMessaging
 	{
 		public delegate void GCMRegisterComplete(string id, string error);
+		public delegate void GCMMessageReceived(string message);
 
 		private static GCMRegisterComplete RegistrationCallback;
+		private static GCMMessageReceived MessageCallbackEvent;
+
+		public static void addMessageListener (GCMMessageReceived listener)
+		{
+			MessageCallbackEvent += listener;
+		}
+
+		public static void removeMessageListener (GCMMessageReceived listener)
+		{
+			MessageCallbackEvent -= listener;
+		}
 
 #if PLAYFAB_ANDROID_PLUGIN
 
@@ -95,6 +107,20 @@ namespace PlayFab
 			return PlayFabGCMClass.CallStatic<string> ("getRegistrationId");
 		}
 
+		public static void unregister()
+		{
+			PlayFabGCMClass.CallStatic ("unregister");
+		}
+
+		public static void cancelAllNotifications()
+		{
+			PlayFabGCMClass.CallStatic ("cancelAllNotifications");
+		}
+
+		public static void cancelNotification(int id)
+		{
+			PlayFabGCMClass.CallStatic ("cancelNotification", new object[] {id});
+		}
 
 	#else
 
@@ -118,6 +144,20 @@ namespace PlayFab
 			return null;
 		}
 
+		public static void unregister()
+		{
+		}
+
+		public static void cancelAllNotifications()
+		{
+
+		}
+		
+		public static void cancelNotification(int id)
+		{
+
+		}
+
 	#endif
 		internal static void registrationComplete(string id, string error)
 		{
@@ -127,5 +167,14 @@ namespace PlayFab
 			RegistrationCallback (id, error);
 			RegistrationCallback = null;
 		}
+
+		internal static void messageReceived(string message)
+		{
+			if (MessageCallbackEvent == null)
+				return;
+
+			MessageCallbackEvent(message);
+		}
+
 	}
 }

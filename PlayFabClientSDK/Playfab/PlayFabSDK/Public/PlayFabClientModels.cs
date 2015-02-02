@@ -2759,6 +2759,9 @@ namespace PlayFab.ClientModels
 		
 		public string AndroidDeviceId { get; set;}
 		
+		
+		public string PublisherId { get; set;}
+		
 		/// <summary>
 		/// specific Operating System version for the user's device
 		/// </summary>
@@ -2779,6 +2782,10 @@ namespace PlayFab.ClientModels
 			
 			writer.Writer.Write(JsonReader.OperatorValueDelim);
 			
+			writer.WriteObjectProperty("PublisherId", PublisherId);
+			
+			writer.Writer.Write(JsonReader.OperatorValueDelim);
+			
 			writer.WriteObjectProperty("OS", OS);
 			
 			writer.Writer.Write(JsonReader.OperatorValueDelim);
@@ -2792,6 +2799,7 @@ namespace PlayFab.ClientModels
 		{
 			
 			AndroidDeviceId = (string)JsonUtil.Get<string>(json, "AndroidDeviceId");
+			PublisherId = (string)JsonUtil.Get<string>(json, "PublisherId");
 			OS = (string)JsonUtil.Get<string>(json, "OS");
 			AndroidDevice = (string)JsonUtil.Get<string>(json, "AndroidDevice");
 		}
@@ -3143,6 +3151,9 @@ namespace PlayFab.ClientModels
 		
 		public string TitleId { get; set;}
 		
+		
+		public string PublisherId { get; set;}
+		
 		/// <summary>
 		/// Android device identifier for the user's device
 		/// </summary>
@@ -3175,6 +3186,10 @@ namespace PlayFab.ClientModels
 			
 			writer.Writer.Write(JsonReader.OperatorValueDelim);
 			
+			writer.WriteObjectProperty("PublisherId", PublisherId);
+			
+			writer.Writer.Write(JsonReader.OperatorValueDelim);
+			
 			writer.WriteObjectProperty("AndroidDeviceId", AndroidDeviceId);
 			
 			writer.Writer.Write(JsonReader.OperatorValueDelim);
@@ -3196,6 +3211,7 @@ namespace PlayFab.ClientModels
 		{
 			
 			TitleId = (string)JsonUtil.Get<string>(json, "TitleId");
+			PublisherId = (string)JsonUtil.Get<string>(json, "PublisherId");
 			AndroidDeviceId = (string)JsonUtil.Get<string>(json, "AndroidDeviceId");
 			OS = (string)JsonUtil.Get<string>(json, "OS");
 			AndroidDevice = (string)JsonUtil.Get<string>(json, "AndroidDevice");
@@ -3377,6 +3393,9 @@ namespace PlayFab.ClientModels
 		
 		public bool? CreateAccount { get; set;}
 		
+		
+		public string PublisherId { get; set;}
+		
 		public override void WriteJson(JsonWriter writer)
 		{
 			writer.Writer.Write(JsonReader.OperatorObjectStart);
@@ -3399,6 +3418,10 @@ namespace PlayFab.ClientModels
 			
 			writer.WriteObjectProperty("CreateAccount", CreateAccount);
 			
+			writer.Writer.Write(JsonReader.OperatorValueDelim);
+			
+			writer.WriteObjectProperty("PublisherId", PublisherId);
+			
 			writer.Writer.Write(JsonReader.OperatorObjectEnd);
 		}
 		
@@ -3410,6 +3433,7 @@ namespace PlayFab.ClientModels
 			OS = (string)JsonUtil.Get<string>(json, "OS");
 			DeviceModel = (string)JsonUtil.Get<string>(json, "DeviceModel");
 			CreateAccount = (bool?)JsonUtil.Get<bool?>(json, "CreateAccount");
+			PublisherId = (string)JsonUtil.Get<string>(json, "PublisherId");
 		}
 	}
 	

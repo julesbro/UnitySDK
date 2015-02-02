@@ -15,6 +15,7 @@ public class AndroidPlugin {
 	static final String TAG = "PlayFabUnityAndroidPlugin";
 	
 	public static final String PROPERTY_APP_VERSION = "_PlayFab_appVersion";
+	public static final String PROPERTY_NOTIFICATION_ID = "_PlayFab_notificationId";
 	public static int APP_ICON=0;
 	
 	public static void init()
@@ -23,6 +24,8 @@ public class AndroidPlugin {
 		Resources res = context.getResources();
 		APP_ICON = res.getIdentifier("app_icon", "drawable", context.getPackageName());
 		Log.i(AndroidPlugin.TAG, "Initialized with app icon: " + APP_ICON);
+		
+		GoogleCloudMessaging.init();
 	}
 	
 	/**
@@ -34,6 +37,17 @@ public class AndroidPlugin {
 		Activity unityActivity = UnityPlayer.currentActivity;
 	    return unityActivity.getSharedPreferences("PlayFabUnityPluginPrefs",
 	            Context.MODE_PRIVATE);
+	}
+	
+	public static synchronized int getNotificationId()
+	{
+		SharedPreferences prefs = getPluginPreferences();
+		int id = prefs.getInt(PROPERTY_NOTIFICATION_ID, 1);
+		int nextId = id+1;
+		SharedPreferences.Editor editor = prefs.edit();
+	    editor.putInt(AndroidPlugin.PROPERTY_NOTIFICATION_ID, nextId);
+	    editor.commit();
+		return id;
 	}
 	
 	/**

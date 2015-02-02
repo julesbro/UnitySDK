@@ -8,12 +8,14 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.media.RingtoneManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
 public class GcmIntentService extends IntentService {
-    public static final int NOTIFICATION_ID = 1;
+    
     private NotificationManager mNotificationManager;
     NotificationCompat.Builder builder;
 
@@ -30,7 +32,7 @@ public class GcmIntentService extends IntentService {
         // The getMessageType() intent parameter must be the intent you received
         // in your BroadcastReceiver.
         String messageType = gcm.getMessageType(intent);
-
+        
         if (!extras.isEmpty()) {  // has effect of unparcelling Bundle
             /*
              * Filter messages based on message type. Since it is likely that GCM
@@ -47,8 +49,17 @@ public class GcmIntentService extends IntentService {
                 // Post notification of received message.
             	Log.i(AndroidPlugin.TAG, "Received: " + extras.toString());
             	String defaultMessage = extras.getString("default");
-            	sendNotification("Notification", defaultMessage);
-                UnityPlayer.UnitySendMessage("_PlayFabGO", "GCMMessageReceived", defaultMessage);
+            	String subject = "Notification";
+            	int notificationId = AndroidPlugin.getNotificationId();
+            	sendNotification(notificationId, subject, defaultMessage);
+            	try
+            	{
+            		UnityPlayer.UnitySendMessage("_PlayFabGO", "GCMMessageReceived", defaultMessage);
+            	}
+            	catch(Exception e)
+            	{
+            		Log.i(AndroidPlugin.TAG, "Did not forward to unity since it was not running");
+            	}
             }
         }
         // Release the wake lock provided by the WakefulBroadcastReceiver.
@@ -58,23 +69,26 @@ public class GcmIntentService extends IntentService {
     // Put the message into a notification and post it.
     // This is just one simple example of what you might choose to do with
     // a GCM message.
-    private void sendNotification(String title, String msg) {
+    private void sendNotification(int id, String title, String msg) {
     	
         mNotificationManager = (NotificationManager)
                 this.getSystemService(Context.NOTIFICATION_SERVICE);
 
         PendingIntent contentIntent = PendingIntent.getActivity(this, REQUEST_CODE_UNITY_ACTIVITY,
                 new Intent(this, UnityPlayerProxyActivity.class), PendingIntent.FLAG_UPDATE_CURRENT);
-
+        
+        Uri alarmSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+        
         NotificationCompat.Builder mBuilder =
                 new NotificationCompat.Builder(this)
         .setSmallIcon(AndroidPlugin.APP_ICON)
         .setContentTitle(title)
         .setStyle(new NotificationCompat.BigTextStyle()
         .bigText(msg))
-        .setContentText(msg);
+        .setContentText(msg)
+        .setSound(alarmSound);
 
         mBuilder.setContentIntent(contentIntent);
-        mNotificationManager.notify(NOTIFICATION_ID, mBuilder.build());
+        mNotificationManager.notify(id, mBuilder.build());
     }
 }

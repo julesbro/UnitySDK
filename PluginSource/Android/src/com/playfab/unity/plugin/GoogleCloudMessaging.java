@@ -2,6 +2,7 @@ package com.playfab.unity.plugin;
 
 import java.io.IOException;
 
+import android.app.NotificationManager;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
@@ -14,6 +15,12 @@ public class GoogleCloudMessaging {
 	public static final String PROPERTY_REG_ID = "_PlayFab_GCM_RegistrationId";
 	
 	private static 	com.google.android.gms.gcm.GoogleCloudMessaging GCM;
+	
+	public static void init()
+	{
+		Context context = UnityPlayer.currentActivity;
+		GCM = com.google.android.gms.gcm.GoogleCloudMessaging.getInstance(context);
+	}
 	
 	public static String getRegistrationId() {
 
@@ -56,21 +63,21 @@ public class GoogleCloudMessaging {
 
 			@Override
 			protected Void doInBackground(Void... arg0) {
-				Context context = UnityPlayer.currentActivity;
+				
 				
 	            try {
-	                if (GCM == null) {
-	                	GCM = com.google.android.gms.gcm.GoogleCloudMessaging.getInstance(context);
-	                }
-	                
+
 	                String regid = GCM.register(senderId);
 	                
 	                // Persist the regID - no need to register again.
 	                storeRegistrationId( regid);
 	                
+	                Log.i(AndroidPlugin.TAG, "GCM registration completed with id "+regid);
+	                
 	                UnityPlayer.UnitySendMessage("_PlayFabGO", "GCMRegistered", regid);
 	                
 	            } catch (IOException ex) {
+	            	Log.e(AndroidPlugin.TAG, "Error registering with GCM: ", ex);
 	            	UnityPlayer.UnitySendMessage("_PlayFabGO", "GCMRegisterError", ex.getMessage());
 	            }
 				return null;  
@@ -79,4 +86,27 @@ public class GoogleCloudMessaging {
 	    }.execute(null, null, null);
 	    
 	}
+	
+	public static void unregister()
+	{
+		try {
+			GCM.unregister();
+			Log.i(AndroidPlugin.TAG, "Unregistered with GCM");
+		} catch (IOException e) {
+			Log.e(AndroidPlugin.TAG, "Error unregistering with GCM: ", e);
+		}
+	}
+	
+	public static void cancelAllNotifications()
+	{
+		NotificationManager nm = (NotificationManager)UnityPlayer.currentActivity.getSystemService(Context.NOTIFICATION_SERVICE);
+		nm.cancelAll();
+	}
+	
+	public static void cancelNotification(int id)
+	{
+		NotificationManager nm = (NotificationManager)UnityPlayer.currentActivity.getSystemService(Context.NOTIFICATION_SERVICE);
+		nm.cancel(id);
+	}
+	
 }

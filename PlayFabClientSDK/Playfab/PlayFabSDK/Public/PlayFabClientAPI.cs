@@ -1965,7 +1965,8 @@ namespace PlayFab
 		/// </summary>
 		public static void LogEvent(LogEventRequest request, LogEventCallback resultCallback, ErrorCallback errorCallback)
 		{
-			
+			if (AuthKey == null) throw new Exception ("Must be logged in to call this method");
+
 			string serializedJSON = JsonWriter.Serialize (request, Util.GlobalJsonWriterSettings);
 			PlayFabHTTP.HTTPCallback callback = delegate(string responseStr, string errorStr)
 			{
@@ -1985,7 +1986,7 @@ namespace PlayFab
 					}
 				}
 			};
-            PlayFabHTTP.Post(PlayFabSettings.GetURL() + "/Client/LogEvent", serializedJSON, "X-Authorization", AuthKey, callback);
+			PlayFabHTTP.Post(PlayFabSettings.GetURL()+"/Client/LogEvent", serializedJSON, "X-Authorization", AuthKey, callback);
 		}
 		
 		/// <summary>

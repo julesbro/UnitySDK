@@ -1231,8 +1231,7 @@ namespace PlayFab
 		/// </summary>
 		public static void GetServerBuildInfo(GetServerBuildInfoRequest request, GetServerBuildInfoCallback resultCallback, ErrorCallback errorCallback)
 		{
-			if (PlayFabSettings.DeveloperSecretKey == null) throw new Exception ("Must have PlayFabSettings.DeveloperSecretKey set to call this method");
-
+			
 			string serializedJSON = JsonWriter.Serialize (request, Util.GlobalJsonWriterSettings);
 			PlayFabHTTP.HTTPCallback callback = delegate(string responseStr, string errorStr)
 			{
@@ -1252,7 +1251,7 @@ namespace PlayFab
 					}
 				}
 			};
-			PlayFabHTTP.Post(PlayFabSettings.GetURL()+"/Admin/GetServerBuildInfo", serializedJSON, "X-SecretKey", PlayFabSettings.DeveloperSecretKey, callback);
+			PlayFabHTTP.Post(PlayFabSettings.GetURL()+"/Admin/GetServerBuildInfo", serializedJSON, null, null, callback);
 		}
 		
 		/// <summary>
