@@ -2349,21 +2349,12 @@ namespace PlayFab.AdminModels
 	{
 		
 		
-		/// <summary>
-		/// PlayFab unique identifier to match against existing user accounts
-		/// </summary>
 		
 		public string PlayFabId { get; set;}
 		
-		/// <summary>
-		/// email address to match against existing user accounts
-		/// </summary>
 		
 		public string Email { get; set;}
 		
-		/// <summary>
-		/// PlayFab username to match against existing user accounts
-		/// </summary>
 		
 		public string Username { get; set;}
 		
@@ -2372,6 +2363,9 @@ namespace PlayFab.AdminModels
 		/// </summary>
 		
 		public string TitleDisplayName { get; set;}
+		
+		
+		public string PublisherId { get; set;}
 		
 		public override void WriteJson(JsonWriter writer)
 		{
@@ -2391,6 +2385,10 @@ namespace PlayFab.AdminModels
 			
 			writer.WriteObjectProperty("TitleDisplayName", TitleDisplayName);
 			
+			writer.Writer.Write(JsonReader.OperatorValueDelim);
+			
+			writer.WriteObjectProperty("PublisherId", PublisherId);
+			
 			writer.Writer.Write(JsonReader.OperatorObjectEnd);
 		}
 		
@@ -2401,6 +2399,7 @@ namespace PlayFab.AdminModels
 			Email = (string)JsonUtil.Get<string>(json, "Email");
 			Username = (string)JsonUtil.Get<string>(json, "Username");
 			TitleDisplayName = (string)JsonUtil.Get<string>(json, "TitleDisplayName");
+			PublisherId = (string)JsonUtil.Get<string>(json, "PublisherId");
 		}
 	}
 	
@@ -2847,11 +2846,18 @@ namespace PlayFab.AdminModels
 		
 		public List<UserCredentials> Users { get; set;}
 		
+		
+		public string PublisherId { get; set;}
+		
 		public override void WriteJson(JsonWriter writer)
 		{
 			writer.Writer.Write(JsonReader.OperatorObjectStart);
 			
 			writer.WriteObjectProperty("Users", Users);
+			
+			writer.Writer.Write(JsonReader.OperatorValueDelim);
+			
+			writer.WriteObjectProperty("PublisherId", PublisherId);
 			
 			writer.Writer.Write(JsonReader.OperatorObjectEnd);
 		}
@@ -2860,6 +2866,7 @@ namespace PlayFab.AdminModels
 		{
 			
 			Users = JsonUtil.GetObjectList<UserCredentials>(json, "Users");
+			PublisherId = (string)JsonUtil.Get<string>(json, "PublisherId");
 		}
 	}
 	
@@ -3035,11 +3042,18 @@ namespace PlayFab.AdminModels
 		
 		public string Email { get; set;}
 		
+		
+		public string PublisherId { get; set;}
+		
 		public override void WriteJson(JsonWriter writer)
 		{
 			writer.Writer.Write(JsonReader.OperatorObjectStart);
 			
 			writer.WriteObjectProperty("Email", Email);
+			
+			writer.Writer.Write(JsonReader.OperatorValueDelim);
+			
+			writer.WriteObjectProperty("PublisherId", PublisherId);
 			
 			writer.Writer.Write(JsonReader.OperatorObjectEnd);
 		}
@@ -3048,6 +3062,7 @@ namespace PlayFab.AdminModels
 		{
 			
 			Email = (string)JsonUtil.Get<string>(json, "Email");
+			PublisherId = (string)JsonUtil.Get<string>(json, "PublisherId");
 		}
 	}
 	
@@ -3360,12 +3375,6 @@ namespace PlayFab.AdminModels
 		public string ItemId { get; set;}
 		
 		/// <summary>
-		/// catalog version for this item
-		/// </summary>
-		
-		public string CatalogVersion { get; set;}
-		
-		/// <summary>
 		/// price of this item in virtual currencies and "RM" (the base Real Money purchase price, in USD pennies)
 		/// </summary>
 		
@@ -3385,10 +3394,6 @@ namespace PlayFab.AdminModels
 			
 			writer.Writer.Write(JsonReader.OperatorValueDelim);
 			
-			writer.WriteObjectProperty("CatalogVersion", CatalogVersion);
-			
-			writer.Writer.Write(JsonReader.OperatorValueDelim);
-			
 			writer.WriteObjectProperty("VirtualCurrencyPrices", VirtualCurrencyPrices);
 			
 			writer.Writer.Write(JsonReader.OperatorValueDelim);
@@ -3402,7 +3407,6 @@ namespace PlayFab.AdminModels
 		{
 			
 			ItemId = (string)JsonUtil.Get<string>(json, "ItemId");
-			CatalogVersion = (string)JsonUtil.Get<string>(json, "CatalogVersion");
 			VirtualCurrencyPrices = JsonUtil.GetDictionaryUInt32(json, "VirtualCurrencyPrices");
 			RealCurrencyPrices = JsonUtil.GetDictionaryUInt32(json, "RealCurrencyPrices");
 		}

@@ -12,6 +12,7 @@ namespace PlayFab
 	public class PlayFabClientAPI
 	{
 		public delegate void LoginWithAndroidDeviceIDCallback(LoginResult result);
+		public delegate void LoginWithEmailAddressCallback(LoginResult result);
 		public delegate void LoginWithFacebookCallback(LoginResult result);
 		public delegate void LoginWithGameCenterCallback(LoginResult result);
 		public delegate void LoginWithGoogleAccountCallback(LoginResult result);
@@ -34,7 +35,6 @@ namespace PlayFab
 		public delegate void UnlinkGameCenterAccountCallback(UnlinkGameCenterAccountResult result);
 		public delegate void UnlinkIOSDeviceIDCallback(UnlinkIOSDeviceIDResult result);
 		public delegate void UnlinkSteamAccountCallback(UnlinkSteamAccountResult result);
-		public delegate void UpdateEmailAddressCallback(UpdateEmailAddressResult result);
 		public delegate void UpdateUserTitleDisplayNameCallback(UpdateUserTitleDisplayNameResult result);
 		public delegate void GetFriendLeaderboardCallback(GetLeaderboardResult result);
 		public delegate void GetLeaderboardCallback(GetLeaderboardResult result);
@@ -118,6 +118,37 @@ namespace PlayFab
 				}
 			};
 			PlayFabHTTP.Post(PlayFabSettings.GetURL()+"/Client/LoginWithAndroidDeviceID", serializedJSON, null, null, callback);
+		}
+		
+		/// <summary>
+		/// Signs the user into the PlayFab account, returning a session identifier that can subsequently be used for API calls which require an authenticated user
+		/// </summary>
+		public static void LoginWithEmailAddress(LoginWithEmailAddressRequest request, LoginWithEmailAddressCallback resultCallback, ErrorCallback errorCallback)
+		{
+			request.TitleId = PlayFabSettings.TitleId ?? request.TitleId;
+			if(request.TitleId == null) throw new Exception ("Must be have PlayFabSettings.TitleId set to call this method");
+
+			string serializedJSON = JsonWriter.Serialize (request, Util.GlobalJsonWriterSettings);
+			PlayFabHTTP.HTTPCallback callback = delegate(string responseStr, string errorStr)
+			{
+				LoginResult result = null;
+				PlayFabError error = null;
+				ResultContainer<LoginResult>.HandleResults(responseStr, errorStr, out result, out error);
+				if(error != null && errorCallback != null)
+				{
+					errorCallback(error);
+				}
+				if(result != null)
+				{
+					AuthKey = result.SessionTicket ?? AuthKey;
+
+					if(resultCallback != null)
+					{
+						resultCallback(result);
+					}
+				}
+			};
+			PlayFabHTTP.Post(PlayFabSettings.GetURL()+"/Client/LoginWithEmailAddress", serializedJSON, null, null, callback);
 		}
 		
 		/// <summary>
@@ -769,35 +800,6 @@ namespace PlayFab
 				}
 			};
 			PlayFabHTTP.Post(PlayFabSettings.GetURL()+"/Client/UnlinkSteamAccount", serializedJSON, "X-Authorization", AuthKey, callback);
-		}
-		
-		/// <summary>
-		/// Updates the local user's email address in PlayFab
-		/// </summary>
-		public static void UpdateEmailAddress(UpdateEmailAddressRequest request, UpdateEmailAddressCallback resultCallback, ErrorCallback errorCallback)
-		{
-			if (AuthKey == null) throw new Exception ("Must be logged in to call this method");
-
-			string serializedJSON = JsonWriter.Serialize (request, Util.GlobalJsonWriterSettings);
-			PlayFabHTTP.HTTPCallback callback = delegate(string responseStr, string errorStr)
-			{
-				UpdateEmailAddressResult result = null;
-				PlayFabError error = null;
-				ResultContainer<UpdateEmailAddressResult>.HandleResults(responseStr, errorStr, out result, out error);
-				if(error != null && errorCallback != null)
-				{
-					errorCallback(error);
-				}
-				if(result != null)
-				{
-					
-					if(resultCallback != null)
-					{
-						resultCallback(result);
-					}
-				}
-			};
-			PlayFabHTTP.Post(PlayFabSettings.GetURL()+"/Client/UpdateEmailAddress", serializedJSON, "X-Authorization", AuthKey, callback);
 		}
 		
 		/// <summary>

@@ -1,5 +1,7 @@
 package com.playfab.unity.plugin;
 
+import org.json.JSONObject;
+
 import com.unity3d.player.UnityPlayer;
 import com.unity3d.player.UnityPlayerProxyActivity;
 
@@ -52,9 +54,22 @@ public class GcmIntentService extends IntentService {
             	String subject = "Notification";
             	int notificationId = AndroidPlugin.getNotificationId();
             	sendNotification(notificationId, subject, defaultMessage);
+            	String encodedMessage = null;
             	try
             	{
-            		UnityPlayer.UnitySendMessage("_PlayFabGO", "GCMMessageReceived", defaultMessage);
+	            	JSONObject encoder = new JSONObject();
+	            	encoder.put("id", notificationId);
+	            	encoder.put("message", defaultMessage);
+	            	encodedMessage = encoder.toString();
+            	}
+            	catch(Exception e)
+            	{
+            		Log.e(AndroidPlugin.TAG, "Error encoding GCM into json ", e);
+            	}
+            	try
+            	{
+            		if(encodedMessage != null)
+            			UnityPlayer.UnitySendMessage("_PlayFabGO", "GCMMessageReceived", defaultMessage);
             	}
             	catch(Exception e)
             	{
