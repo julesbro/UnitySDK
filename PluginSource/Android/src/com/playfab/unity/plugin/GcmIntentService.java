@@ -101,7 +101,9 @@ public class GcmIntentService extends IntentService {
         .setStyle(new NotificationCompat.BigTextStyle()
         .bigText(msg))
         .setContentText(msg)
-        .setSound(alarmSound);
+        .setSound(alarmSound)
+        .setPriority(NotificationCompat.PRIORITY_HIGH)
+        .setVisibility(NotificationCompat.VISIBILITY_PUBLIC);
 
         mBuilder.setContentIntent(contentIntent);
         mNotificationManager.notify(id, mBuilder.build());
