@@ -18,9 +18,6 @@ namespace PlayFab.ServerModels
 		
 		public string SharedGroupId { get; set;}
 		
-		/// <summary>
-		/// list of PlayFabId identifiers of users to add as members of the shared group
-		/// </summary>
 		
 		public List<string> PlayFabIds { get; set;}
 		
@@ -774,6 +771,62 @@ namespace PlayFab.ServerModels
 	
 	
 	
+	public class GetContentDownloadUrlRequest : PlayFabModelBase
+	{
+		
+		
+		/// <summary>
+		/// Key of the content item to fetch, usually formatted as a path, e.g. images/a.png
+		/// </summary>
+		
+		public string Key { get; set;}
+		
+		public override void WriteJson(JsonWriter writer)
+		{
+			writer.Writer.Write(JsonReader.OperatorObjectStart);
+			
+			writer.WriteObjectProperty("Key", Key);
+			
+			writer.Writer.Write(JsonReader.OperatorObjectEnd);
+		}
+		
+		public override void Deserialize (Dictionary<string,object> json)
+		{
+			
+			Key = (string)JsonUtil.Get<string>(json, "Key");
+		}
+	}
+	
+	
+	
+	public class GetContentDownloadUrlResult : PlayFabModelBase
+	{
+		
+		
+		/// <summary>
+		/// URL for downloading content via HTTP GET or HEAD method. The URL will expire in 1 hour.
+		/// </summary>
+		
+		public string URL { get; set;}
+		
+		public override void WriteJson(JsonWriter writer)
+		{
+			writer.Writer.Write(JsonReader.OperatorObjectStart);
+			
+			writer.WriteObjectProperty("URL", URL);
+			
+			writer.Writer.Write(JsonReader.OperatorObjectEnd);
+		}
+		
+		public override void Deserialize (Dictionary<string,object> json)
+		{
+			
+			URL = (string)JsonUtil.Get<string>(json, "URL");
+		}
+	}
+	
+	
+	
 	public class GetLeaderboardAroundUserRequest : PlayFabModelBase
 	{
 		
@@ -1185,9 +1238,6 @@ namespace PlayFab.ServerModels
 	{
 		
 		
-		/// <summary>
-		/// PlayFab unique identifier of the user whose custom data is being requested
-		/// </summary>
 		
 		public string PlayFabId { get; set;}
 		
@@ -1403,9 +1453,6 @@ namespace PlayFab.ServerModels
 		
 		public string CatalogVersion { get; set;}
 		
-		/// <summary>
-		/// PlayFab unique identifier of the user to whom the catalog items are to be granted
-		/// </summary>
 		
 		public string PlayFabId { get; set;}
 		
@@ -1553,9 +1600,6 @@ namespace PlayFab.ServerModels
 	{
 		
 		
-		/// <summary>
-		/// PlayFab unique identifier of the user to whom the catalog item is to be granted
-		/// </summary>
 		
 		public string PlayFabId { get; set;}
 		
@@ -1606,9 +1650,6 @@ namespace PlayFab.ServerModels
 	{
 		
 		
-		/// <summary>
-		/// PlayFab unique identifier of the user to whom the catalog item is to be granted
-		/// </summary>
 		
 		public string PlayFabId { get; set;}
 		
@@ -2156,9 +2197,6 @@ namespace PlayFab.ServerModels
 		
 		public string SharedGroupId { get; set;}
 		
-		/// <summary>
-		/// list of PlayFabId identifiers of users to remove from the shared group
-		/// </summary>
 		
 		public List<string> PlayFabIds { get; set;}
 		
@@ -2548,9 +2586,6 @@ namespace PlayFab.ServerModels
 	{
 		
 		
-		/// <summary>
-		/// PlayFab unique identifier of the user whose virtual currency balance is to be decremented
-		/// </summary>
 		
 		public string PlayFabId { get; set;}
 		
@@ -2678,9 +2713,6 @@ namespace PlayFab.ServerModels
 	{
 		
 		
-		/// <summary>
-		/// PlayFab unique identifier of the user whose custom data is being updated
-		/// </summary>
 		
 		public string PlayFabId { get; set;}
 		
@@ -2747,9 +2779,6 @@ namespace PlayFab.ServerModels
 	{
 		
 		
-		/// <summary>
-		/// PlayFab unique identifier of the user whose custom data is being updated
-		/// </summary>
 		
 		public string PlayFabId { get; set;}
 		
@@ -2786,9 +2815,6 @@ namespace PlayFab.ServerModels
 	{
 		
 		
-		/// <summary>
-		/// user whose statistics are to be updated
-		/// </summary>
 		
 		public string PlayFabId { get; set;}
 		

@@ -795,6 +795,56 @@ namespace PlayFab.AdminModels
 	
 	
 	
+	public class ContentInfo : PlayFabModelBase
+	{
+		
+		
+		/// <summary>
+		/// Key of the content
+		/// </summary>
+		
+		public string Key { get; set;}
+		
+		/// <summary>
+		/// Size of the content in bytes
+		/// </summary>
+		
+		public long Size { get; set;}
+		
+		/// <summary>
+		/// Last modified time
+		/// </summary>
+		
+		public DateTime LastModified { get; set;}
+		
+		public override void WriteJson(JsonWriter writer)
+		{
+			writer.Writer.Write(JsonReader.OperatorObjectStart);
+			
+			writer.WriteObjectProperty("Key", Key);
+			
+			writer.Writer.Write(JsonReader.OperatorValueDelim);
+			
+			writer.WriteObjectProperty("Size", Size);
+			
+			writer.Writer.Write(JsonReader.OperatorValueDelim);
+			
+			writer.WriteObjectProperty("LastModified", LastModified);
+			
+			writer.Writer.Write(JsonReader.OperatorObjectEnd);
+		}
+		
+		public override void Deserialize (Dictionary<string,object> json)
+		{
+			
+			Key = (string)JsonUtil.Get<string>(json, "Key");
+			Size = (long)JsonUtil.Get<double?>(json, "Size");
+			LastModified = (DateTime)JsonUtil.GetDateTime(json, "LastModified");
+		}
+	}
+	
+	
+	
 	public enum Currency
 	{
 		USD,
@@ -804,6 +854,34 @@ namespace PlayFab.AdminModels
 		BRL,
 		CIS,
 		CAD
+	}
+	
+	
+	
+	public class DeleteContentRequest : PlayFabModelBase
+	{
+		
+		
+		/// <summary>
+		/// Key of the content item to be deleted
+		/// </summary>
+		
+		public string Key { get; set;}
+		
+		public override void WriteJson(JsonWriter writer)
+		{
+			writer.Writer.Write(JsonReader.OperatorObjectStart);
+			
+			writer.WriteObjectProperty("Key", Key);
+			
+			writer.Writer.Write(JsonReader.OperatorObjectEnd);
+		}
+		
+		public override void Deserialize (Dictionary<string,object> json)
+		{
+			
+			Key = (string)JsonUtil.Get<string>(json, "Key");
+		}
 	}
 	
 	
@@ -1078,6 +1156,148 @@ namespace PlayFab.AdminModels
 		{
 			
 			Versions = JsonUtil.GetObjectList<CloudScriptVersionStatus>(json, "Versions");
+		}
+	}
+	
+	
+	
+	public class GetContentListRequest : PlayFabModelBase
+	{
+		
+		
+		/// <summary>
+		/// Limits the response to keys that begin with the specified prefix. You can use prefixes to list contents under a folder, or for a specified version, etc.
+		/// </summary>
+		
+		public string Prefix { get; set;}
+		
+		public override void WriteJson(JsonWriter writer)
+		{
+			writer.Writer.Write(JsonReader.OperatorObjectStart);
+			
+			writer.WriteObjectProperty("Prefix", Prefix);
+			
+			writer.Writer.Write(JsonReader.OperatorObjectEnd);
+		}
+		
+		public override void Deserialize (Dictionary<string,object> json)
+		{
+			
+			Prefix = (string)JsonUtil.Get<string>(json, "Prefix");
+		}
+	}
+	
+	
+	
+	public class GetContentListResult : PlayFabModelBase
+	{
+		
+		
+		/// <summary>
+		/// Number of content items returned. We currently have a maximum of 1000 items limit.
+		/// </summary>
+		
+		public long ItemCount { get; set;}
+		
+		/// <summary>
+		/// The total size of listed contents in bytes
+		/// </summary>
+		
+		public long TotalSize { get; set;}
+		
+		
+		public List<ContentInfo> Contents { get; set;}
+		
+		public override void WriteJson(JsonWriter writer)
+		{
+			writer.Writer.Write(JsonReader.OperatorObjectStart);
+			
+			writer.WriteObjectProperty("ItemCount", ItemCount);
+			
+			writer.Writer.Write(JsonReader.OperatorValueDelim);
+			
+			writer.WriteObjectProperty("TotalSize", TotalSize);
+			
+			writer.Writer.Write(JsonReader.OperatorValueDelim);
+			
+			writer.WriteObjectProperty("Contents", Contents);
+			
+			writer.Writer.Write(JsonReader.OperatorObjectEnd);
+		}
+		
+		public override void Deserialize (Dictionary<string,object> json)
+		{
+			
+			ItemCount = (long)JsonUtil.Get<double?>(json, "ItemCount");
+			TotalSize = (long)JsonUtil.Get<double?>(json, "TotalSize");
+			Contents = JsonUtil.GetObjectList<ContentInfo>(json, "Contents");
+		}
+	}
+	
+	
+	
+	public class GetContentUploadUrlRequest : PlayFabModelBase
+	{
+		
+		
+		/// <summary>
+		/// Key of the content item to upload, usually formatted as a path, e.g. images/a.png
+		/// </summary>
+		
+		public string Key { get; set;}
+		
+		/// <summary>
+		/// A standard MIME type describing the format of the contents. The same MIME type has to be set in the header when uploading the content.
+		/// </summary>
+		
+		public string ContentType { get; set;}
+		
+		public override void WriteJson(JsonWriter writer)
+		{
+			writer.Writer.Write(JsonReader.OperatorObjectStart);
+			
+			writer.WriteObjectProperty("Key", Key);
+			
+			writer.Writer.Write(JsonReader.OperatorValueDelim);
+			
+			writer.WriteObjectProperty("ContentType", ContentType);
+			
+			writer.Writer.Write(JsonReader.OperatorObjectEnd);
+		}
+		
+		public override void Deserialize (Dictionary<string,object> json)
+		{
+			
+			Key = (string)JsonUtil.Get<string>(json, "Key");
+			ContentType = (string)JsonUtil.Get<string>(json, "ContentType");
+		}
+	}
+	
+	
+	
+	public class GetContentUploadUrlResult : PlayFabModelBase
+	{
+		
+		
+		/// <summary>
+		/// URL for uploading content via HTTP PUT method. The URL will expire in 1 hour.
+		/// </summary>
+		
+		public string URL { get; set;}
+		
+		public override void WriteJson(JsonWriter writer)
+		{
+			writer.Writer.Write(JsonReader.OperatorObjectStart);
+			
+			writer.WriteObjectProperty("URL", URL);
+			
+			writer.Writer.Write(JsonReader.OperatorObjectEnd);
+		}
+		
+		public override void Deserialize (Dictionary<string,object> json)
+		{
+			
+			URL = (string)JsonUtil.Get<string>(json, "URL");
 		}
 	}
 	
@@ -1788,9 +2008,6 @@ namespace PlayFab.AdminModels
 	{
 		
 		
-		/// <summary>
-		/// PlayFab unique identifier of the user whose custom data is being requested
-		/// </summary>
 		
 		public string PlayFabId { get; set;}
 		
@@ -2011,9 +2228,6 @@ namespace PlayFab.AdminModels
 	{
 		
 		
-		/// <summary>
-		/// PlayFab unique identifier of the user to whom the catalog item is to be granted
-		/// </summary>
 		
 		public string PlayFabId { get; set;}
 		
@@ -2064,9 +2278,6 @@ namespace PlayFab.AdminModels
 	{
 		
 		
-		/// <summary>
-		/// PlayFab unique identifier of the user to whom the catalog item is to be granted
-		/// </summary>
 		
 		public string PlayFabId { get; set;}
 		
@@ -2876,9 +3087,6 @@ namespace PlayFab.AdminModels
 	{
 		
 		
-		/// <summary>
-		/// PlayFab unique identifier of the user whose statistics are to be reset
-		/// </summary>
 		
 		public string PlayFabId { get; set;}
 		
@@ -3418,9 +3626,6 @@ namespace PlayFab.AdminModels
 	{
 		
 		
-		/// <summary>
-		/// PlayFab unique identifier of the user whose virtual currency balance is to be decremented
-		/// </summary>
 		
 		public string PlayFabId { get; set;}
 		
@@ -3720,9 +3925,6 @@ namespace PlayFab.AdminModels
 	{
 		
 		
-		/// <summary>
-		/// PlayFab unique identifier of the user whose custom data is being updated
-		/// </summary>
 		
 		public string PlayFabId { get; set;}
 		
@@ -3789,9 +3991,6 @@ namespace PlayFab.AdminModels
 	{
 		
 		
-		/// <summary>
-		/// PlayFab unique identifier of the user whose custom data is being updated
-		/// </summary>
 		
 		public string PlayFabId { get; set;}
 		

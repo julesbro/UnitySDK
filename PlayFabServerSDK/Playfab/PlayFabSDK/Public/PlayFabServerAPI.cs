@@ -51,6 +51,7 @@ namespace PlayFab
 		public delegate void RemoveSharedGroupMembersCallback(RemoveSharedGroupMembersResult result);
 		public delegate void SetPublisherDataCallback(SetPublisherDataResult result);
 		public delegate void UpdateSharedGroupDataCallback(UpdateSharedGroupDataResult result);
+		public delegate void GetContentDownloadUrlCallback(GetContentDownloadUrlResult result);
 		
 		
 		
@@ -63,7 +64,7 @@ namespace PlayFab
 			if (PlayFabSettings.DeveloperSecretKey == null) throw new Exception ("Must have PlayFabSettings.DeveloperSecretKey set to call this method");
 
 			string serializedJSON = JsonWriter.Serialize (request, Util.GlobalJsonWriterSettings);
-			PlayFabHTTP.HTTPCallback callback = delegate(string responseStr, string errorStr)
+			Action<string,string> callback = delegate(string responseStr, string errorStr)
 			{
 				AuthenticateSessionTicketResult result = null;
 				PlayFabError error = null;
@@ -92,7 +93,7 @@ namespace PlayFab
 			if (PlayFabSettings.DeveloperSecretKey == null) throw new Exception ("Must have PlayFabSettings.DeveloperSecretKey set to call this method");
 
 			string serializedJSON = JsonWriter.Serialize (request, Util.GlobalJsonWriterSettings);
-			PlayFabHTTP.HTTPCallback callback = delegate(string responseStr, string errorStr)
+			Action<string,string> callback = delegate(string responseStr, string errorStr)
 			{
 				GetUserAccountInfoResult result = null;
 				PlayFabError error = null;
@@ -121,7 +122,7 @@ namespace PlayFab
 			if (PlayFabSettings.DeveloperSecretKey == null) throw new Exception ("Must have PlayFabSettings.DeveloperSecretKey set to call this method");
 
 			string serializedJSON = JsonWriter.Serialize (request, Util.GlobalJsonWriterSettings);
-			PlayFabHTTP.HTTPCallback callback = delegate(string responseStr, string errorStr)
+			Action<string,string> callback = delegate(string responseStr, string errorStr)
 			{
 				SendPushNotificationResult result = null;
 				PlayFabError error = null;
@@ -150,7 +151,7 @@ namespace PlayFab
 			if (PlayFabSettings.DeveloperSecretKey == null) throw new Exception ("Must have PlayFabSettings.DeveloperSecretKey set to call this method");
 
 			string serializedJSON = JsonWriter.Serialize (request, Util.GlobalJsonWriterSettings);
-			PlayFabHTTP.HTTPCallback callback = delegate(string responseStr, string errorStr)
+			Action<string,string> callback = delegate(string responseStr, string errorStr)
 			{
 				GetLeaderboardResult result = null;
 				PlayFabError error = null;
@@ -179,7 +180,7 @@ namespace PlayFab
 			if (PlayFabSettings.DeveloperSecretKey == null) throw new Exception ("Must have PlayFabSettings.DeveloperSecretKey set to call this method");
 
 			string serializedJSON = JsonWriter.Serialize (request, Util.GlobalJsonWriterSettings);
-			PlayFabHTTP.HTTPCallback callback = delegate(string responseStr, string errorStr)
+			Action<string,string> callback = delegate(string responseStr, string errorStr)
 			{
 				GetLeaderboardAroundUserResult result = null;
 				PlayFabError error = null;
@@ -208,7 +209,7 @@ namespace PlayFab
 			if (PlayFabSettings.DeveloperSecretKey == null) throw new Exception ("Must have PlayFabSettings.DeveloperSecretKey set to call this method");
 
 			string serializedJSON = JsonWriter.Serialize (request, Util.GlobalJsonWriterSettings);
-			PlayFabHTTP.HTTPCallback callback = delegate(string responseStr, string errorStr)
+			Action<string,string> callback = delegate(string responseStr, string errorStr)
 			{
 				GetUserDataResult result = null;
 				PlayFabError error = null;
@@ -237,7 +238,7 @@ namespace PlayFab
 			if (PlayFabSettings.DeveloperSecretKey == null) throw new Exception ("Must have PlayFabSettings.DeveloperSecretKey set to call this method");
 
 			string serializedJSON = JsonWriter.Serialize (request, Util.GlobalJsonWriterSettings);
-			PlayFabHTTP.HTTPCallback callback = delegate(string responseStr, string errorStr)
+			Action<string,string> callback = delegate(string responseStr, string errorStr)
 			{
 				GetUserDataResult result = null;
 				PlayFabError error = null;
@@ -266,7 +267,7 @@ namespace PlayFab
 			if (PlayFabSettings.DeveloperSecretKey == null) throw new Exception ("Must have PlayFabSettings.DeveloperSecretKey set to call this method");
 
 			string serializedJSON = JsonWriter.Serialize (request, Util.GlobalJsonWriterSettings);
-			PlayFabHTTP.HTTPCallback callback = delegate(string responseStr, string errorStr)
+			Action<string,string> callback = delegate(string responseStr, string errorStr)
 			{
 				GetUserDataResult result = null;
 				PlayFabError error = null;
@@ -295,7 +296,7 @@ namespace PlayFab
 			if (PlayFabSettings.DeveloperSecretKey == null) throw new Exception ("Must have PlayFabSettings.DeveloperSecretKey set to call this method");
 
 			string serializedJSON = JsonWriter.Serialize (request, Util.GlobalJsonWriterSettings);
-			PlayFabHTTP.HTTPCallback callback = delegate(string responseStr, string errorStr)
+			Action<string,string> callback = delegate(string responseStr, string errorStr)
 			{
 				GetUserDataResult result = null;
 				PlayFabError error = null;
@@ -324,7 +325,7 @@ namespace PlayFab
 			if (PlayFabSettings.DeveloperSecretKey == null) throw new Exception ("Must have PlayFabSettings.DeveloperSecretKey set to call this method");
 
 			string serializedJSON = JsonWriter.Serialize (request, Util.GlobalJsonWriterSettings);
-			PlayFabHTTP.HTTPCallback callback = delegate(string responseStr, string errorStr)
+			Action<string,string> callback = delegate(string responseStr, string errorStr)
 			{
 				GetUserDataResult result = null;
 				PlayFabError error = null;
@@ -353,7 +354,7 @@ namespace PlayFab
 			if (PlayFabSettings.DeveloperSecretKey == null) throw new Exception ("Must have PlayFabSettings.DeveloperSecretKey set to call this method");
 
 			string serializedJSON = JsonWriter.Serialize (request, Util.GlobalJsonWriterSettings);
-			PlayFabHTTP.HTTPCallback callback = delegate(string responseStr, string errorStr)
+			Action<string,string> callback = delegate(string responseStr, string errorStr)
 			{
 				GetUserDataResult result = null;
 				PlayFabError error = null;
@@ -382,7 +383,7 @@ namespace PlayFab
 			if (PlayFabSettings.DeveloperSecretKey == null) throw new Exception ("Must have PlayFabSettings.DeveloperSecretKey set to call this method");
 
 			string serializedJSON = JsonWriter.Serialize (request, Util.GlobalJsonWriterSettings);
-			PlayFabHTTP.HTTPCallback callback = delegate(string responseStr, string errorStr)
+			Action<string,string> callback = delegate(string responseStr, string errorStr)
 			{
 				GetUserStatisticsResult result = null;
 				PlayFabError error = null;
@@ -411,7 +412,7 @@ namespace PlayFab
 			if (PlayFabSettings.DeveloperSecretKey == null) throw new Exception ("Must have PlayFabSettings.DeveloperSecretKey set to call this method");
 
 			string serializedJSON = JsonWriter.Serialize (request, Util.GlobalJsonWriterSettings);
-			PlayFabHTTP.HTTPCallback callback = delegate(string responseStr, string errorStr)
+			Action<string,string> callback = delegate(string responseStr, string errorStr)
 			{
 				UpdateUserDataResult result = null;
 				PlayFabError error = null;
@@ -440,7 +441,7 @@ namespace PlayFab
 			if (PlayFabSettings.DeveloperSecretKey == null) throw new Exception ("Must have PlayFabSettings.DeveloperSecretKey set to call this method");
 
 			string serializedJSON = JsonWriter.Serialize (request, Util.GlobalJsonWriterSettings);
-			PlayFabHTTP.HTTPCallback callback = delegate(string responseStr, string errorStr)
+			Action<string,string> callback = delegate(string responseStr, string errorStr)
 			{
 				UpdateUserDataResult result = null;
 				PlayFabError error = null;
@@ -469,7 +470,7 @@ namespace PlayFab
 			if (PlayFabSettings.DeveloperSecretKey == null) throw new Exception ("Must have PlayFabSettings.DeveloperSecretKey set to call this method");
 
 			string serializedJSON = JsonWriter.Serialize (request, Util.GlobalJsonWriterSettings);
-			PlayFabHTTP.HTTPCallback callback = delegate(string responseStr, string errorStr)
+			Action<string,string> callback = delegate(string responseStr, string errorStr)
 			{
 				UpdateUserDataResult result = null;
 				PlayFabError error = null;
@@ -498,7 +499,7 @@ namespace PlayFab
 			if (PlayFabSettings.DeveloperSecretKey == null) throw new Exception ("Must have PlayFabSettings.DeveloperSecretKey set to call this method");
 
 			string serializedJSON = JsonWriter.Serialize (request, Util.GlobalJsonWriterSettings);
-			PlayFabHTTP.HTTPCallback callback = delegate(string responseStr, string errorStr)
+			Action<string,string> callback = delegate(string responseStr, string errorStr)
 			{
 				UpdateUserDataResult result = null;
 				PlayFabError error = null;
@@ -527,7 +528,7 @@ namespace PlayFab
 			if (PlayFabSettings.DeveloperSecretKey == null) throw new Exception ("Must have PlayFabSettings.DeveloperSecretKey set to call this method");
 
 			string serializedJSON = JsonWriter.Serialize (request, Util.GlobalJsonWriterSettings);
-			PlayFabHTTP.HTTPCallback callback = delegate(string responseStr, string errorStr)
+			Action<string,string> callback = delegate(string responseStr, string errorStr)
 			{
 				UpdateUserDataResult result = null;
 				PlayFabError error = null;
@@ -556,7 +557,7 @@ namespace PlayFab
 			if (PlayFabSettings.DeveloperSecretKey == null) throw new Exception ("Must have PlayFabSettings.DeveloperSecretKey set to call this method");
 
 			string serializedJSON = JsonWriter.Serialize (request, Util.GlobalJsonWriterSettings);
-			PlayFabHTTP.HTTPCallback callback = delegate(string responseStr, string errorStr)
+			Action<string,string> callback = delegate(string responseStr, string errorStr)
 			{
 				UpdateUserDataResult result = null;
 				PlayFabError error = null;
@@ -585,7 +586,7 @@ namespace PlayFab
 			if (PlayFabSettings.DeveloperSecretKey == null) throw new Exception ("Must have PlayFabSettings.DeveloperSecretKey set to call this method");
 
 			string serializedJSON = JsonWriter.Serialize (request, Util.GlobalJsonWriterSettings);
-			PlayFabHTTP.HTTPCallback callback = delegate(string responseStr, string errorStr)
+			Action<string,string> callback = delegate(string responseStr, string errorStr)
 			{
 				UpdateUserStatisticsResult result = null;
 				PlayFabError error = null;
@@ -614,7 +615,7 @@ namespace PlayFab
 			if (PlayFabSettings.DeveloperSecretKey == null) throw new Exception ("Must have PlayFabSettings.DeveloperSecretKey set to call this method");
 
 			string serializedJSON = JsonWriter.Serialize (request, Util.GlobalJsonWriterSettings);
-			PlayFabHTTP.HTTPCallback callback = delegate(string responseStr, string errorStr)
+			Action<string,string> callback = delegate(string responseStr, string errorStr)
 			{
 				GetCatalogItemsResult result = null;
 				PlayFabError error = null;
@@ -643,7 +644,7 @@ namespace PlayFab
 			if (PlayFabSettings.DeveloperSecretKey == null) throw new Exception ("Must have PlayFabSettings.DeveloperSecretKey set to call this method");
 
 			string serializedJSON = JsonWriter.Serialize (request, Util.GlobalJsonWriterSettings);
-			PlayFabHTTP.HTTPCallback callback = delegate(string responseStr, string errorStr)
+			Action<string,string> callback = delegate(string responseStr, string errorStr)
 			{
 				GetTitleDataResult result = null;
 				PlayFabError error = null;
@@ -672,7 +673,7 @@ namespace PlayFab
 			if (PlayFabSettings.DeveloperSecretKey == null) throw new Exception ("Must have PlayFabSettings.DeveloperSecretKey set to call this method");
 
 			string serializedJSON = JsonWriter.Serialize (request, Util.GlobalJsonWriterSettings);
-			PlayFabHTTP.HTTPCallback callback = delegate(string responseStr, string errorStr)
+			Action<string,string> callback = delegate(string responseStr, string errorStr)
 			{
 				SetTitleDataResult result = null;
 				PlayFabError error = null;
@@ -701,7 +702,7 @@ namespace PlayFab
 			if (PlayFabSettings.DeveloperSecretKey == null) throw new Exception ("Must have PlayFabSettings.DeveloperSecretKey set to call this method");
 
 			string serializedJSON = JsonWriter.Serialize (request, Util.GlobalJsonWriterSettings);
-			PlayFabHTTP.HTTPCallback callback = delegate(string responseStr, string errorStr)
+			Action<string,string> callback = delegate(string responseStr, string errorStr)
 			{
 				ModifyUserVirtualCurrencyResult result = null;
 				PlayFabError error = null;
@@ -730,7 +731,7 @@ namespace PlayFab
 			if (PlayFabSettings.DeveloperSecretKey == null) throw new Exception ("Must have PlayFabSettings.DeveloperSecretKey set to call this method");
 
 			string serializedJSON = JsonWriter.Serialize (request, Util.GlobalJsonWriterSettings);
-			PlayFabHTTP.HTTPCallback callback = delegate(string responseStr, string errorStr)
+			Action<string,string> callback = delegate(string responseStr, string errorStr)
 			{
 				GetUserInventoryResult result = null;
 				PlayFabError error = null;
@@ -759,7 +760,7 @@ namespace PlayFab
 			if (PlayFabSettings.DeveloperSecretKey == null) throw new Exception ("Must have PlayFabSettings.DeveloperSecretKey set to call this method");
 
 			string serializedJSON = JsonWriter.Serialize (request, Util.GlobalJsonWriterSettings);
-			PlayFabHTTP.HTTPCallback callback = delegate(string responseStr, string errorStr)
+			Action<string,string> callback = delegate(string responseStr, string errorStr)
 			{
 				GrantItemsToUserResult result = null;
 				PlayFabError error = null;
@@ -788,7 +789,7 @@ namespace PlayFab
 			if (PlayFabSettings.DeveloperSecretKey == null) throw new Exception ("Must have PlayFabSettings.DeveloperSecretKey set to call this method");
 
 			string serializedJSON = JsonWriter.Serialize (request, Util.GlobalJsonWriterSettings);
-			PlayFabHTTP.HTTPCallback callback = delegate(string responseStr, string errorStr)
+			Action<string,string> callback = delegate(string responseStr, string errorStr)
 			{
 				GrantItemsToUsersResult result = null;
 				PlayFabError error = null;
@@ -817,7 +818,7 @@ namespace PlayFab
 			if (PlayFabSettings.DeveloperSecretKey == null) throw new Exception ("Must have PlayFabSettings.DeveloperSecretKey set to call this method");
 
 			string serializedJSON = JsonWriter.Serialize (request, Util.GlobalJsonWriterSettings);
-			PlayFabHTTP.HTTPCallback callback = delegate(string responseStr, string errorStr)
+			Action<string,string> callback = delegate(string responseStr, string errorStr)
 			{
 				ModifyItemUsesResult result = null;
 				PlayFabError error = null;
@@ -839,14 +840,14 @@ namespace PlayFab
 		}
 		
 		/// <summary>
-		/// Report a player on behalf of another player
+		/// Submit a report about a player (due to bad bahavior, etc.) on behalf of another player, so that customer service representatives for the title can take action concerning potentially poxic players.
 		/// </summary>
 		public static void ReportPlayer(ReportPlayerServerRequest request, ReportPlayerCallback resultCallback, ErrorCallback errorCallback)
 		{
 			if (PlayFabSettings.DeveloperSecretKey == null) throw new Exception ("Must have PlayFabSettings.DeveloperSecretKey set to call this method");
 
 			string serializedJSON = JsonWriter.Serialize (request, Util.GlobalJsonWriterSettings);
-			PlayFabHTTP.HTTPCallback callback = delegate(string responseStr, string errorStr)
+			Action<string,string> callback = delegate(string responseStr, string errorStr)
 			{
 				ReportPlayerServerResult result = null;
 				PlayFabError error = null;
@@ -875,7 +876,7 @@ namespace PlayFab
 			if (PlayFabSettings.DeveloperSecretKey == null) throw new Exception ("Must have PlayFabSettings.DeveloperSecretKey set to call this method");
 
 			string serializedJSON = JsonWriter.Serialize (request, Util.GlobalJsonWriterSettings);
-			PlayFabHTTP.HTTPCallback callback = delegate(string responseStr, string errorStr)
+			Action<string,string> callback = delegate(string responseStr, string errorStr)
 			{
 				ModifyUserVirtualCurrencyResult result = null;
 				PlayFabError error = null;
@@ -904,7 +905,7 @@ namespace PlayFab
 			if (PlayFabSettings.DeveloperSecretKey == null) throw new Exception ("Must have PlayFabSettings.DeveloperSecretKey set to call this method");
 
 			string serializedJSON = JsonWriter.Serialize (request, Util.GlobalJsonWriterSettings);
-			PlayFabHTTP.HTTPCallback callback = delegate(string responseStr, string errorStr)
+			Action<string,string> callback = delegate(string responseStr, string errorStr)
 			{
 				NotifyMatchmakerPlayerLeftResult result = null;
 				PlayFabError error = null;
@@ -933,7 +934,7 @@ namespace PlayFab
 			if (PlayFabSettings.DeveloperSecretKey == null) throw new Exception ("Must have PlayFabSettings.DeveloperSecretKey set to call this method");
 
 			string serializedJSON = JsonWriter.Serialize (request, Util.GlobalJsonWriterSettings);
-			PlayFabHTTP.HTTPCallback callback = delegate(string responseStr, string errorStr)
+			Action<string,string> callback = delegate(string responseStr, string errorStr)
 			{
 				RedeemMatchmakerTicketResult result = null;
 				PlayFabError error = null;
@@ -962,7 +963,7 @@ namespace PlayFab
 			if (PlayFabSettings.DeveloperSecretKey == null) throw new Exception ("Must have PlayFabSettings.DeveloperSecretKey set to call this method");
 
 			string serializedJSON = JsonWriter.Serialize (request, Util.GlobalJsonWriterSettings);
-			PlayFabHTTP.HTTPCallback callback = delegate(string responseStr, string errorStr)
+			Action<string,string> callback = delegate(string responseStr, string errorStr)
 			{
 				AwardSteamAchievementResult result = null;
 				PlayFabError error = null;
@@ -991,7 +992,7 @@ namespace PlayFab
 			if (PlayFabSettings.DeveloperSecretKey == null) throw new Exception ("Must have PlayFabSettings.DeveloperSecretKey set to call this method");
 
 			string serializedJSON = JsonWriter.Serialize (request, Util.GlobalJsonWriterSettings);
-			PlayFabHTTP.HTTPCallback callback = delegate(string responseStr, string errorStr)
+			Action<string,string> callback = delegate(string responseStr, string errorStr)
 			{
 				AddSharedGroupMembersResult result = null;
 				PlayFabError error = null;
@@ -1020,7 +1021,7 @@ namespace PlayFab
 			if (PlayFabSettings.DeveloperSecretKey == null) throw new Exception ("Must have PlayFabSettings.DeveloperSecretKey set to call this method");
 
 			string serializedJSON = JsonWriter.Serialize (request, Util.GlobalJsonWriterSettings);
-			PlayFabHTTP.HTTPCallback callback = delegate(string responseStr, string errorStr)
+			Action<string,string> callback = delegate(string responseStr, string errorStr)
 			{
 				CreateSharedGroupResult result = null;
 				PlayFabError error = null;
@@ -1049,7 +1050,7 @@ namespace PlayFab
 			if (PlayFabSettings.DeveloperSecretKey == null) throw new Exception ("Must have PlayFabSettings.DeveloperSecretKey set to call this method");
 
 			string serializedJSON = JsonWriter.Serialize (request, Util.GlobalJsonWriterSettings);
-			PlayFabHTTP.HTTPCallback callback = delegate(string responseStr, string errorStr)
+			Action<string,string> callback = delegate(string responseStr, string errorStr)
 			{
 				EmptyResult result = null;
 				PlayFabError error = null;
@@ -1078,7 +1079,7 @@ namespace PlayFab
 			if (PlayFabSettings.DeveloperSecretKey == null) throw new Exception ("Must have PlayFabSettings.DeveloperSecretKey set to call this method");
 
 			string serializedJSON = JsonWriter.Serialize (request, Util.GlobalJsonWriterSettings);
-			PlayFabHTTP.HTTPCallback callback = delegate(string responseStr, string errorStr)
+			Action<string,string> callback = delegate(string responseStr, string errorStr)
 			{
 				GetPublisherDataResult result = null;
 				PlayFabError error = null;
@@ -1107,7 +1108,7 @@ namespace PlayFab
 			if (PlayFabSettings.DeveloperSecretKey == null) throw new Exception ("Must have PlayFabSettings.DeveloperSecretKey set to call this method");
 
 			string serializedJSON = JsonWriter.Serialize (request, Util.GlobalJsonWriterSettings);
-			PlayFabHTTP.HTTPCallback callback = delegate(string responseStr, string errorStr)
+			Action<string,string> callback = delegate(string responseStr, string errorStr)
 			{
 				GetSharedGroupDataResult result = null;
 				PlayFabError error = null;
@@ -1136,7 +1137,7 @@ namespace PlayFab
 			if (PlayFabSettings.DeveloperSecretKey == null) throw new Exception ("Must have PlayFabSettings.DeveloperSecretKey set to call this method");
 
 			string serializedJSON = JsonWriter.Serialize (request, Util.GlobalJsonWriterSettings);
-			PlayFabHTTP.HTTPCallback callback = delegate(string responseStr, string errorStr)
+			Action<string,string> callback = delegate(string responseStr, string errorStr)
 			{
 				RemoveSharedGroupMembersResult result = null;
 				PlayFabError error = null;
@@ -1165,7 +1166,7 @@ namespace PlayFab
 			if (PlayFabSettings.DeveloperSecretKey == null) throw new Exception ("Must have PlayFabSettings.DeveloperSecretKey set to call this method");
 
 			string serializedJSON = JsonWriter.Serialize (request, Util.GlobalJsonWriterSettings);
-			PlayFabHTTP.HTTPCallback callback = delegate(string responseStr, string errorStr)
+			Action<string,string> callback = delegate(string responseStr, string errorStr)
 			{
 				SetPublisherDataResult result = null;
 				PlayFabError error = null;
@@ -1194,7 +1195,7 @@ namespace PlayFab
 			if (PlayFabSettings.DeveloperSecretKey == null) throw new Exception ("Must have PlayFabSettings.DeveloperSecretKey set to call this method");
 
 			string serializedJSON = JsonWriter.Serialize (request, Util.GlobalJsonWriterSettings);
-			PlayFabHTTP.HTTPCallback callback = delegate(string responseStr, string errorStr)
+			Action<string,string> callback = delegate(string responseStr, string errorStr)
 			{
 				UpdateSharedGroupDataResult result = null;
 				PlayFabError error = null;
@@ -1213,6 +1214,35 @@ namespace PlayFab
 				}
 			};
 			PlayFabHTTP.Post(PlayFabSettings.GetURL()+"/Server/UpdateSharedGroupData", serializedJSON, "X-SecretKey", PlayFabSettings.DeveloperSecretKey, callback);
+		}
+		
+		/// <summary>
+		/// Retrieves the pre-authorized URL for accessing a content file for the title. A subsequent HTTP GET to the returned URL downloads the content; or a HEAD query to the returned URL retrieves the metadata of the content. This API only generates a pre-signed URL to access the content. A success result does not guarantee the existence of the content.
+		/// </summary>
+		public static void GetContentDownloadUrl(GetContentDownloadUrlRequest request, GetContentDownloadUrlCallback resultCallback, ErrorCallback errorCallback)
+		{
+			if (PlayFabSettings.DeveloperSecretKey == null) throw new Exception ("Must have PlayFabSettings.DeveloperSecretKey set to call this method");
+
+			string serializedJSON = JsonWriter.Serialize (request, Util.GlobalJsonWriterSettings);
+			Action<string,string> callback = delegate(string responseStr, string errorStr)
+			{
+				GetContentDownloadUrlResult result = null;
+				PlayFabError error = null;
+				ResultContainer<GetContentDownloadUrlResult>.HandleResults(responseStr, errorStr, out result, out error);
+				if(error != null && errorCallback != null)
+				{
+					errorCallback(error);
+				}
+				if(result != null)
+				{
+					
+					if(resultCallback != null)
+					{
+						resultCallback(result);
+					}
+				}
+			};
+			PlayFabHTTP.Post(PlayFabSettings.GetURL()+"/Server/GetContentDownloadUrl", serializedJSON, "X-SecretKey", PlayFabSettings.DeveloperSecretKey, callback);
 		}
 		
 		

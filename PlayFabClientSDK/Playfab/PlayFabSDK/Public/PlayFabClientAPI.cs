@@ -85,6 +85,7 @@ namespace PlayFab
 		public delegate void RefreshPSNAuthTokenCallback(EmptyResult result);
 		public delegate void GetCloudScriptUrlCallback(GetCloudScriptUrlResult result);
 		public delegate void RunCloudScriptCallback(RunCloudScriptResult result);
+		public delegate void GetContentDownloadUrlCallback(GetContentDownloadUrlResult result);
 		
 		
 		
@@ -98,7 +99,7 @@ namespace PlayFab
 			if(request.TitleId == null) throw new Exception ("Must be have PlayFabSettings.TitleId set to call this method");
 
 			string serializedJSON = JsonWriter.Serialize (request, Util.GlobalJsonWriterSettings);
-			PlayFabHTTP.HTTPCallback callback = delegate(string responseStr, string errorStr)
+			Action<string,string> callback = delegate(string responseStr, string errorStr)
 			{
 				LoginResult result = null;
 				PlayFabError error = null;
@@ -129,7 +130,7 @@ namespace PlayFab
 			if(request.TitleId == null) throw new Exception ("Must be have PlayFabSettings.TitleId set to call this method");
 
 			string serializedJSON = JsonWriter.Serialize (request, Util.GlobalJsonWriterSettings);
-			PlayFabHTTP.HTTPCallback callback = delegate(string responseStr, string errorStr)
+			Action<string,string> callback = delegate(string responseStr, string errorStr)
 			{
 				LoginResult result = null;
 				PlayFabError error = null;
@@ -160,7 +161,7 @@ namespace PlayFab
 			if(request.TitleId == null) throw new Exception ("Must be have PlayFabSettings.TitleId set to call this method");
 
 			string serializedJSON = JsonWriter.Serialize (request, Util.GlobalJsonWriterSettings);
-			PlayFabHTTP.HTTPCallback callback = delegate(string responseStr, string errorStr)
+			Action<string,string> callback = delegate(string responseStr, string errorStr)
 			{
 				LoginResult result = null;
 				PlayFabError error = null;
@@ -191,7 +192,7 @@ namespace PlayFab
 			if(request.TitleId == null) throw new Exception ("Must be have PlayFabSettings.TitleId set to call this method");
 
 			string serializedJSON = JsonWriter.Serialize (request, Util.GlobalJsonWriterSettings);
-			PlayFabHTTP.HTTPCallback callback = delegate(string responseStr, string errorStr)
+			Action<string,string> callback = delegate(string responseStr, string errorStr)
 			{
 				LoginResult result = null;
 				PlayFabError error = null;
@@ -222,7 +223,7 @@ namespace PlayFab
 			if(request.TitleId == null) throw new Exception ("Must be have PlayFabSettings.TitleId set to call this method");
 
 			string serializedJSON = JsonWriter.Serialize (request, Util.GlobalJsonWriterSettings);
-			PlayFabHTTP.HTTPCallback callback = delegate(string responseStr, string errorStr)
+			Action<string,string> callback = delegate(string responseStr, string errorStr)
 			{
 				LoginResult result = null;
 				PlayFabError error = null;
@@ -253,7 +254,7 @@ namespace PlayFab
 			if(request.TitleId == null) throw new Exception ("Must be have PlayFabSettings.TitleId set to call this method");
 
 			string serializedJSON = JsonWriter.Serialize (request, Util.GlobalJsonWriterSettings);
-			PlayFabHTTP.HTTPCallback callback = delegate(string responseStr, string errorStr)
+			Action<string,string> callback = delegate(string responseStr, string errorStr)
 			{
 				LoginResult result = null;
 				PlayFabError error = null;
@@ -284,7 +285,7 @@ namespace PlayFab
 			if(request.TitleId == null) throw new Exception ("Must be have PlayFabSettings.TitleId set to call this method");
 
 			string serializedJSON = JsonWriter.Serialize (request, Util.GlobalJsonWriterSettings);
-			PlayFabHTTP.HTTPCallback callback = delegate(string responseStr, string errorStr)
+			Action<string,string> callback = delegate(string responseStr, string errorStr)
 			{
 				LoginResult result = null;
 				PlayFabError error = null;
@@ -315,7 +316,7 @@ namespace PlayFab
 			if(request.TitleId == null) throw new Exception ("Must be have PlayFabSettings.TitleId set to call this method");
 
 			string serializedJSON = JsonWriter.Serialize (request, Util.GlobalJsonWriterSettings);
-			PlayFabHTTP.HTTPCallback callback = delegate(string responseStr, string errorStr)
+			Action<string,string> callback = delegate(string responseStr, string errorStr)
 			{
 				LoginResult result = null;
 				PlayFabError error = null;
@@ -346,7 +347,7 @@ namespace PlayFab
 			if(request.TitleId == null) throw new Exception ("Must be have PlayFabSettings.TitleId set to call this method");
 
 			string serializedJSON = JsonWriter.Serialize (request, Util.GlobalJsonWriterSettings);
-			PlayFabHTTP.HTTPCallback callback = delegate(string responseStr, string errorStr)
+			Action<string,string> callback = delegate(string responseStr, string errorStr)
 			{
 				RegisterPlayFabUserResult result = null;
 				PlayFabError error = null;
@@ -376,7 +377,7 @@ namespace PlayFab
 			if (AuthKey == null) throw new Exception ("Must be logged in to call this method");
 
 			string serializedJSON = JsonWriter.Serialize (request, Util.GlobalJsonWriterSettings);
-			PlayFabHTTP.HTTPCallback callback = delegate(string responseStr, string errorStr)
+			Action<string,string> callback = delegate(string responseStr, string errorStr)
 			{
 				AddUsernamePasswordResult result = null;
 				PlayFabError error = null;
@@ -405,7 +406,7 @@ namespace PlayFab
 			if (AuthKey == null) throw new Exception ("Must be logged in to call this method");
 
 			string serializedJSON = JsonWriter.Serialize (request, Util.GlobalJsonWriterSettings);
-			PlayFabHTTP.HTTPCallback callback = delegate(string responseStr, string errorStr)
+			Action<string,string> callback = delegate(string responseStr, string errorStr)
 			{
 				GetAccountInfoResult result = null;
 				PlayFabError error = null;
@@ -434,7 +435,7 @@ namespace PlayFab
 			if (AuthKey == null) throw new Exception ("Must be logged in to call this method");
 
 			string serializedJSON = JsonWriter.Serialize (request, Util.GlobalJsonWriterSettings);
-			PlayFabHTTP.HTTPCallback callback = delegate(string responseStr, string errorStr)
+			Action<string,string> callback = delegate(string responseStr, string errorStr)
 			{
 				GetPlayFabIDsFromFacebookIDsResult result = null;
 				PlayFabError error = null;
@@ -463,7 +464,7 @@ namespace PlayFab
 			if (AuthKey == null) throw new Exception ("Must be logged in to call this method");
 
 			string serializedJSON = JsonWriter.Serialize (request, Util.GlobalJsonWriterSettings);
-			PlayFabHTTP.HTTPCallback callback = delegate(string responseStr, string errorStr)
+			Action<string,string> callback = delegate(string responseStr, string errorStr)
 			{
 				GetUserCombinedInfoResult result = null;
 				PlayFabError error = null;
@@ -492,7 +493,7 @@ namespace PlayFab
 			if (AuthKey == null) throw new Exception ("Must be logged in to call this method");
 
 			string serializedJSON = JsonWriter.Serialize (request, Util.GlobalJsonWriterSettings);
-			PlayFabHTTP.HTTPCallback callback = delegate(string responseStr, string errorStr)
+			Action<string,string> callback = delegate(string responseStr, string errorStr)
 			{
 				LinkAndroidDeviceIDResult result = null;
 				PlayFabError error = null;
@@ -521,7 +522,7 @@ namespace PlayFab
 			if (AuthKey == null) throw new Exception ("Must be logged in to call this method");
 
 			string serializedJSON = JsonWriter.Serialize (request, Util.GlobalJsonWriterSettings);
-			PlayFabHTTP.HTTPCallback callback = delegate(string responseStr, string errorStr)
+			Action<string,string> callback = delegate(string responseStr, string errorStr)
 			{
 				LinkFacebookAccountResult result = null;
 				PlayFabError error = null;
@@ -550,7 +551,7 @@ namespace PlayFab
 			if (AuthKey == null) throw new Exception ("Must be logged in to call this method");
 
 			string serializedJSON = JsonWriter.Serialize (request, Util.GlobalJsonWriterSettings);
-			PlayFabHTTP.HTTPCallback callback = delegate(string responseStr, string errorStr)
+			Action<string,string> callback = delegate(string responseStr, string errorStr)
 			{
 				LinkGameCenterAccountResult result = null;
 				PlayFabError error = null;
@@ -579,7 +580,7 @@ namespace PlayFab
 			if (AuthKey == null) throw new Exception ("Must be logged in to call this method");
 
 			string serializedJSON = JsonWriter.Serialize (request, Util.GlobalJsonWriterSettings);
-			PlayFabHTTP.HTTPCallback callback = delegate(string responseStr, string errorStr)
+			Action<string,string> callback = delegate(string responseStr, string errorStr)
 			{
 				LinkIOSDeviceIDResult result = null;
 				PlayFabError error = null;
@@ -608,7 +609,7 @@ namespace PlayFab
 			if (AuthKey == null) throw new Exception ("Must be logged in to call this method");
 
 			string serializedJSON = JsonWriter.Serialize (request, Util.GlobalJsonWriterSettings);
-			PlayFabHTTP.HTTPCallback callback = delegate(string responseStr, string errorStr)
+			Action<string,string> callback = delegate(string responseStr, string errorStr)
 			{
 				LinkSteamAccountResult result = null;
 				PlayFabError error = null;
@@ -636,7 +637,7 @@ namespace PlayFab
 		{
 			
 			string serializedJSON = JsonWriter.Serialize (request, Util.GlobalJsonWriterSettings);
-			PlayFabHTTP.HTTPCallback callback = delegate(string responseStr, string errorStr)
+			Action<string,string> callback = delegate(string responseStr, string errorStr)
 			{
 				SendAccountRecoveryEmailResult result = null;
 				PlayFabError error = null;
@@ -665,7 +666,7 @@ namespace PlayFab
 			if (AuthKey == null) throw new Exception ("Must be logged in to call this method");
 
 			string serializedJSON = JsonWriter.Serialize (request, Util.GlobalJsonWriterSettings);
-			PlayFabHTTP.HTTPCallback callback = delegate(string responseStr, string errorStr)
+			Action<string,string> callback = delegate(string responseStr, string errorStr)
 			{
 				UnlinkAndroidDeviceIDResult result = null;
 				PlayFabError error = null;
@@ -694,7 +695,7 @@ namespace PlayFab
 			if (AuthKey == null) throw new Exception ("Must be logged in to call this method");
 
 			string serializedJSON = JsonWriter.Serialize (request, Util.GlobalJsonWriterSettings);
-			PlayFabHTTP.HTTPCallback callback = delegate(string responseStr, string errorStr)
+			Action<string,string> callback = delegate(string responseStr, string errorStr)
 			{
 				UnlinkFacebookAccountResult result = null;
 				PlayFabError error = null;
@@ -723,7 +724,7 @@ namespace PlayFab
 			if (AuthKey == null) throw new Exception ("Must be logged in to call this method");
 
 			string serializedJSON = JsonWriter.Serialize (request, Util.GlobalJsonWriterSettings);
-			PlayFabHTTP.HTTPCallback callback = delegate(string responseStr, string errorStr)
+			Action<string,string> callback = delegate(string responseStr, string errorStr)
 			{
 				UnlinkGameCenterAccountResult result = null;
 				PlayFabError error = null;
@@ -752,7 +753,7 @@ namespace PlayFab
 			if (AuthKey == null) throw new Exception ("Must be logged in to call this method");
 
 			string serializedJSON = JsonWriter.Serialize (request, Util.GlobalJsonWriterSettings);
-			PlayFabHTTP.HTTPCallback callback = delegate(string responseStr, string errorStr)
+			Action<string,string> callback = delegate(string responseStr, string errorStr)
 			{
 				UnlinkIOSDeviceIDResult result = null;
 				PlayFabError error = null;
@@ -781,7 +782,7 @@ namespace PlayFab
 			if (AuthKey == null) throw new Exception ("Must be logged in to call this method");
 
 			string serializedJSON = JsonWriter.Serialize (request, Util.GlobalJsonWriterSettings);
-			PlayFabHTTP.HTTPCallback callback = delegate(string responseStr, string errorStr)
+			Action<string,string> callback = delegate(string responseStr, string errorStr)
 			{
 				UnlinkSteamAccountResult result = null;
 				PlayFabError error = null;
@@ -810,7 +811,7 @@ namespace PlayFab
 			if (AuthKey == null) throw new Exception ("Must be logged in to call this method");
 
 			string serializedJSON = JsonWriter.Serialize (request, Util.GlobalJsonWriterSettings);
-			PlayFabHTTP.HTTPCallback callback = delegate(string responseStr, string errorStr)
+			Action<string,string> callback = delegate(string responseStr, string errorStr)
 			{
 				UpdateUserTitleDisplayNameResult result = null;
 				PlayFabError error = null;
@@ -839,7 +840,7 @@ namespace PlayFab
 			if (AuthKey == null) throw new Exception ("Must be logged in to call this method");
 
 			string serializedJSON = JsonWriter.Serialize (request, Util.GlobalJsonWriterSettings);
-			PlayFabHTTP.HTTPCallback callback = delegate(string responseStr, string errorStr)
+			Action<string,string> callback = delegate(string responseStr, string errorStr)
 			{
 				GetLeaderboardResult result = null;
 				PlayFabError error = null;
@@ -868,7 +869,7 @@ namespace PlayFab
 			if (AuthKey == null) throw new Exception ("Must be logged in to call this method");
 
 			string serializedJSON = JsonWriter.Serialize (request, Util.GlobalJsonWriterSettings);
-			PlayFabHTTP.HTTPCallback callback = delegate(string responseStr, string errorStr)
+			Action<string,string> callback = delegate(string responseStr, string errorStr)
 			{
 				GetLeaderboardResult result = null;
 				PlayFabError error = null;
@@ -897,7 +898,7 @@ namespace PlayFab
 			if (AuthKey == null) throw new Exception ("Must be logged in to call this method");
 
 			string serializedJSON = JsonWriter.Serialize (request, Util.GlobalJsonWriterSettings);
-			PlayFabHTTP.HTTPCallback callback = delegate(string responseStr, string errorStr)
+			Action<string,string> callback = delegate(string responseStr, string errorStr)
 			{
 				GetLeaderboardAroundCurrentUserResult result = null;
 				PlayFabError error = null;
@@ -926,7 +927,7 @@ namespace PlayFab
 			if (AuthKey == null) throw new Exception ("Must be logged in to call this method");
 
 			string serializedJSON = JsonWriter.Serialize (request, Util.GlobalJsonWriterSettings);
-			PlayFabHTTP.HTTPCallback callback = delegate(string responseStr, string errorStr)
+			Action<string,string> callback = delegate(string responseStr, string errorStr)
 			{
 				GetUserDataResult result = null;
 				PlayFabError error = null;
@@ -955,7 +956,7 @@ namespace PlayFab
 			if (AuthKey == null) throw new Exception ("Must be logged in to call this method");
 
 			string serializedJSON = JsonWriter.Serialize (request, Util.GlobalJsonWriterSettings);
-			PlayFabHTTP.HTTPCallback callback = delegate(string responseStr, string errorStr)
+			Action<string,string> callback = delegate(string responseStr, string errorStr)
 			{
 				GetUserDataResult result = null;
 				PlayFabError error = null;
@@ -984,7 +985,7 @@ namespace PlayFab
 			if (AuthKey == null) throw new Exception ("Must be logged in to call this method");
 
 			string serializedJSON = JsonWriter.Serialize (request, Util.GlobalJsonWriterSettings);
-			PlayFabHTTP.HTTPCallback callback = delegate(string responseStr, string errorStr)
+			Action<string,string> callback = delegate(string responseStr, string errorStr)
 			{
 				GetUserDataResult result = null;
 				PlayFabError error = null;
@@ -1013,7 +1014,7 @@ namespace PlayFab
 			if (AuthKey == null) throw new Exception ("Must be logged in to call this method");
 
 			string serializedJSON = JsonWriter.Serialize (request, Util.GlobalJsonWriterSettings);
-			PlayFabHTTP.HTTPCallback callback = delegate(string responseStr, string errorStr)
+			Action<string,string> callback = delegate(string responseStr, string errorStr)
 			{
 				GetUserDataResult result = null;
 				PlayFabError error = null;
@@ -1042,7 +1043,7 @@ namespace PlayFab
 			if (AuthKey == null) throw new Exception ("Must be logged in to call this method");
 
 			string serializedJSON = JsonWriter.Serialize (request, Util.GlobalJsonWriterSettings);
-			PlayFabHTTP.HTTPCallback callback = delegate(string responseStr, string errorStr)
+			Action<string,string> callback = delegate(string responseStr, string errorStr)
 			{
 				GetUserStatisticsResult result = null;
 				PlayFabError error = null;
@@ -1071,7 +1072,7 @@ namespace PlayFab
 			if (AuthKey == null) throw new Exception ("Must be logged in to call this method");
 
 			string serializedJSON = JsonWriter.Serialize (request, Util.GlobalJsonWriterSettings);
-			PlayFabHTTP.HTTPCallback callback = delegate(string responseStr, string errorStr)
+			Action<string,string> callback = delegate(string responseStr, string errorStr)
 			{
 				UpdateUserDataResult result = null;
 				PlayFabError error = null;
@@ -1100,7 +1101,7 @@ namespace PlayFab
 			if (AuthKey == null) throw new Exception ("Must be logged in to call this method");
 
 			string serializedJSON = JsonWriter.Serialize (request, Util.GlobalJsonWriterSettings);
-			PlayFabHTTP.HTTPCallback callback = delegate(string responseStr, string errorStr)
+			Action<string,string> callback = delegate(string responseStr, string errorStr)
 			{
 				UpdateUserDataResult result = null;
 				PlayFabError error = null;
@@ -1129,7 +1130,7 @@ namespace PlayFab
 			if (AuthKey == null) throw new Exception ("Must be logged in to call this method");
 
 			string serializedJSON = JsonWriter.Serialize (request, Util.GlobalJsonWriterSettings);
-			PlayFabHTTP.HTTPCallback callback = delegate(string responseStr, string errorStr)
+			Action<string,string> callback = delegate(string responseStr, string errorStr)
 			{
 				UpdateUserStatisticsResult result = null;
 				PlayFabError error = null;
@@ -1158,7 +1159,7 @@ namespace PlayFab
 			if (AuthKey == null) throw new Exception ("Must be logged in to call this method");
 
 			string serializedJSON = JsonWriter.Serialize (request, Util.GlobalJsonWriterSettings);
-			PlayFabHTTP.HTTPCallback callback = delegate(string responseStr, string errorStr)
+			Action<string,string> callback = delegate(string responseStr, string errorStr)
 			{
 				GetCatalogItemsResult result = null;
 				PlayFabError error = null;
@@ -1187,7 +1188,7 @@ namespace PlayFab
 			if (AuthKey == null) throw new Exception ("Must be logged in to call this method");
 
 			string serializedJSON = JsonWriter.Serialize (request, Util.GlobalJsonWriterSettings);
-			PlayFabHTTP.HTTPCallback callback = delegate(string responseStr, string errorStr)
+			Action<string,string> callback = delegate(string responseStr, string errorStr)
 			{
 				GetStoreItemsResult result = null;
 				PlayFabError error = null;
@@ -1216,7 +1217,7 @@ namespace PlayFab
 			if (AuthKey == null) throw new Exception ("Must be logged in to call this method");
 
 			string serializedJSON = JsonWriter.Serialize (request, Util.GlobalJsonWriterSettings);
-			PlayFabHTTP.HTTPCallback callback = delegate(string responseStr, string errorStr)
+			Action<string,string> callback = delegate(string responseStr, string errorStr)
 			{
 				GetTitleDataResult result = null;
 				PlayFabError error = null;
@@ -1245,7 +1246,7 @@ namespace PlayFab
 			if (AuthKey == null) throw new Exception ("Must be logged in to call this method");
 
 			string serializedJSON = JsonWriter.Serialize (request, Util.GlobalJsonWriterSettings);
-			PlayFabHTTP.HTTPCallback callback = delegate(string responseStr, string errorStr)
+			Action<string,string> callback = delegate(string responseStr, string errorStr)
 			{
 				GetTitleNewsResult result = null;
 				PlayFabError error = null;
@@ -1274,7 +1275,7 @@ namespace PlayFab
 			if (AuthKey == null) throw new Exception ("Must be logged in to call this method");
 
 			string serializedJSON = JsonWriter.Serialize (request, Util.GlobalJsonWriterSettings);
-			PlayFabHTTP.HTTPCallback callback = delegate(string responseStr, string errorStr)
+			Action<string,string> callback = delegate(string responseStr, string errorStr)
 			{
 				ModifyUserVirtualCurrencyResult result = null;
 				PlayFabError error = null;
@@ -1303,7 +1304,7 @@ namespace PlayFab
 			if (AuthKey == null) throw new Exception ("Must be logged in to call this method");
 
 			string serializedJSON = JsonWriter.Serialize (request, Util.GlobalJsonWriterSettings);
-			PlayFabHTTP.HTTPCallback callback = delegate(string responseStr, string errorStr)
+			Action<string,string> callback = delegate(string responseStr, string errorStr)
 			{
 				ConfirmPurchaseResult result = null;
 				PlayFabError error = null;
@@ -1332,7 +1333,7 @@ namespace PlayFab
 			if (AuthKey == null) throw new Exception ("Must be logged in to call this method");
 
 			string serializedJSON = JsonWriter.Serialize (request, Util.GlobalJsonWriterSettings);
-			PlayFabHTTP.HTTPCallback callback = delegate(string responseStr, string errorStr)
+			Action<string,string> callback = delegate(string responseStr, string errorStr)
 			{
 				ConsumeItemResult result = null;
 				PlayFabError error = null;
@@ -1361,7 +1362,7 @@ namespace PlayFab
 			if (AuthKey == null) throw new Exception ("Must be logged in to call this method");
 
 			string serializedJSON = JsonWriter.Serialize (request, Util.GlobalJsonWriterSettings);
-			PlayFabHTTP.HTTPCallback callback = delegate(string responseStr, string errorStr)
+			Action<string,string> callback = delegate(string responseStr, string errorStr)
 			{
 				GetUserInventoryResult result = null;
 				PlayFabError error = null;
@@ -1390,7 +1391,7 @@ namespace PlayFab
 			if (AuthKey == null) throw new Exception ("Must be logged in to call this method");
 
 			string serializedJSON = JsonWriter.Serialize (request, Util.GlobalJsonWriterSettings);
-			PlayFabHTTP.HTTPCallback callback = delegate(string responseStr, string errorStr)
+			Action<string,string> callback = delegate(string responseStr, string errorStr)
 			{
 				PayForPurchaseResult result = null;
 				PlayFabError error = null;
@@ -1419,7 +1420,7 @@ namespace PlayFab
 			if (AuthKey == null) throw new Exception ("Must be logged in to call this method");
 
 			string serializedJSON = JsonWriter.Serialize (request, Util.GlobalJsonWriterSettings);
-			PlayFabHTTP.HTTPCallback callback = delegate(string responseStr, string errorStr)
+			Action<string,string> callback = delegate(string responseStr, string errorStr)
 			{
 				PurchaseItemResult result = null;
 				PlayFabError error = null;
@@ -1448,7 +1449,7 @@ namespace PlayFab
 			if (AuthKey == null) throw new Exception ("Must be logged in to call this method");
 
 			string serializedJSON = JsonWriter.Serialize (request, Util.GlobalJsonWriterSettings);
-			PlayFabHTTP.HTTPCallback callback = delegate(string responseStr, string errorStr)
+			Action<string,string> callback = delegate(string responseStr, string errorStr)
 			{
 				RedeemCouponResult result = null;
 				PlayFabError error = null;
@@ -1470,14 +1471,14 @@ namespace PlayFab
 		}
 		
 		/// <summary>
-		/// Report a player
+		/// Submit a report for another player (due to bad bahavior, etc.), so that customer service representatives for the title can take action concerning potentially toxic players.
 		/// </summary>
 		public static void ReportPlayer(ReportPlayerClientRequest request, ReportPlayerCallback resultCallback, ErrorCallback errorCallback)
 		{
 			if (AuthKey == null) throw new Exception ("Must be logged in to call this method");
 
 			string serializedJSON = JsonWriter.Serialize (request, Util.GlobalJsonWriterSettings);
-			PlayFabHTTP.HTTPCallback callback = delegate(string responseStr, string errorStr)
+			Action<string,string> callback = delegate(string responseStr, string errorStr)
 			{
 				ReportPlayerClientResult result = null;
 				PlayFabError error = null;
@@ -1506,7 +1507,7 @@ namespace PlayFab
 			if (AuthKey == null) throw new Exception ("Must be logged in to call this method");
 
 			string serializedJSON = JsonWriter.Serialize (request, Util.GlobalJsonWriterSettings);
-			PlayFabHTTP.HTTPCallback callback = delegate(string responseStr, string errorStr)
+			Action<string,string> callback = delegate(string responseStr, string errorStr)
 			{
 				StartPurchaseResult result = null;
 				PlayFabError error = null;
@@ -1535,7 +1536,7 @@ namespace PlayFab
 			if (AuthKey == null) throw new Exception ("Must be logged in to call this method");
 
 			string serializedJSON = JsonWriter.Serialize (request, Util.GlobalJsonWriterSettings);
-			PlayFabHTTP.HTTPCallback callback = delegate(string responseStr, string errorStr)
+			Action<string,string> callback = delegate(string responseStr, string errorStr)
 			{
 				ModifyUserVirtualCurrencyResult result = null;
 				PlayFabError error = null;
@@ -1564,7 +1565,7 @@ namespace PlayFab
 			if (AuthKey == null) throw new Exception ("Must be logged in to call this method");
 
 			string serializedJSON = JsonWriter.Serialize (request, Util.GlobalJsonWriterSettings);
-			PlayFabHTTP.HTTPCallback callback = delegate(string responseStr, string errorStr)
+			Action<string,string> callback = delegate(string responseStr, string errorStr)
 			{
 				UnlockContainerItemResult result = null;
 				PlayFabError error = null;
@@ -1593,7 +1594,7 @@ namespace PlayFab
 			if (AuthKey == null) throw new Exception ("Must be logged in to call this method");
 
 			string serializedJSON = JsonWriter.Serialize (request, Util.GlobalJsonWriterSettings);
-			PlayFabHTTP.HTTPCallback callback = delegate(string responseStr, string errorStr)
+			Action<string,string> callback = delegate(string responseStr, string errorStr)
 			{
 				AddFriendResult result = null;
 				PlayFabError error = null;
@@ -1622,7 +1623,7 @@ namespace PlayFab
 			if (AuthKey == null) throw new Exception ("Must be logged in to call this method");
 
 			string serializedJSON = JsonWriter.Serialize (request, Util.GlobalJsonWriterSettings);
-			PlayFabHTTP.HTTPCallback callback = delegate(string responseStr, string errorStr)
+			Action<string,string> callback = delegate(string responseStr, string errorStr)
 			{
 				GetFriendsListResult result = null;
 				PlayFabError error = null;
@@ -1651,7 +1652,7 @@ namespace PlayFab
 			if (AuthKey == null) throw new Exception ("Must be logged in to call this method");
 
 			string serializedJSON = JsonWriter.Serialize (request, Util.GlobalJsonWriterSettings);
-			PlayFabHTTP.HTTPCallback callback = delegate(string responseStr, string errorStr)
+			Action<string,string> callback = delegate(string responseStr, string errorStr)
 			{
 				RemoveFriendResult result = null;
 				PlayFabError error = null;
@@ -1680,7 +1681,7 @@ namespace PlayFab
 			if (AuthKey == null) throw new Exception ("Must be logged in to call this method");
 
 			string serializedJSON = JsonWriter.Serialize (request, Util.GlobalJsonWriterSettings);
-			PlayFabHTTP.HTTPCallback callback = delegate(string responseStr, string errorStr)
+			Action<string,string> callback = delegate(string responseStr, string errorStr)
 			{
 				SetFriendTagsResult result = null;
 				PlayFabError error = null;
@@ -1709,7 +1710,7 @@ namespace PlayFab
 			if (AuthKey == null) throw new Exception ("Must be logged in to call this method");
 
 			string serializedJSON = JsonWriter.Serialize (request, Util.GlobalJsonWriterSettings);
-			PlayFabHTTP.HTTPCallback callback = delegate(string responseStr, string errorStr)
+			Action<string,string> callback = delegate(string responseStr, string errorStr)
 			{
 				RegisterForIOSPushNotificationResult result = null;
 				PlayFabError error = null;
@@ -1738,7 +1739,7 @@ namespace PlayFab
 			if (AuthKey == null) throw new Exception ("Must be logged in to call this method");
 
 			string serializedJSON = JsonWriter.Serialize (request, Util.GlobalJsonWriterSettings);
-			PlayFabHTTP.HTTPCallback callback = delegate(string responseStr, string errorStr)
+			Action<string,string> callback = delegate(string responseStr, string errorStr)
 			{
 				RestoreIOSPurchasesResult result = null;
 				PlayFabError error = null;
@@ -1767,7 +1768,7 @@ namespace PlayFab
 			if (AuthKey == null) throw new Exception ("Must be logged in to call this method");
 
 			string serializedJSON = JsonWriter.Serialize (request, Util.GlobalJsonWriterSettings);
-			PlayFabHTTP.HTTPCallback callback = delegate(string responseStr, string errorStr)
+			Action<string,string> callback = delegate(string responseStr, string errorStr)
 			{
 				ValidateIOSReceiptResult result = null;
 				PlayFabError error = null;
@@ -1796,7 +1797,7 @@ namespace PlayFab
 			if (AuthKey == null) throw new Exception ("Must be logged in to call this method");
 
 			string serializedJSON = JsonWriter.Serialize (request, Util.GlobalJsonWriterSettings);
-			PlayFabHTTP.HTTPCallback callback = delegate(string responseStr, string errorStr)
+			Action<string,string> callback = delegate(string responseStr, string errorStr)
 			{
 				CurrentGamesResult result = null;
 				PlayFabError error = null;
@@ -1825,7 +1826,7 @@ namespace PlayFab
 			if (AuthKey == null) throw new Exception ("Must be logged in to call this method");
 
 			string serializedJSON = JsonWriter.Serialize (request, Util.GlobalJsonWriterSettings);
-			PlayFabHTTP.HTTPCallback callback = delegate(string responseStr, string errorStr)
+			Action<string,string> callback = delegate(string responseStr, string errorStr)
 			{
 				GameServerRegionsResult result = null;
 				PlayFabError error = null;
@@ -1854,7 +1855,7 @@ namespace PlayFab
 			if (AuthKey == null) throw new Exception ("Must be logged in to call this method");
 
 			string serializedJSON = JsonWriter.Serialize (request, Util.GlobalJsonWriterSettings);
-			PlayFabHTTP.HTTPCallback callback = delegate(string responseStr, string errorStr)
+			Action<string,string> callback = delegate(string responseStr, string errorStr)
 			{
 				MatchmakeResult result = null;
 				PlayFabError error = null;
@@ -1883,7 +1884,7 @@ namespace PlayFab
 			if (AuthKey == null) throw new Exception ("Must be logged in to call this method");
 
 			string serializedJSON = JsonWriter.Serialize (request, Util.GlobalJsonWriterSettings);
-			PlayFabHTTP.HTTPCallback callback = delegate(string responseStr, string errorStr)
+			Action<string,string> callback = delegate(string responseStr, string errorStr)
 			{
 				StartGameResult result = null;
 				PlayFabError error = null;
@@ -1912,7 +1913,7 @@ namespace PlayFab
 			if (AuthKey == null) throw new Exception ("Must be logged in to call this method");
 
 			string serializedJSON = JsonWriter.Serialize (request, Util.GlobalJsonWriterSettings);
-			PlayFabHTTP.HTTPCallback callback = delegate(string responseStr, string errorStr)
+			Action<string,string> callback = delegate(string responseStr, string errorStr)
 			{
 				AndroidDevicePushNotificationRegistrationResult result = null;
 				PlayFabError error = null;
@@ -1941,7 +1942,7 @@ namespace PlayFab
 			if (AuthKey == null) throw new Exception ("Must be logged in to call this method");
 
 			string serializedJSON = JsonWriter.Serialize (request, Util.GlobalJsonWriterSettings);
-			PlayFabHTTP.HTTPCallback callback = delegate(string responseStr, string errorStr)
+			Action<string,string> callback = delegate(string responseStr, string errorStr)
 			{
 				ValidateGooglePlayPurchaseResult result = null;
 				PlayFabError error = null;
@@ -1970,7 +1971,7 @@ namespace PlayFab
 			if (AuthKey == null) throw new Exception ("Must be logged in to call this method");
 
 			string serializedJSON = JsonWriter.Serialize (request, Util.GlobalJsonWriterSettings);
-			PlayFabHTTP.HTTPCallback callback = delegate(string responseStr, string errorStr)
+			Action<string,string> callback = delegate(string responseStr, string errorStr)
 			{
 				LogEventResult result = null;
 				PlayFabError error = null;
@@ -1999,7 +2000,7 @@ namespace PlayFab
 			if (AuthKey == null) throw new Exception ("Must be logged in to call this method");
 
 			string serializedJSON = JsonWriter.Serialize (request, Util.GlobalJsonWriterSettings);
-			PlayFabHTTP.HTTPCallback callback = delegate(string responseStr, string errorStr)
+			Action<string,string> callback = delegate(string responseStr, string errorStr)
 			{
 				AddSharedGroupMembersResult result = null;
 				PlayFabError error = null;
@@ -2028,7 +2029,7 @@ namespace PlayFab
 			if (AuthKey == null) throw new Exception ("Must be logged in to call this method");
 
 			string serializedJSON = JsonWriter.Serialize (request, Util.GlobalJsonWriterSettings);
-			PlayFabHTTP.HTTPCallback callback = delegate(string responseStr, string errorStr)
+			Action<string,string> callback = delegate(string responseStr, string errorStr)
 			{
 				CreateSharedGroupResult result = null;
 				PlayFabError error = null;
@@ -2057,7 +2058,7 @@ namespace PlayFab
 			if (AuthKey == null) throw new Exception ("Must be logged in to call this method");
 
 			string serializedJSON = JsonWriter.Serialize (request, Util.GlobalJsonWriterSettings);
-			PlayFabHTTP.HTTPCallback callback = delegate(string responseStr, string errorStr)
+			Action<string,string> callback = delegate(string responseStr, string errorStr)
 			{
 				GetPublisherDataResult result = null;
 				PlayFabError error = null;
@@ -2086,7 +2087,7 @@ namespace PlayFab
 			if (AuthKey == null) throw new Exception ("Must be logged in to call this method");
 
 			string serializedJSON = JsonWriter.Serialize (request, Util.GlobalJsonWriterSettings);
-			PlayFabHTTP.HTTPCallback callback = delegate(string responseStr, string errorStr)
+			Action<string,string> callback = delegate(string responseStr, string errorStr)
 			{
 				GetSharedGroupDataResult result = null;
 				PlayFabError error = null;
@@ -2115,7 +2116,7 @@ namespace PlayFab
 			if (AuthKey == null) throw new Exception ("Must be logged in to call this method");
 
 			string serializedJSON = JsonWriter.Serialize (request, Util.GlobalJsonWriterSettings);
-			PlayFabHTTP.HTTPCallback callback = delegate(string responseStr, string errorStr)
+			Action<string,string> callback = delegate(string responseStr, string errorStr)
 			{
 				RemoveSharedGroupMembersResult result = null;
 				PlayFabError error = null;
@@ -2144,7 +2145,7 @@ namespace PlayFab
 			if (AuthKey == null) throw new Exception ("Must be logged in to call this method");
 
 			string serializedJSON = JsonWriter.Serialize (request, Util.GlobalJsonWriterSettings);
-			PlayFabHTTP.HTTPCallback callback = delegate(string responseStr, string errorStr)
+			Action<string,string> callback = delegate(string responseStr, string errorStr)
 			{
 				UpdateSharedGroupDataResult result = null;
 				PlayFabError error = null;
@@ -2173,7 +2174,7 @@ namespace PlayFab
 			if (AuthKey == null) throw new Exception ("Must be logged in to call this method");
 
 			string serializedJSON = JsonWriter.Serialize (request, Util.GlobalJsonWriterSettings);
-			PlayFabHTTP.HTTPCallback callback = delegate(string responseStr, string errorStr)
+			Action<string,string> callback = delegate(string responseStr, string errorStr)
 			{
 				EmptyResult result = null;
 				PlayFabError error = null;
@@ -2202,7 +2203,7 @@ namespace PlayFab
 			if (AuthKey == null) throw new Exception ("Must be logged in to call this method");
 
 			string serializedJSON = JsonWriter.Serialize (request, Util.GlobalJsonWriterSettings);
-			PlayFabHTTP.HTTPCallback callback = delegate(string responseStr, string errorStr)
+			Action<string,string> callback = delegate(string responseStr, string errorStr)
 			{
 				GetCloudScriptUrlResult result = null;
 				PlayFabError error = null;
@@ -2232,7 +2233,7 @@ namespace PlayFab
 			if (AuthKey == null) throw new Exception ("Must be logged in to call this method");
 
 			string serializedJSON = JsonWriter.Serialize (request, Util.GlobalJsonWriterSettings);
-			PlayFabHTTP.HTTPCallback callback = delegate(string responseStr, string errorStr)
+			Action<string,string> callback = delegate(string responseStr, string errorStr)
 			{
 				RunCloudScriptResult result = null;
 				PlayFabError error = null;
@@ -2251,6 +2252,35 @@ namespace PlayFab
 				}
 			};
 			PlayFabHTTP.Post(PlayFabSettings.GetLogicURL()+"/Client/RunCloudScript", serializedJSON, "X-Authorization", AuthKey, callback);
+		}
+		
+		/// <summary>
+		/// Retrieves the pre-authorized URL for accessing a content file for the title. A subsequent HTTP GET to the returned URL downloads the content; or a HEAD query to the returned URL retrieves the metadata of the content. This API only generates a pre-signed URL to access the content. A success result does not guarantee the existence of the content.
+		/// </summary>
+		public static void GetContentDownloadUrl(GetContentDownloadUrlRequest request, GetContentDownloadUrlCallback resultCallback, ErrorCallback errorCallback)
+		{
+			if (AuthKey == null) throw new Exception ("Must be logged in to call this method");
+
+			string serializedJSON = JsonWriter.Serialize (request, Util.GlobalJsonWriterSettings);
+			Action<string,string> callback = delegate(string responseStr, string errorStr)
+			{
+				GetContentDownloadUrlResult result = null;
+				PlayFabError error = null;
+				ResultContainer<GetContentDownloadUrlResult>.HandleResults(responseStr, errorStr, out result, out error);
+				if(error != null && errorCallback != null)
+				{
+					errorCallback(error);
+				}
+				if(result != null)
+				{
+					
+					if(resultCallback != null)
+					{
+						resultCallback(result);
+					}
+				}
+			};
+			PlayFabHTTP.Post(PlayFabSettings.GetURL()+"/Client/GetContentDownloadUrl", serializedJSON, "X-Authorization", AuthKey, callback);
 		}
 		
 		

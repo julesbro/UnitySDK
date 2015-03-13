@@ -115,9 +115,6 @@ namespace PlayFab.ClientModels
 		
 		public string SharedGroupId { get; set;}
 		
-		/// <summary>
-		/// list of PlayFabId identifiers of users to add as members of the shared group
-		/// </summary>
 		
 		public List<string> PlayFabIds { get; set;}
 		
@@ -1600,6 +1597,62 @@ namespace PlayFab.ClientModels
 		{
 			
 			Url = (string)JsonUtil.Get<string>(json, "Url");
+		}
+	}
+	
+	
+	
+	public class GetContentDownloadUrlRequest : PlayFabModelBase
+	{
+		
+		
+		/// <summary>
+		/// Key of the content item to fetch, usually formatted as a path, e.g. images/a.png
+		/// </summary>
+		
+		public string Key { get; set;}
+		
+		public override void WriteJson(JsonWriter writer)
+		{
+			writer.Writer.Write(JsonReader.OperatorObjectStart);
+			
+			writer.WriteObjectProperty("Key", Key);
+			
+			writer.Writer.Write(JsonReader.OperatorObjectEnd);
+		}
+		
+		public override void Deserialize (Dictionary<string,object> json)
+		{
+			
+			Key = (string)JsonUtil.Get<string>(json, "Key");
+		}
+	}
+	
+	
+	
+	public class GetContentDownloadUrlResult : PlayFabModelBase
+	{
+		
+		
+		/// <summary>
+		/// URL for downloading content via HTTP GET or HEAD method. The URL will expire in 1 hour.
+		/// </summary>
+		
+		public string URL { get; set;}
+		
+		public override void WriteJson(JsonWriter writer)
+		{
+			writer.Writer.Write(JsonReader.OperatorObjectStart);
+			
+			writer.WriteObjectProperty("URL", URL);
+			
+			writer.Writer.Write(JsonReader.OperatorObjectEnd);
+		}
+		
+		public override void Deserialize (Dictionary<string,object> json)
+		{
+			
+			URL = (string)JsonUtil.Get<string>(json, "URL");
 		}
 	}
 	
@@ -4787,9 +4840,6 @@ namespace PlayFab.ClientModels
 		
 		public string SharedGroupId { get; set;}
 		
-		/// <summary>
-		/// list of PlayFabId identifiers of users to remove from the shared group
-		/// </summary>
 		
 		public List<string> PlayFabIds { get; set;}
 		
@@ -4846,12 +4896,6 @@ namespace PlayFab.ClientModels
 		public string ReporteeId { get; set;}
 		
 		/// <summary>
-		/// title player was reported in, optional if report not for specific title
-		/// </summary>
-		
-		public string TitleId { get; set;}
-		
-		/// <summary>
 		/// Optional additional comment by reporting player
 		/// </summary>
 		
@@ -4865,10 +4909,6 @@ namespace PlayFab.ClientModels
 			
 			writer.Writer.Write(JsonReader.OperatorValueDelim);
 			
-			writer.WriteObjectProperty("TitleId", TitleId);
-			
-			writer.Writer.Write(JsonReader.OperatorValueDelim);
-			
 			writer.WriteObjectProperty("Comment", Comment);
 			
 			writer.Writer.Write(JsonReader.OperatorObjectEnd);
@@ -4878,7 +4918,6 @@ namespace PlayFab.ClientModels
 		{
 			
 			ReporteeId = (string)JsonUtil.Get<string>(json, "ReporteeId");
-			TitleId = (string)JsonUtil.Get<string>(json, "TitleId");
 			Comment = (string)JsonUtil.Get<string>(json, "Comment");
 		}
 	}
