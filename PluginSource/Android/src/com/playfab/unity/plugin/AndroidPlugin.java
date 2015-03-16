@@ -13,7 +13,8 @@ import android.util.Log;
 public class AndroidPlugin {
 
 	static final String TAG = "PlayFabUnityAndroidPlugin";
-	
+	public static final String UNITY_EVENT_OBJECT = "_PlayFabGO";
+
 	public static final String PROPERTY_APP_VERSION = "_PlayFab_appVersion";
 	public static final String PROPERTY_NOTIFICATION_ID = "_PlayFab_notificationId";
 	public static int APP_ICON=0;

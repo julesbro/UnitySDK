@@ -7,12 +7,13 @@
 using System;
 using UnityEngine;
 
+using PlayFab.Internal;
+
 namespace PlayFab
 {
 	public class PlayFabAndroidPlugin
 	{
-		private static PlayFabGameObject PlayFabGO;
-
+		private static bool Initted=false;
 #if PLAYFAB_ANDROID_PLUGIN
 
 		private static AndroidJavaClass AndroidPlugin;
@@ -25,17 +26,10 @@ namespace PlayFab
 
 		public static void init()
 		{
-			if (PlayFabGO != null)
+			if (Initted)
 				return;
 
-			GameObject playfabHolder = GameObject.Find ("_PlayFabGO");
-			if(playfabHolder == null)
-				playfabHolder = new GameObject ("_PlayFabGO");
-			UnityEngine.Object.DontDestroyOnLoad(playfabHolder);
-
-			PlayFabGO = playfabHolder.GetComponent<PlayFabGameObject> ();
-			if(PlayFabGO == null)
-				PlayFabGO = playfabHolder.AddComponent<PlayFabGameObject> ();
+			PlayFabPluginEventHandler.init ();
 
 #if PLAYFAB_ANDROID_PLUGIN
 			AndroidPlugin = new AndroidJavaClass("com.playfab.unity.plugin.AndroidPlugin");
@@ -44,6 +38,8 @@ namespace PlayFab
 			PlayServicesUtils = new AndroidJavaClass("com.playfab.unity.plugin.PlayServicesUtils");
 #endif
 			PlayFabGoogleCloudMessaging.init ();
+
+			Initted = true;
 		}
 
 #if PLAYFAB_ANDROID_PLUGIN

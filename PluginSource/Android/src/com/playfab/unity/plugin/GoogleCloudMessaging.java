@@ -74,11 +74,11 @@ public class GoogleCloudMessaging {
 	                
 	                Log.i(AndroidPlugin.TAG, "GCM registration completed with id "+regid);
 	                
-	                UnityPlayer.UnitySendMessage("_PlayFabGO", "GCMRegistered", regid);
+	                UnityPlayer.UnitySendMessage(AndroidPlugin.UNITY_EVENT_OBJECT, "GCMRegistered", regid);
 	                
 	            } catch (IOException ex) {
 	            	Log.e(AndroidPlugin.TAG, "Error registering with GCM: ", ex);
-	            	UnityPlayer.UnitySendMessage("_PlayFabGO", "GCMRegisterError", ex.getMessage());
+	            	UnityPlayer.UnitySendMessage(AndroidPlugin.UNITY_EVENT_OBJECT, "GCMRegisterError", ex.getMessage());
 	            }
 				return null;  
 			}

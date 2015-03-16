@@ -69,7 +69,7 @@ public class GcmIntentService extends IntentService {
             	try
             	{
             		if(encodedMessage != null)
-            			UnityPlayer.UnitySendMessage("_PlayFabGO", "GCMMessageReceived", defaultMessage);
+            			UnityPlayer.UnitySendMessage(AndroidPlugin.UNITY_EVENT_OBJECT, "GCMMessageReceived", defaultMessage);
             	}
             	catch(Exception e)
             	{
