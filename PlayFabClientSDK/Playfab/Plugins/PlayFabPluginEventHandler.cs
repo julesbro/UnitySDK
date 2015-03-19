@@ -52,6 +52,8 @@ namespace PlayFab.Internal
 
 		public static void addHttpDelegate(int id, Action<string,string> callback)
 		{
+			init ();
+
 			if(callback != null)
 				PlayFabGO.HttpHandlers.Add (id, callback);
 		}
