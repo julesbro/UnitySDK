@@ -88,7 +88,7 @@ namespace PlayFab.Editor
 			Application.OpenURL("http://api.playfab.com/documentation");
 		}
 		private void OpenGettingStarted() {
-			Application.OpenURL("http://developer.playfab.com/gettingstarted.html");
+			Application.OpenURL("https://playfab.com/getting-started");
 		}
 		private void OpenDashboard() {
 			Application.OpenURL("https://developer.playfab.com/");
