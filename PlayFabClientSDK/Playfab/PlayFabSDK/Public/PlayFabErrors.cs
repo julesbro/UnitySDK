@@ -134,7 +134,13 @@ namespace PlayFab
 		BuildNotAvailable = 1132,
 		ConcurrentEditError = 1133,
 		ContentNotFound = 1134,
-		CharacterNotFound = 1135
+		CharacterNotFound = 1135,
+		CloudScriptNotFound = 1136,
+		ContentQuotaExceeded = 1137,
+		InvalidCharacterStatistics = 1138,
+		PhotonNotEnabledForTitle = 1139,
+		PhotonApplicationNotFound = 1140,
+		PhotonApplicationNotAssociatedWithTitle = 1141
 	}
 	
 	public class PlayFabError

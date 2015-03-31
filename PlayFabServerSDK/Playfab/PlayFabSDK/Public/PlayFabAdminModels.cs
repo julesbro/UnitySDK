@@ -2243,6 +2243,9 @@ namespace PlayFab.AdminModels
 		
 		public string Annotation { get; set;}
 		
+		
+		public string CharacterId { get; set;}
+		
 		public override void WriteJson(JsonWriter writer)
 		{
 			writer.Writer.Write(JsonReader.OperatorObjectStart);
@@ -2257,6 +2260,10 @@ namespace PlayFab.AdminModels
 			
 			writer.WriteObjectProperty("Annotation", Annotation);
 			
+			writer.Writer.Write(JsonReader.OperatorValueDelim);
+			
+			writer.WriteObjectProperty("CharacterId", CharacterId);
+			
 			writer.Writer.Write(JsonReader.OperatorObjectEnd);
 		}
 		
@@ -2266,6 +2273,7 @@ namespace PlayFab.AdminModels
 			PlayFabId = (string)JsonUtil.Get<string>(json, "PlayFabId");
 			ItemId = (string)JsonUtil.Get<string>(json, "ItemId");
 			Annotation = (string)JsonUtil.Get<string>(json, "Annotation");
+			CharacterId = (string)JsonUtil.Get<string>(json, "CharacterId");
 		}
 	}
 	
@@ -2305,6 +2313,9 @@ namespace PlayFab.AdminModels
 		
 		public bool Result { get; set;}
 		
+		
+		public string CharacterId { get; set;}
+		
 		public override void WriteJson(JsonWriter writer)
 		{
 			writer.Writer.Write(JsonReader.OperatorObjectStart);
@@ -2327,6 +2338,10 @@ namespace PlayFab.AdminModels
 			
 			writer.WriteObjectProperty("Result", Result);
 			
+			writer.Writer.Write(JsonReader.OperatorValueDelim);
+			
+			writer.WriteObjectProperty("CharacterId", CharacterId);
+			
 			writer.Writer.Write(JsonReader.OperatorObjectEnd);
 		}
 		
@@ -2338,6 +2353,7 @@ namespace PlayFab.AdminModels
 			ItemInstanceId = (string)JsonUtil.Get<string>(json, "ItemInstanceId");
 			Annotation = (string)JsonUtil.Get<string>(json, "Annotation");
 			Result = (bool)JsonUtil.Get<bool?>(json, "Result");
+			CharacterId = (string)JsonUtil.Get<string>(json, "CharacterId");
 		}
 	}
 	

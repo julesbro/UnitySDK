@@ -777,6 +777,100 @@ namespace PlayFab.ClientModels
 	
 	
 	
+	public class CharacterLeaderboardEntry : PlayFabModelBase
+	{
+		
+		
+		/// <summary>
+		/// PlayFab unique identifier of the user for this leaderboard entry
+		/// </summary>
+		
+		public string PlayFabId { get; set;}
+		
+		/// <summary>
+		/// PlayFab unique identifier of the character that belongs to the user for this leaderboard entry
+		/// </summary>
+		
+		public string CharacterId { get; set;}
+		
+		/// <summary>
+		/// title-specific display name of the character for this leaderboard entry
+		/// </summary>
+		
+		public string CharacterName { get; set;}
+		
+		/// <summary>
+		/// title-specific display name of the user for this leaderboard entry
+		/// </summary>
+		
+		public string DisplayName { get; set;}
+		
+		/// <summary>
+		/// name of the character class for this entry
+		/// </summary>
+		
+		public string CharacterType { get; set;}
+		
+		/// <summary>
+		/// specific value of the user's statistic
+		/// </summary>
+		
+		public int StatValue { get; set;}
+		
+		/// <summary>
+		/// user's overall position in the leaderboard
+		/// </summary>
+		
+		public int Position { get; set;}
+		
+		public override void WriteJson(JsonWriter writer)
+		{
+			writer.Writer.Write(JsonReader.OperatorObjectStart);
+			
+			writer.WriteObjectProperty("PlayFabId", PlayFabId);
+			
+			writer.Writer.Write(JsonReader.OperatorValueDelim);
+			
+			writer.WriteObjectProperty("CharacterId", CharacterId);
+			
+			writer.Writer.Write(JsonReader.OperatorValueDelim);
+			
+			writer.WriteObjectProperty("CharacterName", CharacterName);
+			
+			writer.Writer.Write(JsonReader.OperatorValueDelim);
+			
+			writer.WriteObjectProperty("DisplayName", DisplayName);
+			
+			writer.Writer.Write(JsonReader.OperatorValueDelim);
+			
+			writer.WriteObjectProperty("CharacterType", CharacterType);
+			
+			writer.Writer.Write(JsonReader.OperatorValueDelim);
+			
+			writer.WriteObjectProperty("StatValue", StatValue);
+			
+			writer.Writer.Write(JsonReader.OperatorValueDelim);
+			
+			writer.WriteObjectProperty("Position", Position);
+			
+			writer.Writer.Write(JsonReader.OperatorObjectEnd);
+		}
+		
+		public override void Deserialize (Dictionary<string,object> json)
+		{
+			
+			PlayFabId = (string)JsonUtil.Get<string>(json, "PlayFabId");
+			CharacterId = (string)JsonUtil.Get<string>(json, "CharacterId");
+			CharacterName = (string)JsonUtil.Get<string>(json, "CharacterName");
+			DisplayName = (string)JsonUtil.Get<string>(json, "DisplayName");
+			CharacterType = (string)JsonUtil.Get<string>(json, "CharacterType");
+			StatValue = (int)JsonUtil.Get<double?>(json, "StatValue");
+			Position = (int)JsonUtil.Get<double?>(json, "Position");
+		}
+	}
+	
+	
+	
 	public class ConfirmPurchaseRequest : PlayFabModelBase
 	{
 		
@@ -1535,6 +1629,175 @@ namespace PlayFab.ClientModels
 	
 	
 	
+	public class GetCharacterDataRequest : PlayFabModelBase
+	{
+		
+		
+		/// <summary>
+		/// PlayFabId of the user to load data for. Optional, defaults to yourself if not set.
+		/// </summary>
+		
+		public string PlayFabId { get; set;}
+		
+		
+		public string CharacterId { get; set;}
+		
+		/// <summary>
+		/// specific keys to search for in the custom user data
+		/// </summary>
+		
+		public List<string> Keys { get; set;}
+		
+		public override void WriteJson(JsonWriter writer)
+		{
+			writer.Writer.Write(JsonReader.OperatorObjectStart);
+			
+			writer.WriteObjectProperty("PlayFabId", PlayFabId);
+			
+			writer.Writer.Write(JsonReader.OperatorValueDelim);
+			
+			writer.WriteObjectProperty("CharacterId", CharacterId);
+			
+			writer.Writer.Write(JsonReader.OperatorValueDelim);
+			
+			writer.WriteObjectProperty("Keys", Keys);
+			
+			writer.Writer.Write(JsonReader.OperatorObjectEnd);
+		}
+		
+		public override void Deserialize (Dictionary<string,object> json)
+		{
+			
+			PlayFabId = (string)JsonUtil.Get<string>(json, "PlayFabId");
+			CharacterId = (string)JsonUtil.Get<string>(json, "CharacterId");
+			Keys = JsonUtil.GetList<string>(json, "Keys");
+		}
+	}
+	
+	
+	
+	public class GetCharacterDataResult : PlayFabModelBase
+	{
+		
+		
+		
+		public string CharacterId { get; set;}
+		
+		public override void WriteJson(JsonWriter writer)
+		{
+			writer.Writer.Write(JsonReader.OperatorObjectStart);
+			
+			writer.WriteObjectProperty("CharacterId", CharacterId);
+			
+			writer.Writer.Write(JsonReader.OperatorObjectEnd);
+		}
+		
+		public override void Deserialize (Dictionary<string,object> json)
+		{
+			
+			CharacterId = (string)JsonUtil.Get<string>(json, "CharacterId");
+		}
+	}
+	
+	
+	
+	public class GetCharacterLeaderboardRequest : PlayFabModelBase
+	{
+		
+		
+		
+		public string CharacterId { get; set;}
+		
+		/// <summary>
+		/// optional character type on which to filter the leaderboard entries
+		/// </summary>
+		
+		public string CharacterType { get; set;}
+		
+		/// <summary>
+		/// unique identifier for the title-specific statistic for the leaderboard
+		/// </summary>
+		
+		public string StatisticName { get; set;}
+		
+		/// <summary>
+		/// first entry in the leaderboard to be retrieved
+		/// </summary>
+		
+		public int StartPosition { get; set;}
+		
+		/// <summary>
+		/// maximum number of entries to retrieve
+		/// </summary>
+		
+		public int MaxResultsCount { get; set;}
+		
+		public override void WriteJson(JsonWriter writer)
+		{
+			writer.Writer.Write(JsonReader.OperatorObjectStart);
+			
+			writer.WriteObjectProperty("CharacterId", CharacterId);
+			
+			writer.Writer.Write(JsonReader.OperatorValueDelim);
+			
+			writer.WriteObjectProperty("CharacterType", CharacterType);
+			
+			writer.Writer.Write(JsonReader.OperatorValueDelim);
+			
+			writer.WriteObjectProperty("StatisticName", StatisticName);
+			
+			writer.Writer.Write(JsonReader.OperatorValueDelim);
+			
+			writer.WriteObjectProperty("StartPosition", StartPosition);
+			
+			writer.Writer.Write(JsonReader.OperatorValueDelim);
+			
+			writer.WriteObjectProperty("MaxResultsCount", MaxResultsCount);
+			
+			writer.Writer.Write(JsonReader.OperatorObjectEnd);
+		}
+		
+		public override void Deserialize (Dictionary<string,object> json)
+		{
+			
+			CharacterId = (string)JsonUtil.Get<string>(json, "CharacterId");
+			CharacterType = (string)JsonUtil.Get<string>(json, "CharacterType");
+			StatisticName = (string)JsonUtil.Get<string>(json, "StatisticName");
+			StartPosition = (int)JsonUtil.Get<double?>(json, "StartPosition");
+			MaxResultsCount = (int)JsonUtil.Get<double?>(json, "MaxResultsCount");
+		}
+	}
+	
+	
+	
+	public class GetCharacterLeaderboardResult : PlayFabModelBase
+	{
+		
+		
+		/// <summary>
+		/// ordered list of leaderboard entries
+		/// </summary>
+		
+		public List<CharacterLeaderboardEntry> Leaderboard { get; set;}
+		
+		public override void WriteJson(JsonWriter writer)
+		{
+			writer.Writer.Write(JsonReader.OperatorObjectStart);
+			
+			writer.WriteObjectProperty("Leaderboard", Leaderboard);
+			
+			writer.Writer.Write(JsonReader.OperatorObjectEnd);
+		}
+		
+		public override void Deserialize (Dictionary<string,object> json)
+		{
+			
+			Leaderboard = JsonUtil.GetObjectList<CharacterLeaderboardEntry>(json, "Leaderboard");
+		}
+	}
+	
+	
+	
 	public class GetCloudScriptUrlRequest : PlayFabModelBase
 	{
 		
@@ -1612,11 +1875,31 @@ namespace PlayFab.ClientModels
 		
 		public string Key { get; set;}
 		
+		/// <summary>
+		/// HTTP method to fetch item - GET or HEAD. Use HEAD when only fetching metadata. Default is GET.
+		/// </summary>
+		
+		public string HttpMethod { get; set;}
+		
+		/// <summary>
+		/// True if download through CDN. CDN provides better download bandwidth and time. However, if you want latest, non-cached version of the content, set this to false. Default is true.
+		/// </summary>
+		
+		public bool? ThruCDN { get; set;}
+		
 		public override void WriteJson(JsonWriter writer)
 		{
 			writer.Writer.Write(JsonReader.OperatorObjectStart);
 			
 			writer.WriteObjectProperty("Key", Key);
+			
+			writer.Writer.Write(JsonReader.OperatorValueDelim);
+			
+			writer.WriteObjectProperty("HttpMethod", HttpMethod);
+			
+			writer.Writer.Write(JsonReader.OperatorValueDelim);
+			
+			writer.WriteObjectProperty("ThruCDN", ThruCDN);
 			
 			writer.Writer.Write(JsonReader.OperatorObjectEnd);
 		}
@@ -1625,6 +1908,8 @@ namespace PlayFab.ClientModels
 		{
 			
 			Key = (string)JsonUtil.Get<string>(json, "Key");
+			HttpMethod = (string)JsonUtil.Get<string>(json, "HttpMethod");
+			ThruCDN = (bool?)JsonUtil.Get<bool?>(json, "ThruCDN");
 		}
 	}
 	
@@ -1764,6 +2049,92 @@ namespace PlayFab.ClientModels
 	
 	
 	
+	public class GetLeaderboardAroundCharacterRequest : PlayFabModelBase
+	{
+		
+		
+		/// <summary>
+		/// unique identifier for the title-specific statistic for the leaderboard
+		/// </summary>
+		
+		public string StatisticName { get; set;}
+		
+		
+		public string CharacterId { get; set;}
+		
+		/// <summary>
+		/// optional character type on which to filter the leaderboard entries
+		/// </summary>
+		
+		public string CharacterType { get; set;}
+		
+		/// <summary>
+		/// maximum number of entries to retrieve
+		/// </summary>
+		
+		public int MaxResultsCount { get; set;}
+		
+		public override void WriteJson(JsonWriter writer)
+		{
+			writer.Writer.Write(JsonReader.OperatorObjectStart);
+			
+			writer.WriteObjectProperty("StatisticName", StatisticName);
+			
+			writer.Writer.Write(JsonReader.OperatorValueDelim);
+			
+			writer.WriteObjectProperty("CharacterId", CharacterId);
+			
+			writer.Writer.Write(JsonReader.OperatorValueDelim);
+			
+			writer.WriteObjectProperty("CharacterType", CharacterType);
+			
+			writer.Writer.Write(JsonReader.OperatorValueDelim);
+			
+			writer.WriteObjectProperty("MaxResultsCount", MaxResultsCount);
+			
+			writer.Writer.Write(JsonReader.OperatorObjectEnd);
+		}
+		
+		public override void Deserialize (Dictionary<string,object> json)
+		{
+			
+			StatisticName = (string)JsonUtil.Get<string>(json, "StatisticName");
+			CharacterId = (string)JsonUtil.Get<string>(json, "CharacterId");
+			CharacterType = (string)JsonUtil.Get<string>(json, "CharacterType");
+			MaxResultsCount = (int)JsonUtil.Get<double?>(json, "MaxResultsCount");
+		}
+	}
+	
+	
+	
+	public class GetLeaderboardAroundCharacterResult : PlayFabModelBase
+	{
+		
+		
+		/// <summary>
+		/// ordered list of leaderboard entries
+		/// </summary>
+		
+		public List<CharacterLeaderboardEntry> Leaderboard { get; set;}
+		
+		public override void WriteJson(JsonWriter writer)
+		{
+			writer.Writer.Write(JsonReader.OperatorObjectStart);
+			
+			writer.WriteObjectProperty("Leaderboard", Leaderboard);
+			
+			writer.Writer.Write(JsonReader.OperatorObjectEnd);
+		}
+		
+		public override void Deserialize (Dictionary<string,object> json)
+		{
+			
+			Leaderboard = JsonUtil.GetObjectList<CharacterLeaderboardEntry>(json, "Leaderboard");
+		}
+	}
+	
+	
+	
 	public class GetLeaderboardAroundCurrentUserRequest : PlayFabModelBase
 	{
 		
@@ -1826,6 +2197,73 @@ namespace PlayFab.ClientModels
 		{
 			
 			Leaderboard = JsonUtil.GetObjectList<PlayerLeaderboardEntry>(json, "Leaderboard");
+		}
+	}
+	
+	
+	
+	public class GetLeaderboardForUsersCharactersRequest : PlayFabModelBase
+	{
+		
+		
+		/// <summary>
+		/// unique identifier for the title-specific statistic for the leaderboard
+		/// </summary>
+		
+		public string StatisticName { get; set;}
+		
+		/// <summary>
+		/// maximum number of entries to retrieve
+		/// </summary>
+		
+		public int MaxResultsCount { get; set;}
+		
+		public override void WriteJson(JsonWriter writer)
+		{
+			writer.Writer.Write(JsonReader.OperatorObjectStart);
+			
+			writer.WriteObjectProperty("StatisticName", StatisticName);
+			
+			writer.Writer.Write(JsonReader.OperatorValueDelim);
+			
+			writer.WriteObjectProperty("MaxResultsCount", MaxResultsCount);
+			
+			writer.Writer.Write(JsonReader.OperatorObjectEnd);
+		}
+		
+		public override void Deserialize (Dictionary<string,object> json)
+		{
+			
+			StatisticName = (string)JsonUtil.Get<string>(json, "StatisticName");
+			MaxResultsCount = (int)JsonUtil.Get<double?>(json, "MaxResultsCount");
+		}
+	}
+	
+	
+	
+	public class GetLeaderboardForUsersCharactersResult : PlayFabModelBase
+	{
+		
+		
+		/// <summary>
+		/// ordered list of leaderboard entries
+		/// </summary>
+		
+		public List<CharacterLeaderboardEntry> Leaderboard { get; set;}
+		
+		public override void WriteJson(JsonWriter writer)
+		{
+			writer.Writer.Write(JsonReader.OperatorObjectStart);
+			
+			writer.WriteObjectProperty("Leaderboard", Leaderboard);
+			
+			writer.Writer.Write(JsonReader.OperatorObjectEnd);
+		}
+		
+		public override void Deserialize (Dictionary<string,object> json)
+		{
+			
+			Leaderboard = JsonUtil.GetObjectList<CharacterLeaderboardEntry>(json, "Leaderboard");
 		}
 	}
 	
@@ -1904,6 +2342,56 @@ namespace PlayFab.ClientModels
 		{
 			
 			Leaderboard = JsonUtil.GetObjectList<PlayerLeaderboardEntry>(json, "Leaderboard");
+		}
+	}
+	
+	
+	
+	public class GetPhotonAuthenticationTokenRequest : PlayFabModelBase
+	{
+		
+		
+		
+		public string PhotonApplicationId { get; set;}
+		
+		public override void WriteJson(JsonWriter writer)
+		{
+			writer.Writer.Write(JsonReader.OperatorObjectStart);
+			
+			writer.WriteObjectProperty("PhotonApplicationId", PhotonApplicationId);
+			
+			writer.Writer.Write(JsonReader.OperatorObjectEnd);
+		}
+		
+		public override void Deserialize (Dictionary<string,object> json)
+		{
+			
+			PhotonApplicationId = (string)JsonUtil.Get<string>(json, "PhotonApplicationId");
+		}
+	}
+	
+	
+	
+	public class GetPhotonAuthenticationTokenResult : PlayFabModelBase
+	{
+		
+		
+		
+		public string PhotonCustomAuthenticationToken { get; set;}
+		
+		public override void WriteJson(JsonWriter writer)
+		{
+			writer.Writer.Write(JsonReader.OperatorObjectStart);
+			
+			writer.WriteObjectProperty("PhotonCustomAuthenticationToken", PhotonCustomAuthenticationToken);
+			
+			writer.Writer.Write(JsonReader.OperatorObjectEnd);
+		}
+		
+		public override void Deserialize (Dictionary<string,object> json)
+		{
+			
+			PhotonCustomAuthenticationToken = (string)JsonUtil.Get<string>(json, "PhotonCustomAuthenticationToken");
 		}
 	}
 	
@@ -2646,6 +3134,111 @@ namespace PlayFab.ClientModels
 	
 	
 	
+	public class GrantCharacterToUserRequest : PlayFabModelBase
+	{
+		
+		
+		/// <summary>
+		/// catalog version from which items are to be granted
+		/// </summary>
+		
+		public string CatalogVersion { get; set;}
+		
+		
+		public string PlayFabId { get; set;}
+		
+		/// <summary>
+		/// id of the item in the user's inventory that corresponds to the character in the catalog to be created for the user
+		/// </summary>
+		
+		public string ItemId { get; set;}
+		
+		/// <summary>
+		/// the non-unique display name of the character being granted
+		/// </summary>
+		
+		public string CharacterName { get; set;}
+		
+		public override void WriteJson(JsonWriter writer)
+		{
+			writer.Writer.Write(JsonReader.OperatorObjectStart);
+			
+			writer.WriteObjectProperty("CatalogVersion", CatalogVersion);
+			
+			writer.Writer.Write(JsonReader.OperatorValueDelim);
+			
+			writer.WriteObjectProperty("PlayFabId", PlayFabId);
+			
+			writer.Writer.Write(JsonReader.OperatorValueDelim);
+			
+			writer.WriteObjectProperty("ItemId", ItemId);
+			
+			writer.Writer.Write(JsonReader.OperatorValueDelim);
+			
+			writer.WriteObjectProperty("CharacterName", CharacterName);
+			
+			writer.Writer.Write(JsonReader.OperatorObjectEnd);
+		}
+		
+		public override void Deserialize (Dictionary<string,object> json)
+		{
+			
+			CatalogVersion = (string)JsonUtil.Get<string>(json, "CatalogVersion");
+			PlayFabId = (string)JsonUtil.Get<string>(json, "PlayFabId");
+			ItemId = (string)JsonUtil.Get<string>(json, "ItemId");
+			CharacterName = (string)JsonUtil.Get<string>(json, "CharacterName");
+		}
+	}
+	
+	
+	
+	public class GrantCharacterToUserResult : PlayFabModelBase
+	{
+		
+		
+		/// <summary>
+		/// the unique identifier tagged to this character
+		/// </summary>
+		
+		public string CharacterId { get; set;}
+		
+		/// <summary>
+		/// the type of character that was created
+		/// </summary>
+		
+		public string CharacterType { get; set;}
+		
+		
+		public bool Result { get; set;}
+		
+		public override void WriteJson(JsonWriter writer)
+		{
+			writer.Writer.Write(JsonReader.OperatorObjectStart);
+			
+			writer.WriteObjectProperty("CharacterId", CharacterId);
+			
+			writer.Writer.Write(JsonReader.OperatorValueDelim);
+			
+			writer.WriteObjectProperty("CharacterType", CharacterType);
+			
+			writer.Writer.Write(JsonReader.OperatorValueDelim);
+			
+			writer.WriteObjectProperty("Result", Result);
+			
+			writer.Writer.Write(JsonReader.OperatorObjectEnd);
+		}
+		
+		public override void Deserialize (Dictionary<string,object> json)
+		{
+			
+			CharacterId = (string)JsonUtil.Get<string>(json, "CharacterId");
+			CharacterType = (string)JsonUtil.Get<string>(json, "CharacterType");
+			Result = (bool)JsonUtil.Get<bool?>(json, "Result");
+		}
+	}
+	
+	
+	
 	/// <summary>
 	/// A unique instance of an item in a user's inventory
 	/// </summary>
@@ -3150,10 +3743,34 @@ namespace PlayFab.ClientModels
 		
 		
 		/// <summary>
+		/// PlayFab User Id of the player associated with this event. For non-player associated events, this must be null and EntityId must be set.
+		/// </summary>
+		
+		public string PlayFabId { get; set;}
+		
+		/// <summary>
+		/// For non player-associated events, a unique ID for the entity associated with this event. For player associated events, this must be null and PlayFabId must be set.
+		/// </summary>
+		
+		public string EntityId { get; set;}
+		
+		/// <summary>
+		/// For non player-associated events, the type of entity associated with this event. For player associated events, this must be null.
+		/// </summary>
+		
+		public string EntityType { get; set;}
+		
+		/// <summary>
+		/// Optional timestamp for this event. If null, the a timestamp is auto-assigned to the event on the server.
+		/// </summary>
+		
+		public DateTime? Timestamp { get; set;}
+		
+		/// <summary>
 		/// A unique event name which will be used as the table name in the Redshift database. The name will be made lower case, and cannot not contain spaces. The use of underscores is recommended, for readability. Events also cannot match reserved terms. The PlayFab reserved terms are 'log_in' and 'purchase', 'create' and 'request', while the Redshift reserved terms can be found here: http://docs.aws.amazon.com/redshift/latest/dg/r_pg_keywords.html.
 		/// </summary>
 		
-		public string eventName { get; set;}
+		public string EventName { get; set;}
 		
 		/// <summary>
 		/// Contains all the data for this event. Event Values can be strings, booleans or numerics (float, double, integer, long) and must be consistent on a per-event basis (if the Value for Key 'A' in Event 'Foo' is an integer the first time it is sent, it must be an integer in all subsequent 'Foo' events). As with event names, Keys must also not use reserved words (see above). Finally, the size of the Body for an event must be less than 32KB (UTF-8 format).
@@ -3161,15 +3778,41 @@ namespace PlayFab.ClientModels
 		
 		public Dictionary<string,object> Body { get; set;}
 		
+		/// <summary>
+		/// Flag to set event Body as profile details in the Redshift database as well as a standard event.
+		/// </summary>
+		
+		public bool ProfileSetEvent { get; set;}
+		
 		public override void WriteJson(JsonWriter writer)
 		{
 			writer.Writer.Write(JsonReader.OperatorObjectStart);
 			
-			writer.WriteObjectProperty("eventName", eventName);
+			writer.WriteObjectProperty("PlayFabId", PlayFabId);
+			
+			writer.Writer.Write(JsonReader.OperatorValueDelim);
+			
+			writer.WriteObjectProperty("EntityId", EntityId);
+			
+			writer.Writer.Write(JsonReader.OperatorValueDelim);
+			
+			writer.WriteObjectProperty("EntityType", EntityType);
+			
+			writer.Writer.Write(JsonReader.OperatorValueDelim);
+			
+			writer.WriteObjectProperty("Timestamp", Timestamp);
+			
+			writer.Writer.Write(JsonReader.OperatorValueDelim);
+			
+			writer.WriteObjectProperty("EventName", EventName);
 			
 			writer.Writer.Write(JsonReader.OperatorValueDelim);
 			
 			writer.WriteObjectProperty("Body", Body);
+			
+			writer.Writer.Write(JsonReader.OperatorValueDelim);
+			
+			writer.WriteObjectProperty("ProfileSetEvent", ProfileSetEvent);
 			
 			writer.Writer.Write(JsonReader.OperatorObjectEnd);
 		}
@@ -3177,8 +3820,13 @@ namespace PlayFab.ClientModels
 		public override void Deserialize (Dictionary<string,object> json)
 		{
 			
-			eventName = (string)JsonUtil.Get<string>(json, "eventName");
+			PlayFabId = (string)JsonUtil.Get<string>(json, "PlayFabId");
+			EntityId = (string)JsonUtil.Get<string>(json, "EntityId");
+			EntityType = (string)JsonUtil.Get<string>(json, "EntityType");
+			Timestamp = (DateTime?)JsonUtil.GetDateTime(json, "Timestamp");
+			EventName = (string)JsonUtil.Get<string>(json, "EventName");
 			Body = JsonUtil.GetDictionary<object>(json, "Body");
+			ProfileSetEvent = (bool)JsonUtil.Get<bool?>(json, "ProfileSetEvent");
 		}
 	}
 	
@@ -3430,61 +4078,6 @@ namespace PlayFab.ClientModels
 			
 			TitleId = (string)JsonUtil.Get<string>(json, "TitleId");
 			AccessToken = (string)JsonUtil.Get<string>(json, "AccessToken");
-			CreateAccount = (bool?)JsonUtil.Get<bool?>(json, "CreateAccount");
-			PublisherId = (string)JsonUtil.Get<string>(json, "PublisherId");
-		}
-	}
-	
-	
-	
-	public class LoginWithGameCenterRequest : PlayFabModelBase
-	{
-		
-		
-		
-		public string TitleId { get; set;}
-		
-		/// <summary>
-		/// unique Game Center player id
-		/// </summary>
-		
-		public string PlayerId { get; set;}
-		
-		/// <summary>
-		/// automatically create a PlayFab account if one is not currently linked to this Game Center id
-		/// </summary>
-		
-		public bool? CreateAccount { get; set;}
-		
-		
-		public string PublisherId { get; set;}
-		
-		public override void WriteJson(JsonWriter writer)
-		{
-			writer.Writer.Write(JsonReader.OperatorObjectStart);
-			
-			writer.WriteObjectProperty("TitleId", TitleId);
-			
-			writer.Writer.Write(JsonReader.OperatorValueDelim);
-			
-			writer.WriteObjectProperty("PlayerId", PlayerId);
-			
-			writer.Writer.Write(JsonReader.OperatorValueDelim);
-			
-			writer.WriteObjectProperty("CreateAccount", CreateAccount);
-			
-			writer.Writer.Write(JsonReader.OperatorValueDelim);
-			
-			writer.WriteObjectProperty("PublisherId", PublisherId);
-			
-			writer.Writer.Write(JsonReader.OperatorObjectEnd);
-		}
-		
-		public override void Deserialize (Dictionary<string,object> json)
-		{
-			
-			TitleId = (string)JsonUtil.Get<string>(json, "TitleId");
-			PlayerId = (string)JsonUtil.Get<string>(json, "PlayerId");
 			CreateAccount = (bool?)JsonUtil.Get<bool?>(json, "CreateAccount");
 			PublisherId = (string)JsonUtil.Get<string>(json, "PublisherId");
 		}
@@ -6052,6 +6645,72 @@ namespace PlayFab.ClientModels
 			UnlockedWithItemInstanceId = (string)JsonUtil.Get<string>(json, "UnlockedWithItemInstanceId");
 			GrantedItems = JsonUtil.GetObjectList<ItemInstance>(json, "GrantedItems");
 			VirtualCurrency = JsonUtil.GetDictionaryUInt32(json, "VirtualCurrency");
+		}
+	}
+	
+	
+	
+	public class UpdateCharacterDataRequest : PlayFabModelBase
+	{
+		
+		
+		
+		public string CharacterId { get; set;}
+		
+		/// <summary>
+		/// data to be written to the user's character's custom data. A key with a null value will be removed, rather than being set to null.
+		/// </summary>
+		
+		public Dictionary<string,string> Data { get; set;}
+		
+		/// <summary>
+		/// Permission to be applied to all user data keys written in this request. Defaults to "private" if not set.
+		/// </summary>
+		
+		public UserDataPermission? Permission { get; set;}
+		
+		public override void WriteJson(JsonWriter writer)
+		{
+			writer.Writer.Write(JsonReader.OperatorObjectStart);
+			
+			writer.WriteObjectProperty("CharacterId", CharacterId);
+			
+			writer.Writer.Write(JsonReader.OperatorValueDelim);
+			
+			writer.WriteObjectProperty("Data", Data);
+			
+			writer.Writer.Write(JsonReader.OperatorValueDelim);
+			
+			writer.WriteObjectProperty("Permission", Permission);
+			
+			writer.Writer.Write(JsonReader.OperatorObjectEnd);
+		}
+		
+		public override void Deserialize (Dictionary<string,object> json)
+		{
+			
+			CharacterId = (string)JsonUtil.Get<string>(json, "CharacterId");
+			Data = JsonUtil.GetDictionary<string>(json, "Data");
+			Permission = (UserDataPermission?)JsonUtil.GetEnum<UserDataPermission>(json, "Permission");
+		}
+	}
+	
+	
+	
+	public class UpdateCharacterDataResult : PlayFabModelBase
+	{
+		
+		
+		public override void WriteJson(JsonWriter writer)
+		{
+			writer.Writer.Write(JsonReader.OperatorObjectStart);
+			
+			writer.Writer.Write(JsonReader.OperatorObjectEnd);
+		}
+		
+		public override void Deserialize (Dictionary<string,object> json)
+		{
+			
 		}
 	}
 	
