@@ -68,7 +68,7 @@ namespace PlayFab.ServerModels
 		
 		
 		/// <summary>
-		/// PlayFab unique identifier of the user whose virtual currency balance is to be incremented
+		/// PlayFab unique identifier of the user whose virtual currency balance is to be increased
 		/// </summary>
 		
 		public string PlayFabId { get; set;}
@@ -107,7 +107,7 @@ namespace PlayFab.ServerModels
 			
 			PlayFabId = (string)JsonUtil.Get<string>(json, "PlayFabId");
 			VirtualCurrency = (string)JsonUtil.Get<string>(json, "VirtualCurrency");
-			Amount = (int)JsonUtil.Get<double>(json, "Amount");
+			Amount = (int)JsonUtil.Get<double?>(json, "Amount");
 		}
 	}
 	
@@ -210,7 +210,7 @@ namespace PlayFab.ServerModels
 			
 			PlayFabId = (string)JsonUtil.Get<string>(json, "PlayFabId");
 			AchievementName = (string)JsonUtil.Get<string>(json, "AchievementName");
-			Result = (bool)JsonUtil.Get<bool>(json, "Result");
+			Result = (bool)JsonUtil.Get<bool?>(json, "Result");
 		}
 	}
 	
@@ -686,8 +686,8 @@ namespace PlayFab.ServerModels
 			CharacterName = (string)JsonUtil.Get<string>(json, "CharacterName");
 			DisplayName = (string)JsonUtil.Get<string>(json, "DisplayName");
 			CharacterType = (string)JsonUtil.Get<string>(json, "CharacterType");
-			StatValue = (int)JsonUtil.Get<double>(json, "StatValue");
-			Position = (int)JsonUtil.Get<double>(json, "Position");
+			StatValue = (int)JsonUtil.Get<double?>(json, "StatValue");
+			Position = (int)JsonUtil.Get<double?>(json, "Position");
 		}
 	}
 	
@@ -841,7 +841,7 @@ namespace PlayFab.ServerModels
 			
 			PlayFabId = (string)JsonUtil.Get<string>(json, "PlayFabId");
 			CharacterId = (string)JsonUtil.Get<string>(json, "CharacterId");
-			SaveCharacterInventory = (bool)JsonUtil.Get<bool>(json, "SaveCharacterInventory");
+			SaveCharacterInventory = (bool)JsonUtil.Get<bool?>(json, "SaveCharacterInventory");
 		}
 	}
 	
@@ -1111,8 +1111,8 @@ namespace PlayFab.ServerModels
 			CharacterId = (string)JsonUtil.Get<string>(json, "CharacterId");
 			CharacterType = (string)JsonUtil.Get<string>(json, "CharacterType");
 			StatisticName = (string)JsonUtil.Get<string>(json, "StatisticName");
-			StartPosition = (int)JsonUtil.Get<double>(json, "StartPosition");
-			MaxResultsCount = (int)JsonUtil.Get<double>(json, "MaxResultsCount");
+			StartPosition = (int)JsonUtil.Get<double?>(json, "StartPosition");
+			MaxResultsCount = (int)JsonUtil.Get<double?>(json, "MaxResultsCount");
 		}
 	}
 	
@@ -1345,7 +1345,7 @@ namespace PlayFab.ServerModels
 			PlayFabId = (string)JsonUtil.Get<string>(json, "PlayFabId");
 			CharacterId = (string)JsonUtil.Get<string>(json, "CharacterId");
 			CharacterType = (string)JsonUtil.Get<string>(json, "CharacterType");
-			MaxResultsCount = (int)JsonUtil.Get<double>(json, "MaxResultsCount");
+			MaxResultsCount = (int)JsonUtil.Get<double?>(json, "MaxResultsCount");
 		}
 	}
 	
@@ -1420,7 +1420,7 @@ namespace PlayFab.ServerModels
 			
 			StatisticName = (string)JsonUtil.Get<string>(json, "StatisticName");
 			PlayFabId = (string)JsonUtil.Get<string>(json, "PlayFabId");
-			MaxResultsCount = (int)JsonUtil.Get<double>(json, "MaxResultsCount");
+			MaxResultsCount = (int)JsonUtil.Get<double?>(json, "MaxResultsCount");
 		}
 	}
 	
@@ -1495,7 +1495,7 @@ namespace PlayFab.ServerModels
 			
 			StatisticName = (string)JsonUtil.Get<string>(json, "StatisticName");
 			PlayFabId = (string)JsonUtil.Get<string>(json, "PlayFabId");
-			MaxResultsCount = (int)JsonUtil.Get<double>(json, "MaxResultsCount");
+			MaxResultsCount = (int)JsonUtil.Get<double?>(json, "MaxResultsCount");
 		}
 	}
 	
@@ -1572,8 +1572,8 @@ namespace PlayFab.ServerModels
 		{
 			
 			StatisticName = (string)JsonUtil.Get<string>(json, "StatisticName");
-			StartPosition = (int)JsonUtil.Get<double>(json, "StartPosition");
-			MaxResultsCount = (int)JsonUtil.Get<double>(json, "MaxResultsCount");
+			StartPosition = (int)JsonUtil.Get<double?>(json, "StartPosition");
+			MaxResultsCount = (int)JsonUtil.Get<double?>(json, "MaxResultsCount");
 		}
 	}
 	
@@ -2520,7 +2520,7 @@ namespace PlayFab.ServerModels
 			ItemId = (string)JsonUtil.Get<string>(json, "ItemId");
 			ItemInstanceId = (string)JsonUtil.Get<string>(json, "ItemInstanceId");
 			Annotation = (string)JsonUtil.Get<string>(json, "Annotation");
-			Result = (bool)JsonUtil.Get<bool>(json, "Result");
+			Result = (bool)JsonUtil.Get<bool?>(json, "Result");
 			CharacterId = (string)JsonUtil.Get<string>(json, "CharacterId");
 		}
 	}
@@ -2784,7 +2784,7 @@ namespace PlayFab.ServerModels
 			Timestamp = (DateTime?)JsonUtil.GetDateTime(json, "Timestamp");
 			EventName = (string)JsonUtil.Get<string>(json, "EventName");
 			Body = JsonUtil.GetDictionary<object>(json, "Body");
-			ProfileSetEvent = (bool)JsonUtil.Get<bool>(json, "ProfileSetEvent");
+			ProfileSetEvent = (bool)JsonUtil.Get<bool?>(json, "ProfileSetEvent");
 		}
 	}
 	
@@ -2853,7 +2853,7 @@ namespace PlayFab.ServerModels
 			
 			PlayFabId = (string)JsonUtil.Get<string>(json, "PlayFabId");
 			ItemInstanceId = (string)JsonUtil.Get<string>(json, "ItemInstanceId");
-			UsesToAdd = (int)JsonUtil.Get<double>(json, "UsesToAdd");
+			UsesToAdd = (int)JsonUtil.Get<double?>(json, "UsesToAdd");
 		}
 	}
 	
@@ -2892,7 +2892,7 @@ namespace PlayFab.ServerModels
 		{
 			
 			ItemInstanceId = (string)JsonUtil.Get<string>(json, "ItemInstanceId");
-			RemainingUses = (int)JsonUtil.Get<double>(json, "RemainingUses");
+			RemainingUses = (int)JsonUtil.Get<double?>(json, "RemainingUses");
 		}
 	}
 	
@@ -2903,10 +2903,22 @@ namespace PlayFab.ServerModels
 		
 		
 		/// <summary>
+		/// user currency was subtracted from
+		/// </summary>
+		
+		public string PlayFabId { get; set;}
+		
+		/// <summary>
 		/// name of the virtual currency which was modified
 		/// </summary>
 		
 		public string VirtualCurrency { get; set;}
+		
+		/// <summary>
+		/// amount added or subtracted from the user's virtual currency
+		/// </summary>
+		
+		public int BalanceChange { get; set;}
 		
 		/// <summary>
 		/// balance of the virtual currency after modification
@@ -2918,7 +2930,15 @@ namespace PlayFab.ServerModels
 		{
 			writer.Writer.Write(JsonReader.OperatorObjectStart);
 			
+			writer.WriteObjectProperty("PlayFabId", PlayFabId);
+			
+			writer.Writer.Write(JsonReader.OperatorValueDelim);
+			
 			writer.WriteObjectProperty("VirtualCurrency", VirtualCurrency);
+			
+			writer.Writer.Write(JsonReader.OperatorValueDelim);
+			
+			writer.WriteObjectProperty("BalanceChange", BalanceChange);
 			
 			writer.Writer.Write(JsonReader.OperatorValueDelim);
 			
@@ -2930,8 +2950,10 @@ namespace PlayFab.ServerModels
 		public override void Deserialize (Dictionary<string,object> json)
 		{
 			
+			PlayFabId = (string)JsonUtil.Get<string>(json, "PlayFabId");
 			VirtualCurrency = (string)JsonUtil.Get<string>(json, "VirtualCurrency");
-			Balance = (int)JsonUtil.Get<double>(json, "Balance");
+			BalanceChange = (int)JsonUtil.Get<double?>(json, "BalanceChange");
+			Balance = (int)JsonUtil.Get<double?>(json, "Balance");
 		}
 	}
 	
@@ -3260,8 +3282,8 @@ namespace PlayFab.ServerModels
 			
 			PlayFabId = (string)JsonUtil.Get<string>(json, "PlayFabId");
 			DisplayName = (string)JsonUtil.Get<string>(json, "DisplayName");
-			StatValue = (int)JsonUtil.Get<double>(json, "StatValue");
-			Position = (int)JsonUtil.Get<double>(json, "Position");
+			StatValue = (int)JsonUtil.Get<double?>(json, "StatValue");
+			Position = (int)JsonUtil.Get<double?>(json, "Position");
 		}
 	}
 	
@@ -3348,7 +3370,7 @@ namespace PlayFab.ServerModels
 		public override void Deserialize (Dictionary<string,object> json)
 		{
 			
-			TicketIsValid = (bool)JsonUtil.Get<bool>(json, "TicketIsValid");
+			TicketIsValid = (bool)JsonUtil.Get<bool?>(json, "TicketIsValid");
 			Error = (string)JsonUtil.Get<string>(json, "Error");
 			UserInfo = JsonUtil.GetObject<UserAccountInfo>(json, "UserInfo");
 		}
@@ -3498,8 +3520,8 @@ namespace PlayFab.ServerModels
 		public override void Deserialize (Dictionary<string,object> json)
 		{
 			
-			Updated = (bool)JsonUtil.Get<bool>(json, "Updated");
-			SubmissionsRemaining = (int)JsonUtil.Get<double>(json, "SubmissionsRemaining");
+			Updated = (bool)JsonUtil.Get<bool?>(json, "Updated");
+			SubmissionsRemaining = (int)JsonUtil.Get<double?>(json, "SubmissionsRemaining");
 		}
 	}
 	
@@ -3755,6 +3777,9 @@ namespace PlayFab.ServerModels
 	{
 		
 		
+		/// <summary>
+		/// PlayFab unique identifier of the user whose virtual currency balance is to be decreased
+		/// </summary>
 		
 		public string PlayFabId { get; set;}
 		
@@ -3792,7 +3817,7 @@ namespace PlayFab.ServerModels
 			
 			PlayFabId = (string)JsonUtil.Get<string>(json, "PlayFabId");
 			VirtualCurrency = (string)JsonUtil.Get<string>(json, "VirtualCurrency");
-			Amount = (int)JsonUtil.Get<double>(json, "Amount");
+			Amount = (int)JsonUtil.Get<double?>(json, "Amount");
 		}
 	}
 	
@@ -4345,11 +4370,21 @@ namespace PlayFab.ServerModels
 		
 		public string FacebookId { get; set;}
 		
+		/// <summary>
+		/// Facebook full name
+		/// </summary>
+		
+		public string FullName { get; set;}
+		
 		public override void WriteJson(JsonWriter writer)
 		{
 			writer.Writer.Write(JsonReader.OperatorObjectStart);
 			
 			writer.WriteObjectProperty("FacebookId", FacebookId);
+			
+			writer.Writer.Write(JsonReader.OperatorValueDelim);
+			
+			writer.WriteObjectProperty("FullName", FullName);
 			
 			writer.Writer.Write(JsonReader.OperatorObjectEnd);
 		}
@@ -4358,6 +4393,7 @@ namespace PlayFab.ServerModels
 		{
 			
 			FacebookId = (string)JsonUtil.Get<string>(json, "FacebookId");
+			FullName = (string)JsonUtil.Get<string>(json, "FullName");
 		}
 	}
 	

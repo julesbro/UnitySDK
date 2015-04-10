@@ -68,7 +68,7 @@ namespace PlayFab.MatchmakerModels
 		public override void Deserialize (Dictionary<string,object> json)
 		{
 			
-			Authorized = (bool)JsonUtil.Get<bool>(json, "Authorized");
+			Authorized = (bool)JsonUtil.Get<bool?>(json, "Authorized");
 			PlayFabId = (string)JsonUtil.Get<string>(json, "PlayFabId");
 		}
 	}
@@ -439,7 +439,7 @@ namespace PlayFab.MatchmakerModels
 			
 			GameID = (string)JsonUtil.Get<string>(json, "GameID");
 			ServerHostname = (string)JsonUtil.Get<string>(json, "ServerHostname");
-			ServerPort = (uint)JsonUtil.Get<double>(json, "ServerPort");
+			ServerPort = (uint)JsonUtil.Get<double?>(json, "ServerPort");
 		}
 	}
 	
@@ -478,7 +478,7 @@ namespace PlayFab.MatchmakerModels
 		{
 			
 			PlayFabId = (string)JsonUtil.Get<string>(json, "PlayFabId");
-			MinCatalogVersion = (int)JsonUtil.Get<double>(json, "MinCatalogVersion");
+			MinCatalogVersion = (int)JsonUtil.Get<double?>(json, "MinCatalogVersion");
 		}
 	}
 	
@@ -571,7 +571,7 @@ namespace PlayFab.MatchmakerModels
 			TitleDisplayName = (string)JsonUtil.Get<string>(json, "TitleDisplayName");
 			Inventory = JsonUtil.GetObjectList<ItemInstance>(json, "Inventory");
 			VirtualCurrency = JsonUtil.GetDictionaryInt32(json, "VirtualCurrency");
-			IsDeveloper = (bool)JsonUtil.Get<bool>(json, "IsDeveloper");
+			IsDeveloper = (bool)JsonUtil.Get<bool?>(json, "IsDeveloper");
 			SteamId = (string)JsonUtil.Get<string>(json, "SteamId");
 		}
 	}

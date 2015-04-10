@@ -140,7 +140,9 @@ namespace PlayFab
 		InvalidCharacterStatistics = 1138,
 		PhotonNotEnabledForTitle = 1139,
 		PhotonApplicationNotFound = 1140,
-		PhotonApplicationNotAssociatedWithTitle = 1141
+		PhotonApplicationNotAssociatedWithTitle = 1141,
+		InvalidEmailOrPassword = 1142,
+		FacebookAPIError = 1143
 	}
 	
 	public class PlayFabError
