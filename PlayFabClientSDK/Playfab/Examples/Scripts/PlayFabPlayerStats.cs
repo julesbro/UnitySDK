@@ -125,7 +125,7 @@ namespace PlayFab.Examples{
 		public void LogCustomEvent(string eventName, Dictionary<string,object> body)
 		{
 			PlayFab.ClientModels.LogEventRequest request = new LogEventRequest ();
-			request.eventName = eventName;
+			request.EventName = eventName;
 			request.Body = body;
 			if (PlayFabData.AuthKey != null)
 				PlayFabClientAPI.LogEvent (request, EventLogged, OnPlayFabError);
