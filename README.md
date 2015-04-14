@@ -24,6 +24,11 @@ The source code repository **playfab-unity** contains two main projects: PlayFab
 
 Create a new Unity project or open an existing Unity project. From the PlayFabClientSDK directory, drag the playfab/PlayFabSDK folder into your project's assets (anywhere is ok). You may optionally also install the Unity Editor tools by dragging the playfab/Editor directory into your project's assets.
 
+After adding the PlayFabSDK directory, you will also want to install our native iOS and Android plugins. To do this, drag the Plugins folder to the root(Assets/Plugins) of the Unity project. 
+
+With projects running on Unity3d < 5.0, you will want to stick to the standard folder structure (Assets/Plugins/iOS & Assets/Plugins/Android). This means that if you are already using plugins, you will need to merge the PlayFab files into your existing folder structure. 
+
+
 5. Configuring the Plugin
 -------------------------
 You must configure the SDK with your unique TitleId, as assigned by the PlayFab developer portal. Your TitleId will be a short string that looks something like "8D34" in your Title URL.
