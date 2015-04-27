@@ -33,7 +33,9 @@ namespace PlayFab
 		public delegate void GetCatalogItemsCallback(GetCatalogItemsResult result);
 		public delegate void GetTitleDataCallback(GetTitleDataResult result);
 		public delegate void SetTitleDataCallback(SetTitleDataResult result);
+		public delegate void AddCharacterVirtualCurrencyCallback(ModifyCharacterVirtualCurrencyResult result);
 		public delegate void AddUserVirtualCurrencyCallback(ModifyUserVirtualCurrencyResult result);
+		public delegate void GetCharacterInventoryCallback(GetCharacterInventoryResult result);
 		public delegate void GetUserInventoryCallback(GetUserInventoryResult result);
 		public delegate void GrantItemsToCharacterCallback(GrantItemsToCharacterResult result);
 		public delegate void GrantItemsToUserCallback(GrantItemsToUserResult result);
@@ -43,6 +45,7 @@ namespace PlayFab
 		public delegate void MoveItemToCharacterFromUserCallback(MoveItemToCharacterFromUserResult result);
 		public delegate void MoveItemToUserFromCharacterCallback(MoveItemToUserFromCharacterResult result);
 		public delegate void ReportPlayerCallback(ReportPlayerServerResult result);
+		public delegate void SubtractCharacterVirtualCurrencyCallback(ModifyCharacterVirtualCurrencyResult result);
 		public delegate void SubtractUserVirtualCurrencyCallback(ModifyUserVirtualCurrencyResult result);
 		public delegate void NotifyMatchmakerPlayerLeftCallback(NotifyMatchmakerPlayerLeftResult result);
 		public delegate void RedeemMatchmakerTicketCallback(RedeemMatchmakerTicketResult result);
@@ -714,6 +717,35 @@ namespace PlayFab
 		}
 		
 		/// <summary>
+		/// Increments  the character's balance of the specified virtual currency by the stated amount
+		/// </summary>
+		public static void AddCharacterVirtualCurrency(AddCharacterVirtualCurrencyRequest request, AddCharacterVirtualCurrencyCallback resultCallback, ErrorCallback errorCallback)
+		{
+			if (PlayFabSettings.DeveloperSecretKey == null) throw new Exception ("Must have PlayFabSettings.DeveloperSecretKey set to call this method");
+
+			string serializedJSON = JsonWriter.Serialize (request, Util.GlobalJsonWriterSettings);
+			Action<string,string> callback = delegate(string responseStr, string errorStr)
+			{
+				ModifyCharacterVirtualCurrencyResult result = null;
+				PlayFabError error = null;
+				ResultContainer<ModifyCharacterVirtualCurrencyResult>.HandleResults(responseStr, errorStr, out result, out error);
+				if(error != null && errorCallback != null)
+				{
+					errorCallback(error);
+				}
+				if(result != null)
+				{
+					
+					if(resultCallback != null)
+					{
+						resultCallback(result);
+					}
+				}
+			};
+			PlayFabHTTP.Post(PlayFabSettings.GetURL()+"/Server/AddCharacterVirtualCurrency", serializedJSON, "X-SecretKey", PlayFabSettings.DeveloperSecretKey, callback);
+		}
+		
+		/// <summary>
 		/// Increments  the user's balance of the specified virtual currency by the stated amount
 		/// </summary>
 		public static void AddUserVirtualCurrency(AddUserVirtualCurrencyRequest request, AddUserVirtualCurrencyCallback resultCallback, ErrorCallback errorCallback)
@@ -740,6 +772,35 @@ namespace PlayFab
 				}
 			};
 			PlayFabHTTP.Post(PlayFabSettings.GetURL()+"/Server/AddUserVirtualCurrency", serializedJSON, "X-SecretKey", PlayFabSettings.DeveloperSecretKey, callback);
+		}
+		
+		/// <summary>
+		/// Retrieves the specified character's current inventory of virtual goods
+		/// </summary>
+		public static void GetCharacterInventory(GetCharacterInventoryRequest request, GetCharacterInventoryCallback resultCallback, ErrorCallback errorCallback)
+		{
+			if (PlayFabSettings.DeveloperSecretKey == null) throw new Exception ("Must have PlayFabSettings.DeveloperSecretKey set to call this method");
+
+			string serializedJSON = JsonWriter.Serialize (request, Util.GlobalJsonWriterSettings);
+			Action<string,string> callback = delegate(string responseStr, string errorStr)
+			{
+				GetCharacterInventoryResult result = null;
+				PlayFabError error = null;
+				ResultContainer<GetCharacterInventoryResult>.HandleResults(responseStr, errorStr, out result, out error);
+				if(error != null && errorCallback != null)
+				{
+					errorCallback(error);
+				}
+				if(result != null)
+				{
+					
+					if(resultCallback != null)
+					{
+						resultCallback(result);
+					}
+				}
+			};
+			PlayFabHTTP.Post(PlayFabSettings.GetURL()+"/Server/GetCharacterInventory", serializedJSON, "X-SecretKey", PlayFabSettings.DeveloperSecretKey, callback);
 		}
 		
 		/// <summary>
@@ -1001,6 +1062,35 @@ namespace PlayFab
 				}
 			};
 			PlayFabHTTP.Post(PlayFabSettings.GetURL()+"/Server/ReportPlayer", serializedJSON, "X-SecretKey", PlayFabSettings.DeveloperSecretKey, callback);
+		}
+		
+		/// <summary>
+		/// Decrements the character's balance of the specified virtual currency by the stated amount
+		/// </summary>
+		public static void SubtractCharacterVirtualCurrency(SubtractCharacterVirtualCurrencyRequest request, SubtractCharacterVirtualCurrencyCallback resultCallback, ErrorCallback errorCallback)
+		{
+			if (PlayFabSettings.DeveloperSecretKey == null) throw new Exception ("Must have PlayFabSettings.DeveloperSecretKey set to call this method");
+
+			string serializedJSON = JsonWriter.Serialize (request, Util.GlobalJsonWriterSettings);
+			Action<string,string> callback = delegate(string responseStr, string errorStr)
+			{
+				ModifyCharacterVirtualCurrencyResult result = null;
+				PlayFabError error = null;
+				ResultContainer<ModifyCharacterVirtualCurrencyResult>.HandleResults(responseStr, errorStr, out result, out error);
+				if(error != null && errorCallback != null)
+				{
+					errorCallback(error);
+				}
+				if(result != null)
+				{
+					
+					if(resultCallback != null)
+					{
+						resultCallback(result);
+					}
+				}
+			};
+			PlayFabHTTP.Post(PlayFabSettings.GetURL()+"/Server/SubtractCharacterVirtualCurrency", serializedJSON, "X-SecretKey", PlayFabSettings.DeveloperSecretKey, callback);
 		}
 		
 		/// <summary>

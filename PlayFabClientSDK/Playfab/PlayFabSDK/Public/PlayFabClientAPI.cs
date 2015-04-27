@@ -54,6 +54,7 @@ namespace PlayFab
 		public delegate void AddUserVirtualCurrencyCallback(ModifyUserVirtualCurrencyResult result);
 		public delegate void ConfirmPurchaseCallback(ConfirmPurchaseResult result);
 		public delegate void ConsumeItemCallback(ConsumeItemResult result);
+		public delegate void GetCharacterInventoryCallback(GetCharacterInventoryResult result);
 		public delegate void GetUserInventoryCallback(GetUserInventoryResult result);
 		public delegate void PayForPurchaseCallback(PayForPurchaseResult result);
 		public delegate void PurchaseItemCallback(PurchaseItemResult result);
@@ -1357,6 +1358,35 @@ namespace PlayFab
 				}
 			};
 			PlayFabHTTP.Post(PlayFabSettings.GetURL()+"/Client/ConsumeItem", serializedJSON, "X-Authorization", AuthKey, callback);
+		}
+		
+		/// <summary>
+		/// Retrieves the specified character's current inventory of virtual goods
+		/// </summary>
+		public static void GetCharacterInventory(GetCharacterInventoryRequest request, GetCharacterInventoryCallback resultCallback, ErrorCallback errorCallback)
+		{
+			if (AuthKey == null) throw new Exception ("Must be logged in to call this method");
+
+			string serializedJSON = JsonWriter.Serialize (request, Util.GlobalJsonWriterSettings);
+			Action<string,string> callback = delegate(string responseStr, string errorStr)
+			{
+				GetCharacterInventoryResult result = null;
+				PlayFabError error = null;
+				ResultContainer<GetCharacterInventoryResult>.HandleResults(responseStr, errorStr, out result, out error);
+				if(error != null && errorCallback != null)
+				{
+					errorCallback(error);
+				}
+				if(result != null)
+				{
+					
+					if(resultCallback != null)
+					{
+						resultCallback(result);
+					}
+				}
+			};
+			PlayFabHTTP.Post(PlayFabSettings.GetURL()+"/Client/GetCharacterInventory", serializedJSON, "X-Authorization", AuthKey, callback);
 		}
 		
 		/// <summary>

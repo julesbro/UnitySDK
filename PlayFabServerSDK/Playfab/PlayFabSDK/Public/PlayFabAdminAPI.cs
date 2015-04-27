@@ -39,6 +39,7 @@ namespace PlayFab
 		public delegate void SetCatalogItemsCallback(UpdateCatalogItemsResult result);
 		public delegate void SetStoreItemsCallback(UpdateStoreItemsResult result);
 		public delegate void SetTitleDataCallback(SetTitleDataResult result);
+		public delegate void SetupPushNotificationCallback(SetupPushNotificationResult result);
 		public delegate void UpdateCatalogItemsCallback(UpdateCatalogItemsResult result);
 		public delegate void UpdateRandomResultTablesCallback(UpdateRandomResultTablesResult result);
 		public delegate void UpdateStoreItemsCallback(UpdateStoreItemsResult result);
@@ -879,6 +880,35 @@ namespace PlayFab
 				}
 			};
 			PlayFabHTTP.Post(PlayFabSettings.GetURL()+"/Admin/SetTitleData", serializedJSON, "X-SecretKey", PlayFabSettings.DeveloperSecretKey, callback);
+		}
+		
+		/// <summary>
+		/// Sets the Amazon Resource Name (ARN) for iOS and Android push notifications. Documentation on the exact restrictions can be found at: http://docs.aws.amazon.com/sns/latest/api/API_CreatePlatformApplication.html. Currently, Amazon device Messaging is not supported.
+		/// </summary>
+		public static void SetupPushNotification(SetupPushNotificationRequest request, SetupPushNotificationCallback resultCallback, ErrorCallback errorCallback)
+		{
+			if (PlayFabSettings.DeveloperSecretKey == null) throw new Exception ("Must have PlayFabSettings.DeveloperSecretKey set to call this method");
+
+			string serializedJSON = JsonWriter.Serialize (request, Util.GlobalJsonWriterSettings);
+			Action<string,string> callback = delegate(string responseStr, string errorStr)
+			{
+				SetupPushNotificationResult result = null;
+				PlayFabError error = null;
+				ResultContainer<SetupPushNotificationResult>.HandleResults(responseStr, errorStr, out result, out error);
+				if(error != null && errorCallback != null)
+				{
+					errorCallback(error);
+				}
+				if(result != null)
+				{
+					
+					if(resultCallback != null)
+					{
+						resultCallback(result);
+					}
+				}
+			};
+			PlayFabHTTP.Post(PlayFabSettings.GetURL()+"/Admin/SetupPushNotification", serializedJSON, "X-SecretKey", PlayFabSettings.DeveloperSecretKey, callback);
 		}
 		
 		/// <summary>

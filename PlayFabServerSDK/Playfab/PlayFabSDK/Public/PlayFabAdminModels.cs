@@ -287,19 +287,19 @@ namespace PlayFab.AdminModels
 		
 		
 		/// <summary>
-		/// PlayFab unique identifier of the user whose virtual currency balance is to be increased
+		/// PlayFab unique identifier of the user whose virtual currency balance is to be increased.
 		/// </summary>
 		
 		public string PlayFabId { get; set;}
 		
 		/// <summary>
-		/// name of the virtual currency which is to be incremented
+		/// Name of the virtual currency which is to be incremented.
 		/// </summary>
 		
 		public string VirtualCurrency { get; set;}
 		
 		/// <summary>
-		/// amount to be added to the user balance of the specified virtual currency
+		/// Amount to be added to the user balance of the specified virtual currency.
 		/// </summary>
 		
 		public int Amount { get; set;}
@@ -464,6 +464,12 @@ namespace PlayFab.AdminModels
 		
 		public CatalogItemBundleInfo Bundle { get; set;}
 		
+		/// <summary>
+		/// if true, then this item instance can be used to grant a character to a user.
+		/// </summary>
+		
+		public bool CanBecomeCharacter { get; set;}
+		
 		public override void WriteJson(JsonWriter writer)
 		{
 			writer.Writer.Write(JsonReader.OperatorObjectStart);
@@ -518,6 +524,10 @@ namespace PlayFab.AdminModels
 			
 			writer.WriteObjectProperty("Bundle", Bundle);
 			
+			writer.Writer.Write(JsonReader.OperatorValueDelim);
+			
+			writer.WriteObjectProperty("CanBecomeCharacter", CanBecomeCharacter);
+			
 			writer.Writer.Write(JsonReader.OperatorObjectEnd);
 		}
 		
@@ -537,6 +547,7 @@ namespace PlayFab.AdminModels
 			Consumable = JsonUtil.GetObject<CatalogItemConsumableInfo>(json, "Consumable");
 			Container = JsonUtil.GetObject<CatalogItemContainerInfo>(json, "Container");
 			Bundle = JsonUtil.GetObject<CatalogItemBundleInfo>(json, "Bundle");
+			CanBecomeCharacter = (bool)JsonUtil.Get<bool?>(json, "CanBecomeCharacter");
 		}
 	}
 	
@@ -2012,7 +2023,7 @@ namespace PlayFab.AdminModels
 		public string PlayFabId { get; set;}
 		
 		/// <summary>
-		/// specific keys to search for in the custom user data
+		/// Specific keys to search for in the custom user data.
 		/// </summary>
 		
 		public List<string> Keys { get; set;}
@@ -2045,13 +2056,13 @@ namespace PlayFab.AdminModels
 		
 		
 		/// <summary>
-		/// PlayFab unique identifier of the user whose custom data is being returned
+		/// PlayFab unique identifier of the user whose custom data is being returned.
 		/// </summary>
 		
 		public string PlayFabId { get; set;}
 		
 		/// <summary>
-		/// user specific data for this title
+		/// User specific data for this title.
 		/// </summary>
 		
 		public Dictionary<string,UserDataRecord> Data { get; set;}
@@ -2083,9 +2094,6 @@ namespace PlayFab.AdminModels
 	{
 		
 		
-		/// <summary>
-		/// PlayFab unique identifier of the user whose inventory is being requested
-		/// </summary>
 		
 		public string PlayFabId { get; set;}
 		
@@ -2134,6 +2142,12 @@ namespace PlayFab.AdminModels
 		
 		public Dictionary<string,int> VirtualCurrency { get; set;}
 		
+		/// <summary>
+		/// Array of remaining times and timestamps for virtual currencies.
+		/// </summary>
+		
+		public Dictionary<string,VirtualCurrencyRechargeTime> VirtualCurrencyRechargeTimes { get; set;}
+		
 		public override void WriteJson(JsonWriter writer)
 		{
 			writer.Writer.Write(JsonReader.OperatorObjectStart);
@@ -2144,6 +2158,10 @@ namespace PlayFab.AdminModels
 			
 			writer.WriteObjectProperty("VirtualCurrency", VirtualCurrency);
 			
+			writer.Writer.Write(JsonReader.OperatorValueDelim);
+			
+			writer.WriteObjectProperty("VirtualCurrencyRechargeTimes", VirtualCurrencyRechargeTimes);
+			
 			writer.Writer.Write(JsonReader.OperatorObjectEnd);
 		}
 		
@@ -2152,6 +2170,7 @@ namespace PlayFab.AdminModels
 			
 			Inventory = JsonUtil.GetObjectList<ItemInstance>(json, "Inventory");
 			VirtualCurrency = JsonUtil.GetDictionaryInt32(json, "VirtualCurrency");
+			VirtualCurrencyRechargeTimes = JsonUtil.GetObjectDictionary<VirtualCurrencyRechargeTime>(json, "VirtualCurrencyRechargeTimes");
 		}
 	}
 	
@@ -2162,13 +2181,13 @@ namespace PlayFab.AdminModels
 		
 		
 		/// <summary>
-		/// catalog version from which items are to be granted
+		/// Catalog version from which items are to be granted.
 		/// </summary>
 		
 		public string CatalogVersion { get; set;}
 		
 		/// <summary>
-		/// array of items to grant and the users to whom the items are to be granted
+		/// Array of items to grant and the users to whom the items are to be granted.
 		/// </summary>
 		
 		public List<ItemGrant> ItemGrants { get; set;}
@@ -2201,7 +2220,7 @@ namespace PlayFab.AdminModels
 		
 		
 		/// <summary>
-		/// array of items granted to users
+		/// Array of items granted to users.
 		/// </summary>
 		
 		public List<ItemGrantResult> ItemGrantResults { get; set;}
@@ -2232,13 +2251,13 @@ namespace PlayFab.AdminModels
 		public string PlayFabId { get; set;}
 		
 		/// <summary>
-		/// unique identifier of the catalog item to be granted to the user
+		/// Unique identifier of the catalog item to be granted to the user.
 		/// </summary>
 		
 		public string ItemId { get; set;}
 		
 		/// <summary>
-		/// string detailing any additional information concerning this operation
+		/// String detailing any additional information concerning this operation.
 		/// </summary>
 		
 		public string Annotation { get; set;}
@@ -2290,25 +2309,25 @@ namespace PlayFab.AdminModels
 		public string PlayFabId { get; set;}
 		
 		/// <summary>
-		/// unique identifier of the catalog item to be granted to the user
+		/// Unique identifier of the catalog item to be granted to the user.
 		/// </summary>
 		
 		public string ItemId { get; set;}
 		
 		/// <summary>
-		/// unique instance Id of the granted item
+		/// Unique instance Id of the granted item.
 		/// </summary>
 		
 		public string ItemInstanceId { get; set;}
 		
 		/// <summary>
-		/// string detailing any additional information concerning this operation
+		/// String detailing any additional information concerning this operation.
 		/// </summary>
 		
 		public string Annotation { get; set;}
 		
 		/// <summary>
-		/// result of this operation
+		/// Result of this operation.
 		/// </summary>
 		
 		public bool Result { get; set;}
@@ -2930,25 +2949,25 @@ namespace PlayFab.AdminModels
 		
 		
 		/// <summary>
-		/// user currency was subtracted from
+		/// User currency was subtracted from.
 		/// </summary>
 		
 		public string PlayFabId { get; set;}
 		
 		/// <summary>
-		/// name of the virtual currency which was modified
+		/// Name of the virtual currency which was modified.
 		/// </summary>
 		
 		public string VirtualCurrency { get; set;}
 		
 		/// <summary>
-		/// amount added or subtracted from the user's virtual currency
+		/// Amount added or subtracted from the user's virtual currency.
 		/// </summary>
 		
 		public int BalanceChange { get; set;}
 		
 		/// <summary>
-		/// balance of the virtual currency after modification
+		/// Balance of the virtual currency after modification.
 		/// </summary>
 		
 		public int Balance { get; set;}
@@ -3665,19 +3684,19 @@ namespace PlayFab.AdminModels
 		
 		
 		/// <summary>
-		/// PlayFab unique identifier of the user whose virtual currency balance is to be decreased
+		/// PlayFab unique identifier of the user whose virtual currency balance is to be decreased.
 		/// </summary>
 		
 		public string PlayFabId { get; set;}
 		
 		/// <summary>
-		/// name of the virtual currency which is to be decremented
+		/// Name of the virtual currency which is to be decremented.
 		/// </summary>
 		
 		public string VirtualCurrency { get; set;}
 		
 		/// <summary>
-		/// amount to be subtracted from the user balance of the specified virtual currency
+		/// Amount to be subtracted from the user balance of the specified virtual currency.
 		/// </summary>
 		
 		public int Amount { get; set;}
@@ -3970,7 +3989,7 @@ namespace PlayFab.AdminModels
 		public string PlayFabId { get; set;}
 		
 		/// <summary>
-		/// data to be written to the user's custom data. Keys are trimmed of whitespace. Keys may not begin with a '!' character.
+		/// Data to be written to the user's custom data. Note that keys are trimmed of whitespace, are limited to 1024 characters, and may not begin with a '!' character.
 		/// </summary>
 		
 		public Dictionary<string,string> Data { get; set;}
@@ -4036,7 +4055,7 @@ namespace PlayFab.AdminModels
 		public string PlayFabId { get; set;}
 		
 		/// <summary>
-		/// data to be written to the user's custom data
+		/// Data to be written to the user's custom data.
 		/// </summary>
 		
 		public Dictionary<string,string> Data { get; set;}
@@ -4285,19 +4304,19 @@ namespace PlayFab.AdminModels
 		
 		
 		/// <summary>
-		/// user-supplied data for this user data key
+		/// User-supplied data for this user data key.
 		/// </summary>
 		
 		public string Value { get; set;}
 		
 		/// <summary>
-		/// timestamp indicating when this data was last updated
+		/// Timestamp indicating when this data was last updated.
 		/// </summary>
 		
 		public DateTime LastUpdated { get; set;}
 		
 		/// <summary>
-		/// Permissions on this data key
+		/// Permissions on this data key.
 		/// </summary>
 		
 		public UserDataPermission? Permission { get; set;}
@@ -4655,6 +4674,45 @@ namespace PlayFab.AdminModels
 			InitialDeposit = (int?)JsonUtil.Get<double?>(json, "InitialDeposit");
 			RechargeRate = (int?)JsonUtil.Get<double?>(json, "RechargeRate");
 			RechargeMax = (int?)JsonUtil.Get<double?>(json, "RechargeMax");
+		}
+	}
+	
+	
+	
+	public class VirtualCurrencyRechargeTime : PlayFabModelBase
+	{
+		
+		
+		/// <summary>
+		/// Time remaining (in seconds) before the next recharge increment of the virtual currency.
+		/// </summary>
+		
+		public int SecondsToRecharge { get; set;}
+		
+		/// <summary>
+		/// Server timestamp in UTC indicating the next time the virtual currency will be incremented
+		/// </summary>
+		
+		public DateTime RechargeTime { get; set;}
+		
+		public override void WriteJson(JsonWriter writer)
+		{
+			writer.Writer.Write(JsonReader.OperatorObjectStart);
+			
+			writer.WriteObjectProperty("SecondsToRecharge", SecondsToRecharge);
+			
+			writer.Writer.Write(JsonReader.OperatorValueDelim);
+			
+			writer.WriteObjectProperty("RechargeTime", RechargeTime);
+			
+			writer.Writer.Write(JsonReader.OperatorObjectEnd);
+		}
+		
+		public override void Deserialize (Dictionary<string,object> json)
+		{
+			
+			SecondsToRecharge = (int)JsonUtil.Get<double?>(json, "SecondsToRecharge");
+			RechargeTime = (DateTime)JsonUtil.GetDateTime(json, "RechargeTime");
 		}
 	}
 	
