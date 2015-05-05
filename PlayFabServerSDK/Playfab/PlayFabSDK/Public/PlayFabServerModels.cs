@@ -60,7 +60,7 @@ namespace PlayFab.ServerModels
 			PlayFabId = (string)JsonUtil.Get<string>(json, "PlayFabId");
 			CharacterId = (string)JsonUtil.Get<string>(json, "CharacterId");
 			VirtualCurrency = (string)JsonUtil.Get<string>(json, "VirtualCurrency");
-			Amount = (int)JsonUtil.Get<double?>(json, "Amount");
+			Amount = (int)JsonUtil.Get<double>(json, "Amount");
 		}
 	}
 	
@@ -165,7 +165,7 @@ namespace PlayFab.ServerModels
 			
 			PlayFabId = (string)JsonUtil.Get<string>(json, "PlayFabId");
 			VirtualCurrency = (string)JsonUtil.Get<string>(json, "VirtualCurrency");
-			Amount = (int)JsonUtil.Get<double?>(json, "Amount");
+			Amount = (int)JsonUtil.Get<double>(json, "Amount");
 		}
 	}
 	
@@ -268,7 +268,7 @@ namespace PlayFab.ServerModels
 			
 			PlayFabId = (string)JsonUtil.Get<string>(json, "PlayFabId");
 			AchievementName = (string)JsonUtil.Get<string>(json, "AchievementName");
-			Result = (bool)JsonUtil.Get<bool?>(json, "Result");
+			Result = (bool)JsonUtil.Get<bool>(json, "Result");
 		}
 	}
 	
@@ -421,6 +421,12 @@ namespace PlayFab.ServerModels
 		
 		public bool CanBecomeCharacter { get; set;}
 		
+		/// <summary>
+		/// if true, then only one item instance of this type will exist and its remaininguses will be incremented instead
+		/// </summary>
+		
+		public bool IsStackable { get; set;}
+		
 		public override void WriteJson(JsonWriter writer)
 		{
 			writer.Writer.Write(JsonReader.OperatorObjectStart);
@@ -479,6 +485,10 @@ namespace PlayFab.ServerModels
 			
 			writer.WriteObjectProperty("CanBecomeCharacter", CanBecomeCharacter);
 			
+			writer.Writer.Write(JsonReader.OperatorValueDelim);
+			
+			writer.WriteObjectProperty("IsStackable", IsStackable);
+			
 			writer.Writer.Write(JsonReader.OperatorObjectEnd);
 		}
 		
@@ -498,7 +508,8 @@ namespace PlayFab.ServerModels
 			Consumable = JsonUtil.GetObject<CatalogItemConsumableInfo>(json, "Consumable");
 			Container = JsonUtil.GetObject<CatalogItemContainerInfo>(json, "Container");
 			Bundle = JsonUtil.GetObject<CatalogItemBundleInfo>(json, "Bundle");
-			CanBecomeCharacter = (bool)JsonUtil.Get<bool?>(json, "CanBecomeCharacter");
+			CanBecomeCharacter = (bool)JsonUtil.Get<bool>(json, "CanBecomeCharacter");
+			IsStackable = (bool)JsonUtil.Get<bool>(json, "IsStackable");
 		}
 	}
 	
@@ -755,8 +766,8 @@ namespace PlayFab.ServerModels
 			CharacterName = (string)JsonUtil.Get<string>(json, "CharacterName");
 			DisplayName = (string)JsonUtil.Get<string>(json, "DisplayName");
 			CharacterType = (string)JsonUtil.Get<string>(json, "CharacterType");
-			StatValue = (int)JsonUtil.Get<double?>(json, "StatValue");
-			Position = (int)JsonUtil.Get<double?>(json, "Position");
+			StatValue = (int)JsonUtil.Get<double>(json, "StatValue");
+			Position = (int)JsonUtil.Get<double>(json, "Position");
 		}
 	}
 	
@@ -910,7 +921,7 @@ namespace PlayFab.ServerModels
 			
 			PlayFabId = (string)JsonUtil.Get<string>(json, "PlayFabId");
 			CharacterId = (string)JsonUtil.Get<string>(json, "CharacterId");
-			SaveCharacterInventory = (bool)JsonUtil.Get<bool?>(json, "SaveCharacterInventory");
+			SaveCharacterInventory = (bool)JsonUtil.Get<bool>(json, "SaveCharacterInventory");
 		}
 	}
 	
@@ -1263,8 +1274,8 @@ namespace PlayFab.ServerModels
 			CharacterId = (string)JsonUtil.Get<string>(json, "CharacterId");
 			CharacterType = (string)JsonUtil.Get<string>(json, "CharacterType");
 			StatisticName = (string)JsonUtil.Get<string>(json, "StatisticName");
-			StartPosition = (int)JsonUtil.Get<double?>(json, "StartPosition");
-			MaxResultsCount = (int)JsonUtil.Get<double?>(json, "MaxResultsCount");
+			StartPosition = (int)JsonUtil.Get<double>(json, "StartPosition");
+			MaxResultsCount = (int)JsonUtil.Get<double>(json, "MaxResultsCount");
 		}
 	}
 	
@@ -1497,7 +1508,7 @@ namespace PlayFab.ServerModels
 			PlayFabId = (string)JsonUtil.Get<string>(json, "PlayFabId");
 			CharacterId = (string)JsonUtil.Get<string>(json, "CharacterId");
 			CharacterType = (string)JsonUtil.Get<string>(json, "CharacterType");
-			MaxResultsCount = (int)JsonUtil.Get<double?>(json, "MaxResultsCount");
+			MaxResultsCount = (int)JsonUtil.Get<double>(json, "MaxResultsCount");
 		}
 	}
 	
@@ -1572,7 +1583,7 @@ namespace PlayFab.ServerModels
 			
 			StatisticName = (string)JsonUtil.Get<string>(json, "StatisticName");
 			PlayFabId = (string)JsonUtil.Get<string>(json, "PlayFabId");
-			MaxResultsCount = (int)JsonUtil.Get<double?>(json, "MaxResultsCount");
+			MaxResultsCount = (int)JsonUtil.Get<double>(json, "MaxResultsCount");
 		}
 	}
 	
@@ -1647,7 +1658,7 @@ namespace PlayFab.ServerModels
 			
 			StatisticName = (string)JsonUtil.Get<string>(json, "StatisticName");
 			PlayFabId = (string)JsonUtil.Get<string>(json, "PlayFabId");
-			MaxResultsCount = (int)JsonUtil.Get<double?>(json, "MaxResultsCount");
+			MaxResultsCount = (int)JsonUtil.Get<double>(json, "MaxResultsCount");
 		}
 	}
 	
@@ -1724,8 +1735,8 @@ namespace PlayFab.ServerModels
 		{
 			
 			StatisticName = (string)JsonUtil.Get<string>(json, "StatisticName");
-			StartPosition = (int)JsonUtil.Get<double?>(json, "StartPosition");
-			MaxResultsCount = (int)JsonUtil.Get<double?>(json, "MaxResultsCount");
+			StartPosition = (int)JsonUtil.Get<double>(json, "StartPosition");
+			MaxResultsCount = (int)JsonUtil.Get<double>(json, "MaxResultsCount");
 		}
 	}
 	
@@ -2680,7 +2691,7 @@ namespace PlayFab.ServerModels
 			ItemId = (string)JsonUtil.Get<string>(json, "ItemId");
 			ItemInstanceId = (string)JsonUtil.Get<string>(json, "ItemInstanceId");
 			Annotation = (string)JsonUtil.Get<string>(json, "Annotation");
-			Result = (bool)JsonUtil.Get<bool?>(json, "Result");
+			Result = (bool)JsonUtil.Get<bool>(json, "Result");
 			CharacterId = (string)JsonUtil.Get<string>(json, "CharacterId");
 		}
 	}
@@ -2748,6 +2759,12 @@ namespace PlayFab.ServerModels
 		
 		public string BundleParent { get; set;}
 		
+		/// <summary>
+		/// a set of custom key-value pairs on the inventory item
+		/// </summary>
+		
+		public Dictionary<string,string> CustomData { get; set;}
+		
 		public override void WriteJson(JsonWriter writer)
 		{
 			writer.Writer.Write(JsonReader.OperatorObjectStart);
@@ -2786,6 +2803,10 @@ namespace PlayFab.ServerModels
 			
 			writer.WriteObjectProperty("BundleParent", BundleParent);
 			
+			writer.Writer.Write(JsonReader.OperatorValueDelim);
+			
+			writer.WriteObjectProperty("CustomData", CustomData);
+			
 			writer.Writer.Write(JsonReader.OperatorObjectEnd);
 		}
 		
@@ -2801,6 +2822,7 @@ namespace PlayFab.ServerModels
 			Annotation = (string)JsonUtil.Get<string>(json, "Annotation");
 			CatalogVersion = (string)JsonUtil.Get<string>(json, "CatalogVersion");
 			BundleParent = (string)JsonUtil.Get<string>(json, "BundleParent");
+			CustomData = JsonUtil.GetDictionary<string>(json, "CustomData");
 		}
 	}
 	
@@ -2944,7 +2966,7 @@ namespace PlayFab.ServerModels
 			Timestamp = (DateTime?)JsonUtil.GetDateTime(json, "Timestamp");
 			EventName = (string)JsonUtil.Get<string>(json, "EventName");
 			Body = JsonUtil.GetDictionary<object>(json, "Body");
-			ProfileSetEvent = (bool)JsonUtil.Get<bool?>(json, "ProfileSetEvent");
+			ProfileSetEvent = (bool)JsonUtil.Get<bool>(json, "ProfileSetEvent");
 		}
 	}
 	
@@ -3002,7 +3024,7 @@ namespace PlayFab.ServerModels
 		{
 			
 			VirtualCurrency = (string)JsonUtil.Get<string>(json, "VirtualCurrency");
-			Balance = (int)JsonUtil.Get<double?>(json, "Balance");
+			Balance = (int)JsonUtil.Get<double>(json, "Balance");
 		}
 	}
 	
@@ -3052,7 +3074,7 @@ namespace PlayFab.ServerModels
 			
 			PlayFabId = (string)JsonUtil.Get<string>(json, "PlayFabId");
 			ItemInstanceId = (string)JsonUtil.Get<string>(json, "ItemInstanceId");
-			UsesToAdd = (int)JsonUtil.Get<double?>(json, "UsesToAdd");
+			UsesToAdd = (int)JsonUtil.Get<double>(json, "UsesToAdd");
 		}
 	}
 	
@@ -3091,7 +3113,7 @@ namespace PlayFab.ServerModels
 		{
 			
 			ItemInstanceId = (string)JsonUtil.Get<string>(json, "ItemInstanceId");
-			RemainingUses = (int)JsonUtil.Get<double?>(json, "RemainingUses");
+			RemainingUses = (int)JsonUtil.Get<double>(json, "RemainingUses");
 		}
 	}
 	
@@ -3151,8 +3173,8 @@ namespace PlayFab.ServerModels
 			
 			PlayFabId = (string)JsonUtil.Get<string>(json, "PlayFabId");
 			VirtualCurrency = (string)JsonUtil.Get<string>(json, "VirtualCurrency");
-			BalanceChange = (int)JsonUtil.Get<double?>(json, "BalanceChange");
-			Balance = (int)JsonUtil.Get<double?>(json, "Balance");
+			BalanceChange = (int)JsonUtil.Get<double>(json, "BalanceChange");
+			Balance = (int)JsonUtil.Get<double>(json, "Balance");
 		}
 	}
 	
@@ -3481,8 +3503,8 @@ namespace PlayFab.ServerModels
 			
 			PlayFabId = (string)JsonUtil.Get<string>(json, "PlayFabId");
 			DisplayName = (string)JsonUtil.Get<string>(json, "DisplayName");
-			StatValue = (int)JsonUtil.Get<double?>(json, "StatValue");
-			Position = (int)JsonUtil.Get<double?>(json, "Position");
+			StatValue = (int)JsonUtil.Get<double>(json, "StatValue");
+			Position = (int)JsonUtil.Get<double>(json, "Position");
 		}
 	}
 	
@@ -3569,7 +3591,7 @@ namespace PlayFab.ServerModels
 		public override void Deserialize (Dictionary<string,object> json)
 		{
 			
-			TicketIsValid = (bool)JsonUtil.Get<bool?>(json, "TicketIsValid");
+			TicketIsValid = (bool)JsonUtil.Get<bool>(json, "TicketIsValid");
 			Error = (string)JsonUtil.Get<string>(json, "Error");
 			UserInfo = JsonUtil.GetObject<UserAccountInfo>(json, "UserInfo");
 		}
@@ -3719,8 +3741,8 @@ namespace PlayFab.ServerModels
 		public override void Deserialize (Dictionary<string,object> json)
 		{
 			
-			Updated = (bool)JsonUtil.Get<bool?>(json, "Updated");
-			SubmissionsRemaining = (int)JsonUtil.Get<double?>(json, "SubmissionsRemaining");
+			Updated = (bool)JsonUtil.Get<bool>(json, "Updated");
+			SubmissionsRemaining = (int)JsonUtil.Get<double>(json, "SubmissionsRemaining");
 		}
 	}
 	
@@ -4021,7 +4043,7 @@ namespace PlayFab.ServerModels
 			PlayFabId = (string)JsonUtil.Get<string>(json, "PlayFabId");
 			CharacterId = (string)JsonUtil.Get<string>(json, "CharacterId");
 			VirtualCurrency = (string)JsonUtil.Get<string>(json, "VirtualCurrency");
-			Amount = (int)JsonUtil.Get<double?>(json, "Amount");
+			Amount = (int)JsonUtil.Get<double>(json, "Amount");
 		}
 	}
 	
@@ -4071,7 +4093,7 @@ namespace PlayFab.ServerModels
 			
 			PlayFabId = (string)JsonUtil.Get<string>(json, "PlayFabId");
 			VirtualCurrency = (string)JsonUtil.Get<string>(json, "VirtualCurrency");
-			Amount = (int)JsonUtil.Get<double?>(json, "Amount");
+			Amount = (int)JsonUtil.Get<double>(json, "Amount");
 		}
 	}
 	
@@ -4391,6 +4413,69 @@ namespace PlayFab.ServerModels
 			
 			PlayFabId = (string)JsonUtil.Get<string>(json, "PlayFabId");
 			Data = JsonUtil.GetDictionary<string>(json, "Data");
+		}
+	}
+	
+	
+	
+	public class UpdateUserInventoryItemDataRequest : PlayFabModelBase
+	{
+		
+		
+		
+		public string PlayFabId { get; set;}
+		
+		
+		public string ItemInstanceId { get; set;}
+		
+		/// <summary>
+		/// Data to be written to the item's custom data. Note that keys are trimmed of whitespace.
+		/// </summary>
+		
+		public Dictionary<string,string> Data { get; set;}
+		
+		public override void WriteJson(JsonWriter writer)
+		{
+			writer.Writer.Write(JsonReader.OperatorObjectStart);
+			
+			writer.WriteObjectProperty("PlayFabId", PlayFabId);
+			
+			writer.Writer.Write(JsonReader.OperatorValueDelim);
+			
+			writer.WriteObjectProperty("ItemInstanceId", ItemInstanceId);
+			
+			writer.Writer.Write(JsonReader.OperatorValueDelim);
+			
+			writer.WriteObjectProperty("Data", Data);
+			
+			writer.Writer.Write(JsonReader.OperatorObjectEnd);
+		}
+		
+		public override void Deserialize (Dictionary<string,object> json)
+		{
+			
+			PlayFabId = (string)JsonUtil.Get<string>(json, "PlayFabId");
+			ItemInstanceId = (string)JsonUtil.Get<string>(json, "ItemInstanceId");
+			Data = JsonUtil.GetDictionary<string>(json, "Data");
+		}
+	}
+	
+	
+	
+	public class UpdateUserInventoryItemDataResult : PlayFabModelBase
+	{
+		
+		
+		public override void WriteJson(JsonWriter writer)
+		{
+			writer.Writer.Write(JsonReader.OperatorObjectStart);
+			
+			writer.Writer.Write(JsonReader.OperatorObjectEnd);
+		}
+		
+		public override void Deserialize (Dictionary<string,object> json)
+		{
+			
 		}
 	}
 	
@@ -4904,7 +4989,7 @@ namespace PlayFab.ServerModels
 		public override void Deserialize (Dictionary<string,object> json)
 		{
 			
-			SecondsToRecharge = (int)JsonUtil.Get<double?>(json, "SecondsToRecharge");
+			SecondsToRecharge = (int)JsonUtil.Get<double>(json, "SecondsToRecharge");
 			RechargeTime = (DateTime)JsonUtil.GetDateTime(json, "RechargeTime");
 		}
 	}

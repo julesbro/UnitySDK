@@ -27,12 +27,14 @@ namespace PlayFab
 		public delegate void LinkAndroidDeviceIDCallback(LinkAndroidDeviceIDResult result);
 		public delegate void LinkFacebookAccountCallback(LinkFacebookAccountResult result);
 		public delegate void LinkGameCenterAccountCallback(LinkGameCenterAccountResult result);
+		public delegate void LinkGoogleAccountCallback(LinkGoogleAccountResult result);
 		public delegate void LinkIOSDeviceIDCallback(LinkIOSDeviceIDResult result);
 		public delegate void LinkSteamAccountCallback(LinkSteamAccountResult result);
 		public delegate void SendAccountRecoveryEmailCallback(SendAccountRecoveryEmailResult result);
 		public delegate void UnlinkAndroidDeviceIDCallback(UnlinkAndroidDeviceIDResult result);
 		public delegate void UnlinkFacebookAccountCallback(UnlinkFacebookAccountResult result);
 		public delegate void UnlinkGameCenterAccountCallback(UnlinkGameCenterAccountResult result);
+		public delegate void UnlinkGoogleAccountCallback(UnlinkGoogleAccountResult result);
 		public delegate void UnlinkIOSDeviceIDCallback(UnlinkIOSDeviceIDResult result);
 		public delegate void UnlinkSteamAccountCallback(UnlinkSteamAccountResult result);
 		public delegate void UpdateUserTitleDisplayNameCallback(UpdateUserTitleDisplayNameResult result);
@@ -579,6 +581,35 @@ namespace PlayFab
 		}
 		
 		/// <summary>
+		/// Links the currently signed-in user account to the Google account specified by the Google account access token
+		/// </summary>
+		public static void LinkGoogleAccount(LinkGoogleAccountRequest request, LinkGoogleAccountCallback resultCallback, ErrorCallback errorCallback)
+		{
+			if (AuthKey == null) throw new Exception ("Must be logged in to call this method");
+
+			string serializedJSON = JsonWriter.Serialize (request, Util.GlobalJsonWriterSettings);
+			Action<string,string> callback = delegate(string responseStr, string errorStr)
+			{
+				LinkGoogleAccountResult result = null;
+				PlayFabError error = null;
+				ResultContainer<LinkGoogleAccountResult>.HandleResults(responseStr, errorStr, out result, out error);
+				if(error != null && errorCallback != null)
+				{
+					errorCallback(error);
+				}
+				if(result != null)
+				{
+					
+					if(resultCallback != null)
+					{
+						resultCallback(result);
+					}
+				}
+			};
+			PlayFabHTTP.Post(PlayFabSettings.GetURL()+"/Client/LinkGoogleAccount", serializedJSON, "X-Authorization", AuthKey, callback);
+		}
+		
+		/// <summary>
 		/// Links the vendor-specific iOS device identifier to the user's PlayFab account
 		/// </summary>
 		public static void LinkIOSDeviceID(LinkIOSDeviceIDRequest request, LinkIOSDeviceIDCallback resultCallback, ErrorCallback errorCallback)
@@ -749,6 +780,35 @@ namespace PlayFab
 				}
 			};
 			PlayFabHTTP.Post(PlayFabSettings.GetURL()+"/Client/UnlinkGameCenterAccount", serializedJSON, "X-Authorization", AuthKey, callback);
+		}
+		
+		/// <summary>
+		/// Unlinks the related Google account from the user's PlayFab account
+		/// </summary>
+		public static void UnlinkGoogleAccount(UnlinkGoogleAccountRequest request, UnlinkGoogleAccountCallback resultCallback, ErrorCallback errorCallback)
+		{
+			if (AuthKey == null) throw new Exception ("Must be logged in to call this method");
+
+			string serializedJSON = JsonWriter.Serialize (request, Util.GlobalJsonWriterSettings);
+			Action<string,string> callback = delegate(string responseStr, string errorStr)
+			{
+				UnlinkGoogleAccountResult result = null;
+				PlayFabError error = null;
+				ResultContainer<UnlinkGoogleAccountResult>.HandleResults(responseStr, errorStr, out result, out error);
+				if(error != null && errorCallback != null)
+				{
+					errorCallback(error);
+				}
+				if(result != null)
+				{
+					
+					if(resultCallback != null)
+					{
+						resultCallback(result);
+					}
+				}
+			};
+			PlayFabHTTP.Post(PlayFabSettings.GetURL()+"/Client/UnlinkGoogleAccount", serializedJSON, "X-Authorization", AuthKey, callback);
 		}
 		
 		/// <summary>

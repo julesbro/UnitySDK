@@ -163,7 +163,7 @@ namespace PlayFab.AdminModels
 			ExecutablePath = (string)JsonUtil.Get<string>(json, "ExecutablePath");
 			ActiveRegions = JsonUtil.GetListEnum<Region>(json, "ActiveRegions");
 			Comment = (string)JsonUtil.Get<string>(json, "Comment");
-			MaxGamesPerHost = (int)JsonUtil.Get<double?>(json, "MaxGamesPerHost");
+			MaxGamesPerHost = (int)JsonUtil.Get<double>(json, "MaxGamesPerHost");
 		}
 	}
 	
@@ -270,7 +270,7 @@ namespace PlayFab.AdminModels
 			
 			BuildId = (string)JsonUtil.Get<string>(json, "BuildId");
 			ActiveRegions = JsonUtil.GetListEnum<Region>(json, "ActiveRegions");
-			MaxGamesPerHost = (int)JsonUtil.Get<double?>(json, "MaxGamesPerHost");
+			MaxGamesPerHost = (int)JsonUtil.Get<double>(json, "MaxGamesPerHost");
 			CommandLineTemplate = (string)JsonUtil.Get<string>(json, "CommandLineTemplate");
 			ExecutablePath = (string)JsonUtil.Get<string>(json, "ExecutablePath");
 			Comment = (string)JsonUtil.Get<string>(json, "Comment");
@@ -326,7 +326,7 @@ namespace PlayFab.AdminModels
 			
 			PlayFabId = (string)JsonUtil.Get<string>(json, "PlayFabId");
 			VirtualCurrency = (string)JsonUtil.Get<string>(json, "VirtualCurrency");
-			Amount = (int)JsonUtil.Get<double?>(json, "Amount");
+			Amount = (int)JsonUtil.Get<double>(json, "Amount");
 		}
 	}
 	
@@ -470,6 +470,12 @@ namespace PlayFab.AdminModels
 		
 		public bool CanBecomeCharacter { get; set;}
 		
+		/// <summary>
+		/// if true, then only one item instance of this type will exist and its remaininguses will be incremented instead
+		/// </summary>
+		
+		public bool IsStackable { get; set;}
+		
 		public override void WriteJson(JsonWriter writer)
 		{
 			writer.Writer.Write(JsonReader.OperatorObjectStart);
@@ -528,6 +534,10 @@ namespace PlayFab.AdminModels
 			
 			writer.WriteObjectProperty("CanBecomeCharacter", CanBecomeCharacter);
 			
+			writer.Writer.Write(JsonReader.OperatorValueDelim);
+			
+			writer.WriteObjectProperty("IsStackable", IsStackable);
+			
 			writer.Writer.Write(JsonReader.OperatorObjectEnd);
 		}
 		
@@ -547,7 +557,8 @@ namespace PlayFab.AdminModels
 			Consumable = JsonUtil.GetObject<CatalogItemConsumableInfo>(json, "Consumable");
 			Container = JsonUtil.GetObject<CatalogItemContainerInfo>(json, "Container");
 			Bundle = JsonUtil.GetObject<CatalogItemBundleInfo>(json, "Bundle");
-			CanBecomeCharacter = (bool)JsonUtil.Get<bool?>(json, "CanBecomeCharacter");
+			CanBecomeCharacter = (bool)JsonUtil.Get<bool>(json, "CanBecomeCharacter");
+			IsStackable = (bool)JsonUtil.Get<bool>(json, "IsStackable");
 		}
 	}
 	
@@ -798,9 +809,9 @@ namespace PlayFab.AdminModels
 		public override void Deserialize (Dictionary<string,object> json)
 		{
 			
-			Version = (int)JsonUtil.Get<double?>(json, "Version");
-			PublishedRevision = (int)JsonUtil.Get<double?>(json, "PublishedRevision");
-			LatestRevision = (int)JsonUtil.Get<double?>(json, "LatestRevision");
+			Version = (int)JsonUtil.Get<double>(json, "Version");
+			PublishedRevision = (int)JsonUtil.Get<double>(json, "PublishedRevision");
+			LatestRevision = (int)JsonUtil.Get<double>(json, "LatestRevision");
 		}
 	}
 	
@@ -849,7 +860,7 @@ namespace PlayFab.AdminModels
 		{
 			
 			Key = (string)JsonUtil.Get<string>(json, "Key");
-			Size = (long)JsonUtil.Get<double?>(json, "Size");
+			Size = (long)JsonUtil.Get<double>(json, "Size");
 			LastModified = (DateTime)JsonUtil.GetDateTime(json, "LastModified");
 		}
 	}
@@ -951,8 +962,8 @@ namespace PlayFab.AdminModels
 		{
 			
 			Gamemode = (string)JsonUtil.Get<string>(json, "Gamemode");
-			MinPlayerCount = (uint)JsonUtil.Get<double?>(json, "MinPlayerCount");
-			MaxPlayerCount = (uint)JsonUtil.Get<double?>(json, "MaxPlayerCount");
+			MinPlayerCount = (uint)JsonUtil.Get<double>(json, "MinPlayerCount");
+			MaxPlayerCount = (uint)JsonUtil.Get<double>(json, "MaxPlayerCount");
 		}
 	}
 	
@@ -1115,11 +1126,11 @@ namespace PlayFab.AdminModels
 		public override void Deserialize (Dictionary<string,object> json)
 		{
 			
-			Version = (int)JsonUtil.Get<double?>(json, "Version");
-			Revision = (int)JsonUtil.Get<double?>(json, "Revision");
+			Version = (int)JsonUtil.Get<double>(json, "Version");
+			Revision = (int)JsonUtil.Get<double>(json, "Revision");
 			CreatedAt = (DateTime)JsonUtil.GetDateTime(json, "CreatedAt");
 			Files = JsonUtil.GetObjectList<CloudScriptFile>(json, "Files");
-			IsPublished = (bool)JsonUtil.Get<bool?>(json, "IsPublished");
+			IsPublished = (bool)JsonUtil.Get<bool>(json, "IsPublished");
 		}
 	}
 	
@@ -1239,8 +1250,8 @@ namespace PlayFab.AdminModels
 		public override void Deserialize (Dictionary<string,object> json)
 		{
 			
-			ItemCount = (long)JsonUtil.Get<double?>(json, "ItemCount");
-			TotalSize = (long)JsonUtil.Get<double?>(json, "TotalSize");
+			ItemCount = (long)JsonUtil.Get<double>(json, "ItemCount");
+			TotalSize = (long)JsonUtil.Get<double>(json, "TotalSize");
 			Contents = JsonUtil.GetObjectList<ContentInfo>(json, "Contents");
 		}
 	}
@@ -1367,9 +1378,9 @@ namespace PlayFab.AdminModels
 		{
 			
 			ReportName = (string)JsonUtil.Get<string>(json, "ReportName");
-			Year = (int)JsonUtil.Get<double?>(json, "Year");
-			Month = (int)JsonUtil.Get<double?>(json, "Month");
-			Day = (int)JsonUtil.Get<double?>(json, "Day");
+			Year = (int)JsonUtil.Get<double>(json, "Year");
+			Month = (int)JsonUtil.Get<double>(json, "Month");
+			Day = (int)JsonUtil.Get<double>(json, "Day");
 		}
 	}
 	
@@ -1549,7 +1560,7 @@ namespace PlayFab.AdminModels
 			Region = (Region?)JsonUtil.GetEnum<Region>(json, "Region");
 			Players = JsonUtil.GetList<string>(json, "Players");
 			ServerAddress = (string)JsonUtil.Get<string>(json, "ServerAddress");
-			ServerPort = (uint)JsonUtil.Get<double?>(json, "ServerPort");
+			ServerPort = (uint)JsonUtil.Get<double>(json, "ServerPort");
 		}
 	}
 	
@@ -1836,7 +1847,7 @@ namespace PlayFab.AdminModels
 			
 			BuildId = (string)JsonUtil.Get<string>(json, "BuildId");
 			ActiveRegions = JsonUtil.GetListEnum<Region>(json, "ActiveRegions");
-			MaxGamesPerHost = (int)JsonUtil.Get<double?>(json, "MaxGamesPerHost");
+			MaxGamesPerHost = (int)JsonUtil.Get<double>(json, "MaxGamesPerHost");
 			Comment = (string)JsonUtil.Get<string>(json, "Comment");
 			Timestamp = (DateTime)JsonUtil.GetDateTime(json, "Timestamp");
 			TitleId = (string)JsonUtil.Get<string>(json, "TitleId");
@@ -2371,7 +2382,7 @@ namespace PlayFab.AdminModels
 			ItemId = (string)JsonUtil.Get<string>(json, "ItemId");
 			ItemInstanceId = (string)JsonUtil.Get<string>(json, "ItemInstanceId");
 			Annotation = (string)JsonUtil.Get<string>(json, "Annotation");
-			Result = (bool)JsonUtil.Get<bool?>(json, "Result");
+			Result = (bool)JsonUtil.Get<bool>(json, "Result");
 			CharacterId = (string)JsonUtil.Get<string>(json, "CharacterId");
 		}
 	}
@@ -2439,6 +2450,12 @@ namespace PlayFab.AdminModels
 		
 		public string BundleParent { get; set;}
 		
+		/// <summary>
+		/// a set of custom key-value pairs on the inventory item
+		/// </summary>
+		
+		public Dictionary<string,string> CustomData { get; set;}
+		
 		public override void WriteJson(JsonWriter writer)
 		{
 			writer.Writer.Write(JsonReader.OperatorObjectStart);
@@ -2477,6 +2494,10 @@ namespace PlayFab.AdminModels
 			
 			writer.WriteObjectProperty("BundleParent", BundleParent);
 			
+			writer.Writer.Write(JsonReader.OperatorValueDelim);
+			
+			writer.WriteObjectProperty("CustomData", CustomData);
+			
 			writer.Writer.Write(JsonReader.OperatorObjectEnd);
 		}
 		
@@ -2492,6 +2513,7 @@ namespace PlayFab.AdminModels
 			Annotation = (string)JsonUtil.Get<string>(json, "Annotation");
 			CatalogVersion = (string)JsonUtil.Get<string>(json, "CatalogVersion");
 			BundleParent = (string)JsonUtil.Get<string>(json, "BundleParent");
+			CustomData = JsonUtil.GetDictionary<string>(json, "CustomData");
 		}
 	}
 	
@@ -2822,7 +2844,7 @@ namespace PlayFab.AdminModels
 			BuildId = (string)JsonUtil.Get<string>(json, "BuildId");
 			Timestamp = (DateTime?)JsonUtil.GetDateTime(json, "Timestamp");
 			ActiveRegions = JsonUtil.GetListEnum<Region>(json, "ActiveRegions");
-			MaxGamesPerHost = (int)JsonUtil.Get<double?>(json, "MaxGamesPerHost");
+			MaxGamesPerHost = (int)JsonUtil.Get<double>(json, "MaxGamesPerHost");
 			CommandLineTemplate = (string)JsonUtil.Get<string>(json, "CommandLineTemplate");
 			ExecutablePath = (string)JsonUtil.Get<string>(json, "ExecutablePath");
 			Comment = (string)JsonUtil.Get<string>(json, "Comment");
@@ -2932,7 +2954,7 @@ namespace PlayFab.AdminModels
 			
 			BuildId = (string)JsonUtil.Get<string>(json, "BuildId");
 			ActiveRegions = JsonUtil.GetListEnum<Region>(json, "ActiveRegions");
-			MaxGamesPerHost = (int)JsonUtil.Get<double?>(json, "MaxGamesPerHost");
+			MaxGamesPerHost = (int)JsonUtil.Get<double>(json, "MaxGamesPerHost");
 			CommandLineTemplate = (string)JsonUtil.Get<string>(json, "CommandLineTemplate");
 			ExecutablePath = (string)JsonUtil.Get<string>(json, "ExecutablePath");
 			Comment = (string)JsonUtil.Get<string>(json, "Comment");
@@ -2998,8 +3020,8 @@ namespace PlayFab.AdminModels
 			
 			PlayFabId = (string)JsonUtil.Get<string>(json, "PlayFabId");
 			VirtualCurrency = (string)JsonUtil.Get<string>(json, "VirtualCurrency");
-			BalanceChange = (int)JsonUtil.Get<double?>(json, "BalanceChange");
-			Balance = (int)JsonUtil.Get<double?>(json, "Balance");
+			BalanceChange = (int)JsonUtil.Get<double>(json, "BalanceChange");
+			Balance = (int)JsonUtil.Get<double>(json, "Balance");
 		}
 	}
 	
@@ -3228,7 +3250,7 @@ namespace PlayFab.AdminModels
 			
 			ResultItemType = (ResultTableNodeType)JsonUtil.GetEnum<ResultTableNodeType>(json, "ResultItemType");
 			ResultItem = (string)JsonUtil.Get<string>(json, "ResultItem");
-			Weight = (int)JsonUtil.Get<double?>(json, "Weight");
+			Weight = (int)JsonUtil.Get<double>(json, "Weight");
 		}
 	}
 	
@@ -3384,8 +3406,8 @@ namespace PlayFab.AdminModels
 		public override void Deserialize (Dictionary<string,object> json)
 		{
 			
-			Version = (int)JsonUtil.Get<double?>(json, "Version");
-			Revision = (int)JsonUtil.Get<double?>(json, "Revision");
+			Version = (int)JsonUtil.Get<double>(json, "Version");
+			Revision = (int)JsonUtil.Get<double>(json, "Revision");
 		}
 	}
 	
@@ -3592,7 +3614,7 @@ namespace PlayFab.AdminModels
 			Platform = (string)JsonUtil.Get<string>(json, "Platform");
 			Key = (string)JsonUtil.Get<string>(json, "Key");
 			Credential = (string)JsonUtil.Get<string>(json, "Credential");
-			OverwriteOldARN = (bool)JsonUtil.Get<bool?>(json, "OverwriteOldARN");
+			OverwriteOldARN = (bool)JsonUtil.Get<bool>(json, "OverwriteOldARN");
 		}
 	}
 	
@@ -3723,7 +3745,7 @@ namespace PlayFab.AdminModels
 			
 			PlayFabId = (string)JsonUtil.Get<string>(json, "PlayFabId");
 			VirtualCurrency = (string)JsonUtil.Get<string>(json, "VirtualCurrency");
-			Amount = (int)JsonUtil.Get<double?>(json, "Amount");
+			Amount = (int)JsonUtil.Get<double>(json, "Amount");
 		}
 	}
 	
@@ -3869,8 +3891,8 @@ namespace PlayFab.AdminModels
 		public override void Deserialize (Dictionary<string,object> json)
 		{
 			
-			Version = (int)JsonUtil.Get<double?>(json, "Version");
-			Revision = (int)JsonUtil.Get<double?>(json, "Revision");
+			Version = (int)JsonUtil.Get<double>(json, "Version");
+			Revision = (int)JsonUtil.Get<double>(json, "Revision");
 		}
 	}
 	
@@ -4711,7 +4733,7 @@ namespace PlayFab.AdminModels
 		public override void Deserialize (Dictionary<string,object> json)
 		{
 			
-			SecondsToRecharge = (int)JsonUtil.Get<double?>(json, "SecondsToRecharge");
+			SecondsToRecharge = (int)JsonUtil.Get<double>(json, "SecondsToRecharge");
 			RechargeTime = (DateTime)JsonUtil.GetDateTime(json, "RechargeTime");
 		}
 	}
