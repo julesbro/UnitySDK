@@ -55,6 +55,12 @@ You are now ready to begin making API calls using the PlayFabClientAPI singleton
 ----
 For a complete list of available APIs, check out the [online documentation](http://api.playfab.com/Documentation/).
 
+When creating web player builds, ensure that you have the proper WWW Security Emulation
+  * Configuration variable can be found under Edit > Project Settings > Editor [more](http://docs.unity3d.com/Manual/class-EditorManager.html)
+  * Your address will be https://xxxx.playfablogic.com (where xxxx is your title id)
+  * A good overview of the issue can be found [here](http://answers.unity3d.com/questions/133806/why-is-unity-trying-to-get-a-crossdmain-policy-eve.html)
+
+
 #### Contact Us
 We love to hear from our developer community! 
 Do you have ideas on how we can make our products and services better? 
