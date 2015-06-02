@@ -25,7 +25,6 @@ namespace PlayFab
 		public delegate void GetUserStatisticsCallback(GetUserStatisticsResult result);
 		public delegate void UpdateUserDataCallback(UpdateUserDataResult result);
 		public delegate void UpdateUserInternalDataCallback(UpdateUserDataResult result);
-		public delegate void UpdateUserInventoryItemCustomDataCallback(UpdateUserInventoryItemDataResult result);
 		public delegate void UpdateUserPublisherDataCallback(UpdateUserDataResult result);
 		public delegate void UpdateUserPublisherInternalDataCallback(UpdateUserDataResult result);
 		public delegate void UpdateUserPublisherReadOnlyDataCallback(UpdateUserDataResult result);
@@ -50,6 +49,7 @@ namespace PlayFab
 		public delegate void ReportPlayerCallback(ReportPlayerServerResult result);
 		public delegate void SubtractCharacterVirtualCurrencyCallback(ModifyCharacterVirtualCurrencyResult result);
 		public delegate void SubtractUserVirtualCurrencyCallback(ModifyUserVirtualCurrencyResult result);
+		public delegate void UpdateUserInventoryItemCustomDataCallback(UpdateUserInventoryItemDataResult result);
 		public delegate void NotifyMatchmakerPlayerLeftCallback(NotifyMatchmakerPlayerLeftResult result);
 		public delegate void RedeemMatchmakerTicketCallback(RedeemMatchmakerTicketResult result);
 		public delegate void AwardSteamAchievementCallback(AwardSteamAchievementResult result);
@@ -485,35 +485,6 @@ namespace PlayFab
 				}
 			};
 			PlayFabHTTP.Post(PlayFabSettings.GetURL()+"/Server/UpdateUserInternalData", serializedJSON, "X-SecretKey", PlayFabSettings.DeveloperSecretKey, callback);
-		}
-		
-		/// <summary>
-		/// Updates the key-value pair data tagged to the specified item, which is read-only from the client.
-		/// </summary>
-		public static void UpdateUserInventoryItemCustomData(UpdateUserInventoryItemDataRequest request, UpdateUserInventoryItemCustomDataCallback resultCallback, ErrorCallback errorCallback)
-		{
-			if (PlayFabSettings.DeveloperSecretKey == null) throw new Exception ("Must have PlayFabSettings.DeveloperSecretKey set to call this method");
-
-			string serializedJSON = JsonWriter.Serialize (request, Util.GlobalJsonWriterSettings);
-			Action<string,string> callback = delegate(string responseStr, string errorStr)
-			{
-				UpdateUserInventoryItemDataResult result = null;
-				PlayFabError error = null;
-				ResultContainer<UpdateUserInventoryItemDataResult>.HandleResults(responseStr, errorStr, out result, out error);
-				if(error != null && errorCallback != null)
-				{
-					errorCallback(error);
-				}
-				if(result != null)
-				{
-					
-					if(resultCallback != null)
-					{
-						resultCallback(result);
-					}
-				}
-			};
-			PlayFabHTTP.Post(PlayFabSettings.GetURL()+"/Server/UpdateUserInventoryItemCustomData", serializedJSON, "X-SecretKey", PlayFabSettings.DeveloperSecretKey, callback);
 		}
 		
 		/// <summary>
@@ -1210,6 +1181,35 @@ namespace PlayFab
 				}
 			};
 			PlayFabHTTP.Post(PlayFabSettings.GetURL()+"/Server/SubtractUserVirtualCurrency", serializedJSON, "X-SecretKey", PlayFabSettings.DeveloperSecretKey, callback);
+		}
+		
+		/// <summary>
+		/// Updates the key-value pair data tagged to the specified item, which is read-only from the client.
+		/// </summary>
+		public static void UpdateUserInventoryItemCustomData(UpdateUserInventoryItemDataRequest request, UpdateUserInventoryItemCustomDataCallback resultCallback, ErrorCallback errorCallback)
+		{
+			if (PlayFabSettings.DeveloperSecretKey == null) throw new Exception ("Must have PlayFabSettings.DeveloperSecretKey set to call this method");
+
+			string serializedJSON = JsonWriter.Serialize (request, Util.GlobalJsonWriterSettings);
+			Action<string,string> callback = delegate(string responseStr, string errorStr)
+			{
+				UpdateUserInventoryItemDataResult result = null;
+				PlayFabError error = null;
+				ResultContainer<UpdateUserInventoryItemDataResult>.HandleResults(responseStr, errorStr, out result, out error);
+				if(error != null && errorCallback != null)
+				{
+					errorCallback(error);
+				}
+				if(result != null)
+				{
+					
+					if(resultCallback != null)
+					{
+						resultCallback(result);
+					}
+				}
+			};
+			PlayFabHTTP.Post(PlayFabSettings.GetURL()+"/Server/UpdateUserInventoryItemCustomData", serializedJSON, "X-SecretKey", PlayFabSettings.DeveloperSecretKey, callback);
 		}
 		
 		/// <summary>

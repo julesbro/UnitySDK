@@ -36,9 +36,6 @@ namespace PlayFab.ClientModels
 		
 		public string FriendTitleDisplayName { get; set;}
 		
-		
-		public string PublisherId { get; set;}
-		
 		public override void WriteJson(JsonWriter writer)
 		{
 			writer.Writer.Write(JsonReader.OperatorObjectStart);
@@ -57,10 +54,6 @@ namespace PlayFab.ClientModels
 			
 			writer.WriteObjectProperty("FriendTitleDisplayName", FriendTitleDisplayName);
 			
-			writer.Writer.Write(JsonReader.OperatorValueDelim);
-			
-			writer.WriteObjectProperty("PublisherId", PublisherId);
-			
 			writer.Writer.Write(JsonReader.OperatorObjectEnd);
 		}
 		
@@ -71,7 +64,6 @@ namespace PlayFab.ClientModels
 			FriendUsername = (string)JsonUtil.Get<string>(json, "FriendUsername");
 			FriendEmail = (string)JsonUtil.Get<string>(json, "FriendEmail");
 			FriendTitleDisplayName = (string)JsonUtil.Get<string>(json, "FriendTitleDisplayName");
-			PublisherId = (string)JsonUtil.Get<string>(json, "PublisherId");
 		}
 	}
 	
@@ -173,9 +165,6 @@ namespace PlayFab.ClientModels
 		
 		public string Password { get; set;}
 		
-		
-		public string PublisherId { get; set;}
-		
 		public override void WriteJson(JsonWriter writer)
 		{
 			writer.Writer.Write(JsonReader.OperatorObjectStart);
@@ -190,10 +179,6 @@ namespace PlayFab.ClientModels
 			
 			writer.WriteObjectProperty("Password", Password);
 			
-			writer.Writer.Write(JsonReader.OperatorValueDelim);
-			
-			writer.WriteObjectProperty("PublisherId", PublisherId);
-			
 			writer.Writer.Write(JsonReader.OperatorObjectEnd);
 		}
 		
@@ -203,7 +188,6 @@ namespace PlayFab.ClientModels
 			Username = (string)JsonUtil.Get<string>(json, "Username");
 			Email = (string)JsonUtil.Get<string>(json, "Email");
 			Password = (string)JsonUtil.Get<string>(json, "Password");
-			PublisherId = (string)JsonUtil.Get<string>(json, "PublisherId");
 		}
 	}
 	
@@ -1134,6 +1118,18 @@ namespace PlayFab.ClientModels
 		
 		public string BuildVersion { get; set;}
 		
+		/// <summary>
+		/// game mode to look for (optional)
+		/// </summary>
+		
+		public string GameMode { get; set;}
+		
+		/// <summary>
+		/// statistic name to find statistic-based matches (optional)
+		/// </summary>
+		
+		public string StatisticName { get; set;}
+		
 		public override void WriteJson(JsonWriter writer)
 		{
 			writer.Writer.Write(JsonReader.OperatorObjectStart);
@@ -1144,6 +1140,14 @@ namespace PlayFab.ClientModels
 			
 			writer.WriteObjectProperty("BuildVersion", BuildVersion);
 			
+			writer.Writer.Write(JsonReader.OperatorValueDelim);
+			
+			writer.WriteObjectProperty("GameMode", GameMode);
+			
+			writer.Writer.Write(JsonReader.OperatorValueDelim);
+			
+			writer.WriteObjectProperty("StatisticName", StatisticName);
+			
 			writer.Writer.Write(JsonReader.OperatorObjectEnd);
 		}
 		
@@ -1152,6 +1156,8 @@ namespace PlayFab.ClientModels
 			
 			Region = (Region?)JsonUtil.GetEnum<Region>(json, "Region");
 			BuildVersion = (string)JsonUtil.Get<string>(json, "BuildVersion");
+			GameMode = (string)JsonUtil.Get<string>(json, "GameMode");
+			StatisticName = (string)JsonUtil.Get<string>(json, "StatisticName");
 		}
 	}
 	
@@ -1399,6 +1405,12 @@ namespace PlayFab.ClientModels
 		public string GameMode { get; set;}
 		
 		/// <summary>
+		/// stastic used to match this game in player statistic matchmaking
+		/// </summary>
+		
+		public string StatisticName { get; set;}
+		
+		/// <summary>
 		/// maximum players this server can support
 		/// </summary>
 		
@@ -1442,6 +1454,10 @@ namespace PlayFab.ClientModels
 			
 			writer.Writer.Write(JsonReader.OperatorValueDelim);
 			
+			writer.WriteObjectProperty("StatisticName", StatisticName);
+			
+			writer.Writer.Write(JsonReader.OperatorValueDelim);
+			
 			writer.WriteObjectProperty("MaxPlayers", MaxPlayers);
 			
 			writer.Writer.Write(JsonReader.OperatorValueDelim);
@@ -1466,6 +1482,7 @@ namespace PlayFab.ClientModels
 			LobbyID = (string)JsonUtil.Get<string>(json, "LobbyID");
 			BuildVersion = (string)JsonUtil.Get<string>(json, "BuildVersion");
 			GameMode = (string)JsonUtil.Get<string>(json, "GameMode");
+			StatisticName = (string)JsonUtil.Get<string>(json, "StatisticName");
 			MaxPlayers = (int?)JsonUtil.Get<double?>(json, "MaxPlayers");
 			PlayerUserIds = JsonUtil.GetList<string>(json, "PlayerUserIds");
 			RunTime = (uint)JsonUtil.Get<double>(json, "RunTime");
@@ -1544,16 +1561,46 @@ namespace PlayFab.ClientModels
 		
 		
 		/// <summary>
-		/// Unique PlayFab identifier of the user whose info is being requested. Optional, defaults to the authenticated user if not set.
+		/// Unique PlayFab identifier of the user whose info is being requested. Optional, defaults to the authenticated user if no other lookup identifier set.
 		/// </summary>
 		
 		public string PlayFabId { get; set;}
+		
+		/// <summary>
+		/// PlayFab Username for the account to find (if no PlayFabId is specified).
+		/// </summary>
+		
+		public string Username { get; set;}
+		
+		/// <summary>
+		/// User email address for the account to find (if no Username is specified).
+		/// </summary>
+		
+		public string Email { get; set;}
+		
+		/// <summary>
+		/// Title-specific username for the account to find (if no Email is set).
+		/// </summary>
+		
+		public string TitleDisplayName { get; set;}
 		
 		public override void WriteJson(JsonWriter writer)
 		{
 			writer.Writer.Write(JsonReader.OperatorObjectStart);
 			
 			writer.WriteObjectProperty("PlayFabId", PlayFabId);
+			
+			writer.Writer.Write(JsonReader.OperatorValueDelim);
+			
+			writer.WriteObjectProperty("Username", Username);
+			
+			writer.Writer.Write(JsonReader.OperatorValueDelim);
+			
+			writer.WriteObjectProperty("Email", Email);
+			
+			writer.Writer.Write(JsonReader.OperatorValueDelim);
+			
+			writer.WriteObjectProperty("TitleDisplayName", TitleDisplayName);
 			
 			writer.Writer.Write(JsonReader.OperatorObjectEnd);
 		}
@@ -1562,6 +1609,9 @@ namespace PlayFab.ClientModels
 		{
 			
 			PlayFabId = (string)JsonUtil.Get<string>(json, "PlayFabId");
+			Username = (string)JsonUtil.Get<string>(json, "Username");
+			Email = (string)JsonUtil.Get<string>(json, "Email");
+			TitleDisplayName = (string)JsonUtil.Get<string>(json, "TitleDisplayName");
 		}
 	}
 	
@@ -1745,7 +1795,7 @@ namespace PlayFab.ClientModels
 		public string CharacterId { get; set;}
 		
 		/// <summary>
-		/// used to limit results to only those from a specific catalog version
+		/// Used to limit results to only those from a specific catalog version.
 		/// </summary>
 		
 		public string CatalogVersion { get; set;}
@@ -1783,13 +1833,13 @@ namespace PlayFab.ClientModels
 		
 		
 		/// <summary>
-		/// array of inventory items belonging to the character
+		/// Array of inventory items belonging to the character.
 		/// </summary>
 		
 		public List<ItemInstance> Inventory { get; set;}
 		
 		/// <summary>
-		/// array of virtual currency balance(s) belonging to the character
+		/// Array of virtual currency balance(s) belonging to the character.
 		/// </summary>
 		
 		public Dictionary<string,int> VirtualCurrency { get; set;}
@@ -2526,18 +2576,11 @@ namespace PlayFab.ClientModels
 		
 		public List<string> FacebookIDs { get; set;}
 		
-		
-		public string PublisherId { get; set;}
-		
 		public override void WriteJson(JsonWriter writer)
 		{
 			writer.Writer.Write(JsonReader.OperatorObjectStart);
 			
 			writer.WriteObjectProperty("FacebookIDs", FacebookIDs);
-			
-			writer.Writer.Write(JsonReader.OperatorValueDelim);
-			
-			writer.WriteObjectProperty("PublisherId", PublisherId);
 			
 			writer.Writer.Write(JsonReader.OperatorObjectEnd);
 		}
@@ -2546,7 +2589,6 @@ namespace PlayFab.ClientModels
 		{
 			
 			FacebookIDs = JsonUtil.GetList<string>(json, "FacebookIDs");
-			PublisherId = (string)JsonUtil.Get<string>(json, "PublisherId");
 		}
 	}
 	
@@ -2898,10 +2940,28 @@ namespace PlayFab.ClientModels
 		
 		
 		/// <summary>
-		/// Unique PlayFab identifier of the user to load info about. Defaults to yourself if not set.
+		/// Unique PlayFab identifier of the user whose info is being requested. Optional, defaults to the authenticated user if no other lookup identifier set.
 		/// </summary>
 		
 		public string PlayFabId { get; set;}
+		
+		/// <summary>
+		/// PlayFab Username for the account to find (if no PlayFabId is specified).
+		/// </summary>
+		
+		public string Username { get; set;}
+		
+		/// <summary>
+		/// User email address for the account to find (if no Username is specified).
+		/// </summary>
+		
+		public string Email { get; set;}
+		
+		/// <summary>
+		/// Title-specific username for the account to find (if no Email is set).
+		/// </summary>
+		
+		public string TitleDisplayName { get; set;}
 		
 		/// <summary>
 		/// If set to false, account info will not be returned. Defaults to true.
@@ -2953,6 +3013,18 @@ namespace PlayFab.ClientModels
 			
 			writer.Writer.Write(JsonReader.OperatorValueDelim);
 			
+			writer.WriteObjectProperty("Username", Username);
+			
+			writer.Writer.Write(JsonReader.OperatorValueDelim);
+			
+			writer.WriteObjectProperty("Email", Email);
+			
+			writer.Writer.Write(JsonReader.OperatorValueDelim);
+			
+			writer.WriteObjectProperty("TitleDisplayName", TitleDisplayName);
+			
+			writer.Writer.Write(JsonReader.OperatorValueDelim);
+			
 			writer.WriteObjectProperty("GetAccountInfo", GetAccountInfo);
 			
 			writer.Writer.Write(JsonReader.OperatorValueDelim);
@@ -2986,6 +3058,9 @@ namespace PlayFab.ClientModels
 		{
 			
 			PlayFabId = (string)JsonUtil.Get<string>(json, "PlayFabId");
+			Username = (string)JsonUtil.Get<string>(json, "Username");
+			Email = (string)JsonUtil.Get<string>(json, "Email");
+			TitleDisplayName = (string)JsonUtil.Get<string>(json, "TitleDisplayName");
 			GetAccountInfo = (bool?)JsonUtil.Get<bool?>(json, "GetAccountInfo");
 			GetInventory = (bool?)JsonUtil.Get<bool?>(json, "GetInventory");
 			GetVirtualCurrency = (bool?)JsonUtil.Get<bool?>(json, "GetVirtualCurrency");
@@ -3380,61 +3455,61 @@ namespace PlayFab.ClientModels
 		
 		
 		/// <summary>
-		/// unique identifier for the inventory item, as defined in the catalog
+		/// Unique identifier for the inventory item, as defined in the catalog.
 		/// </summary>
 		
 		public string ItemId { get; set;}
 		
 		/// <summary>
-		/// unique item identifier for this specific instance of the item
+		/// Unique item identifier for this specific instance of the item.
 		/// </summary>
 		
 		public string ItemInstanceId { get; set;}
 		
 		/// <summary>
-		/// class name for the inventory item, as defined in the catalog
+		/// Class name for the inventory item, as defined in the catalog.
 		/// </summary>
 		
 		public string ItemClass { get; set;}
 		
 		/// <summary>
-		/// timestamp for when this instance was purchased
+		/// Timestamp for when this instance was purchased.
 		/// </summary>
 		
 		public DateTime? PurchaseDate { get; set;}
 		
 		/// <summary>
-		/// timestamp for when this instance will expire
+		/// Timestamp for when this instance will expire.
 		/// </summary>
 		
 		public DateTime? Expiration { get; set;}
 		
 		/// <summary>
-		/// total number of remaining uses, if this is a consumable item
+		/// Total number of remaining uses, if this is a consumable item.
 		/// </summary>
 		
 		public int? RemainingUses { get; set;}
 		
 		/// <summary>
-		/// game specific comment associated with this instance when it was added to the user inventory
+		/// Game specific comment associated with this instance when it was added to the user inventory.
 		/// </summary>
 		
 		public string Annotation { get; set;}
 		
 		/// <summary>
-		/// catalog version for the inventory item, when this instance was created
+		/// Catalog version for the inventory item, when this instance was created.
 		/// </summary>
 		
 		public string CatalogVersion { get; set;}
 		
 		/// <summary>
-		/// unique identifier for the parent inventory item, as defined in the catalog, for object which were added from a bundle or container
+		/// Unique identifier for the parent inventory item, as defined in the catalog, for object which were added from a bundle or container.
 		/// </summary>
 		
 		public string BundleParent { get; set;}
 		
 		/// <summary>
-		/// a set of custom key-value pairs on the inventory item
+		/// A set of custom key-value pairs on the inventory item.
 		/// </summary>
 		
 		public Dictionary<string,string> CustomData { get; set;}
@@ -3573,9 +3648,6 @@ namespace PlayFab.ClientModels
 		
 		public string AndroidDeviceId { get; set;}
 		
-		
-		public string PublisherId { get; set;}
-		
 		/// <summary>
 		/// Specific Operating System version for the user's device.
 		/// </summary>
@@ -3596,10 +3668,6 @@ namespace PlayFab.ClientModels
 			
 			writer.Writer.Write(JsonReader.OperatorValueDelim);
 			
-			writer.WriteObjectProperty("PublisherId", PublisherId);
-			
-			writer.Writer.Write(JsonReader.OperatorValueDelim);
-			
 			writer.WriteObjectProperty("OS", OS);
 			
 			writer.Writer.Write(JsonReader.OperatorValueDelim);
@@ -3613,7 +3681,6 @@ namespace PlayFab.ClientModels
 		{
 			
 			AndroidDeviceId = (string)JsonUtil.Get<string>(json, "AndroidDeviceId");
-			PublisherId = (string)JsonUtil.Get<string>(json, "PublisherId");
 			OS = (string)JsonUtil.Get<string>(json, "OS");
 			AndroidDevice = (string)JsonUtil.Get<string>(json, "AndroidDevice");
 		}
@@ -3650,18 +3717,11 @@ namespace PlayFab.ClientModels
 		
 		public string AccessToken { get; set;}
 		
-		
-		public string PublisherId { get; set;}
-		
 		public override void WriteJson(JsonWriter writer)
 		{
 			writer.Writer.Write(JsonReader.OperatorObjectStart);
 			
 			writer.WriteObjectProperty("AccessToken", AccessToken);
-			
-			writer.Writer.Write(JsonReader.OperatorValueDelim);
-			
-			writer.WriteObjectProperty("PublisherId", PublisherId);
 			
 			writer.Writer.Write(JsonReader.OperatorObjectEnd);
 		}
@@ -3670,7 +3730,6 @@ namespace PlayFab.ClientModels
 		{
 			
 			AccessToken = (string)JsonUtil.Get<string>(json, "AccessToken");
-			PublisherId = (string)JsonUtil.Get<string>(json, "PublisherId");
 		}
 	}
 	
@@ -3705,18 +3764,11 @@ namespace PlayFab.ClientModels
 		
 		public string GameCenterId { get; set;}
 		
-		
-		public string PublisherId { get; set;}
-		
 		public override void WriteJson(JsonWriter writer)
 		{
 			writer.Writer.Write(JsonReader.OperatorObjectStart);
 			
 			writer.WriteObjectProperty("GameCenterId", GameCenterId);
-			
-			writer.Writer.Write(JsonReader.OperatorValueDelim);
-			
-			writer.WriteObjectProperty("PublisherId", PublisherId);
 			
 			writer.Writer.Write(JsonReader.OperatorObjectEnd);
 		}
@@ -3725,7 +3777,6 @@ namespace PlayFab.ClientModels
 		{
 			
 			GameCenterId = (string)JsonUtil.Get<string>(json, "GameCenterId");
-			PublisherId = (string)JsonUtil.Get<string>(json, "PublisherId");
 		}
 	}
 	
@@ -3760,18 +3811,11 @@ namespace PlayFab.ClientModels
 		
 		public string AccessToken { get; set;}
 		
-		
-		public string PublisherId { get; set;}
-		
 		public override void WriteJson(JsonWriter writer)
 		{
 			writer.Writer.Write(JsonReader.OperatorObjectStart);
 			
 			writer.WriteObjectProperty("AccessToken", AccessToken);
-			
-			writer.Writer.Write(JsonReader.OperatorValueDelim);
-			
-			writer.WriteObjectProperty("PublisherId", PublisherId);
 			
 			writer.Writer.Write(JsonReader.OperatorObjectEnd);
 		}
@@ -3780,7 +3824,6 @@ namespace PlayFab.ClientModels
 		{
 			
 			AccessToken = (string)JsonUtil.Get<string>(json, "AccessToken");
-			PublisherId = (string)JsonUtil.Get<string>(json, "PublisherId");
 		}
 	}
 	
@@ -3827,9 +3870,6 @@ namespace PlayFab.ClientModels
 		
 		public string DeviceModel { get; set;}
 		
-		
-		public string PublisherId { get; set;}
-		
 		public override void WriteJson(JsonWriter writer)
 		{
 			writer.Writer.Write(JsonReader.OperatorObjectStart);
@@ -3844,10 +3884,6 @@ namespace PlayFab.ClientModels
 			
 			writer.WriteObjectProperty("DeviceModel", DeviceModel);
 			
-			writer.Writer.Write(JsonReader.OperatorValueDelim);
-			
-			writer.WriteObjectProperty("PublisherId", PublisherId);
-			
 			writer.Writer.Write(JsonReader.OperatorObjectEnd);
 		}
 		
@@ -3857,7 +3893,6 @@ namespace PlayFab.ClientModels
 			DeviceId = (string)JsonUtil.Get<string>(json, "DeviceId");
 			OS = (string)JsonUtil.Get<string>(json, "OS");
 			DeviceModel = (string)JsonUtil.Get<string>(json, "DeviceModel");
-			PublisherId = (string)JsonUtil.Get<string>(json, "PublisherId");
 		}
 	}
 	
@@ -3892,18 +3927,11 @@ namespace PlayFab.ClientModels
 		
 		public string SteamTicket { get; set;}
 		
-		
-		public string PublisherId { get; set;}
-		
 		public override void WriteJson(JsonWriter writer)
 		{
 			writer.Writer.Write(JsonReader.OperatorObjectStart);
 			
 			writer.WriteObjectProperty("SteamTicket", SteamTicket);
-			
-			writer.Writer.Write(JsonReader.OperatorValueDelim);
-			
-			writer.WriteObjectProperty("PublisherId", PublisherId);
 			
 			writer.Writer.Write(JsonReader.OperatorObjectEnd);
 		}
@@ -3912,7 +3940,6 @@ namespace PlayFab.ClientModels
 		{
 			
 			SteamTicket = (string)JsonUtil.Get<string>(json, "SteamTicket");
-			PublisherId = (string)JsonUtil.Get<string>(json, "PublisherId");
 		}
 	}
 	
@@ -3942,24 +3969,6 @@ namespace PlayFab.ClientModels
 		
 		
 		/// <summary>
-		/// PlayFab User Id of the player associated with this event. For non-player associated events, this must be null and EntityId must be set.
-		/// </summary>
-		
-		public string PlayFabId { get; set;}
-		
-		/// <summary>
-		/// For non player-associated events, a unique ID for the entity associated with this event. For player associated events, this must be null and PlayFabId must be set.
-		/// </summary>
-		
-		public string EntityId { get; set;}
-		
-		/// <summary>
-		/// For non player-associated events, the type of entity associated with this event. For player associated events, this must be null.
-		/// </summary>
-		
-		public string EntityType { get; set;}
-		
-		/// <summary>
 		/// Optional timestamp for this event. If null, the a timestamp is auto-assigned to the event on the server.
 		/// </summary>
 		
@@ -3987,18 +3996,6 @@ namespace PlayFab.ClientModels
 		{
 			writer.Writer.Write(JsonReader.OperatorObjectStart);
 			
-			writer.WriteObjectProperty("PlayFabId", PlayFabId);
-			
-			writer.Writer.Write(JsonReader.OperatorValueDelim);
-			
-			writer.WriteObjectProperty("EntityId", EntityId);
-			
-			writer.Writer.Write(JsonReader.OperatorValueDelim);
-			
-			writer.WriteObjectProperty("EntityType", EntityType);
-			
-			writer.Writer.Write(JsonReader.OperatorValueDelim);
-			
 			writer.WriteObjectProperty("Timestamp", Timestamp);
 			
 			writer.Writer.Write(JsonReader.OperatorValueDelim);
@@ -4019,9 +4016,6 @@ namespace PlayFab.ClientModels
 		public override void Deserialize (Dictionary<string,object> json)
 		{
 			
-			PlayFabId = (string)JsonUtil.Get<string>(json, "PlayFabId");
-			EntityId = (string)JsonUtil.Get<string>(json, "EntityId");
-			EntityType = (string)JsonUtil.Get<string>(json, "EntityType");
 			Timestamp = (DateTime?)JsonUtil.GetDateTime(json, "Timestamp");
 			EventName = (string)JsonUtil.Get<string>(json, "EventName");
 			Body = JsonUtil.GetDictionary<object>(json, "Body");
@@ -4107,9 +4101,6 @@ namespace PlayFab.ClientModels
 		
 		public string TitleId { get; set;}
 		
-		
-		public string PublisherId { get; set;}
-		
 		/// <summary>
 		/// Android device identifier for the user's device.
 		/// </summary>
@@ -4142,10 +4133,6 @@ namespace PlayFab.ClientModels
 			
 			writer.Writer.Write(JsonReader.OperatorValueDelim);
 			
-			writer.WriteObjectProperty("PublisherId", PublisherId);
-			
-			writer.Writer.Write(JsonReader.OperatorValueDelim);
-			
 			writer.WriteObjectProperty("AndroidDeviceId", AndroidDeviceId);
 			
 			writer.Writer.Write(JsonReader.OperatorValueDelim);
@@ -4167,7 +4154,6 @@ namespace PlayFab.ClientModels
 		{
 			
 			TitleId = (string)JsonUtil.Get<string>(json, "TitleId");
-			PublisherId = (string)JsonUtil.Get<string>(json, "PublisherId");
 			AndroidDeviceId = (string)JsonUtil.Get<string>(json, "AndroidDeviceId");
 			OS = (string)JsonUtil.Get<string>(json, "OS");
 			AndroidDevice = (string)JsonUtil.Get<string>(json, "AndroidDevice");
@@ -4193,9 +4179,6 @@ namespace PlayFab.ClientModels
 		
 		public string Password { get; set;}
 		
-		
-		public string PublisherId { get; set;}
-		
 		public override void WriteJson(JsonWriter writer)
 		{
 			writer.Writer.Write(JsonReader.OperatorObjectStart);
@@ -4210,10 +4193,6 @@ namespace PlayFab.ClientModels
 			
 			writer.WriteObjectProperty("Password", Password);
 			
-			writer.Writer.Write(JsonReader.OperatorValueDelim);
-			
-			writer.WriteObjectProperty("PublisherId", PublisherId);
-			
 			writer.Writer.Write(JsonReader.OperatorObjectEnd);
 		}
 		
@@ -4223,7 +4202,6 @@ namespace PlayFab.ClientModels
 			TitleId = (string)JsonUtil.Get<string>(json, "TitleId");
 			Email = (string)JsonUtil.Get<string>(json, "Email");
 			Password = (string)JsonUtil.Get<string>(json, "Password");
-			PublisherId = (string)JsonUtil.Get<string>(json, "PublisherId");
 		}
 	}
 	
@@ -4248,9 +4226,6 @@ namespace PlayFab.ClientModels
 		
 		public bool? CreateAccount { get; set;}
 		
-		
-		public string PublisherId { get; set;}
-		
 		public override void WriteJson(JsonWriter writer)
 		{
 			writer.Writer.Write(JsonReader.OperatorObjectStart);
@@ -4265,10 +4240,6 @@ namespace PlayFab.ClientModels
 			
 			writer.WriteObjectProperty("CreateAccount", CreateAccount);
 			
-			writer.Writer.Write(JsonReader.OperatorValueDelim);
-			
-			writer.WriteObjectProperty("PublisherId", PublisherId);
-			
 			writer.Writer.Write(JsonReader.OperatorObjectEnd);
 		}
 		
@@ -4278,7 +4249,6 @@ namespace PlayFab.ClientModels
 			TitleId = (string)JsonUtil.Get<string>(json, "TitleId");
 			AccessToken = (string)JsonUtil.Get<string>(json, "AccessToken");
 			CreateAccount = (bool?)JsonUtil.Get<bool?>(json, "CreateAccount");
-			PublisherId = (string)JsonUtil.Get<string>(json, "PublisherId");
 		}
 	}
 	
@@ -4370,9 +4340,6 @@ namespace PlayFab.ClientModels
 		
 		public bool? CreateAccount { get; set;}
 		
-		
-		public string PublisherId { get; set;}
-		
 		public override void WriteJson(JsonWriter writer)
 		{
 			writer.Writer.Write(JsonReader.OperatorObjectStart);
@@ -4395,10 +4362,6 @@ namespace PlayFab.ClientModels
 			
 			writer.WriteObjectProperty("CreateAccount", CreateAccount);
 			
-			writer.Writer.Write(JsonReader.OperatorValueDelim);
-			
-			writer.WriteObjectProperty("PublisherId", PublisherId);
-			
 			writer.Writer.Write(JsonReader.OperatorObjectEnd);
 		}
 		
@@ -4410,7 +4373,6 @@ namespace PlayFab.ClientModels
 			OS = (string)JsonUtil.Get<string>(json, "OS");
 			DeviceModel = (string)JsonUtil.Get<string>(json, "DeviceModel");
 			CreateAccount = (bool?)JsonUtil.Get<bool?>(json, "CreateAccount");
-			PublisherId = (string)JsonUtil.Get<string>(json, "PublisherId");
 		}
 	}
 	
@@ -4432,9 +4394,6 @@ namespace PlayFab.ClientModels
 		
 		public string Password { get; set;}
 		
-		
-		public string PublisherId { get; set;}
-		
 		public override void WriteJson(JsonWriter writer)
 		{
 			writer.Writer.Write(JsonReader.OperatorObjectStart);
@@ -4449,10 +4408,6 @@ namespace PlayFab.ClientModels
 			
 			writer.WriteObjectProperty("Password", Password);
 			
-			writer.Writer.Write(JsonReader.OperatorValueDelim);
-			
-			writer.WriteObjectProperty("PublisherId", PublisherId);
-			
 			writer.Writer.Write(JsonReader.OperatorObjectEnd);
 		}
 		
@@ -4462,7 +4417,6 @@ namespace PlayFab.ClientModels
 			TitleId = (string)JsonUtil.Get<string>(json, "TitleId");
 			Username = (string)JsonUtil.Get<string>(json, "Username");
 			Password = (string)JsonUtil.Get<string>(json, "Password");
-			PublisherId = (string)JsonUtil.Get<string>(json, "PublisherId");
 		}
 	}
 	
@@ -4487,9 +4441,6 @@ namespace PlayFab.ClientModels
 		
 		public bool? CreateAccount { get; set;}
 		
-		
-		public string PublisherId { get; set;}
-		
 		public override void WriteJson(JsonWriter writer)
 		{
 			writer.Writer.Write(JsonReader.OperatorObjectStart);
@@ -4504,10 +4455,6 @@ namespace PlayFab.ClientModels
 			
 			writer.WriteObjectProperty("CreateAccount", CreateAccount);
 			
-			writer.Writer.Write(JsonReader.OperatorValueDelim);
-			
-			writer.WriteObjectProperty("PublisherId", PublisherId);
-			
 			writer.Writer.Write(JsonReader.OperatorObjectEnd);
 		}
 		
@@ -4517,7 +4464,6 @@ namespace PlayFab.ClientModels
 			TitleId = (string)JsonUtil.Get<string>(json, "TitleId");
 			SteamTicket = (string)JsonUtil.Get<string>(json, "SteamTicket");
 			CreateAccount = (bool?)JsonUtil.Get<bool?>(json, "CreateAccount");
-			PublisherId = (string)JsonUtil.Get<string>(json, "PublisherId");
 		}
 	}
 	
@@ -4552,6 +4498,18 @@ namespace PlayFab.ClientModels
 		public string LobbyId { get; set;}
 		
 		/// <summary>
+		/// player statistic to use in finding a match. May be null for no stat-based matching
+		/// </summary>
+		
+		public string StatisticName { get; set;}
+		
+		/// <summary>
+		/// character to use for stats based matching. Leave null to use account stats
+		/// </summary>
+		
+		public string CharacterId { get; set;}
+		
+		/// <summary>
 		/// [deprecated]
 		/// </summary>
 		
@@ -4577,6 +4535,14 @@ namespace PlayFab.ClientModels
 			
 			writer.Writer.Write(JsonReader.OperatorValueDelim);
 			
+			writer.WriteObjectProperty("StatisticName", StatisticName);
+			
+			writer.Writer.Write(JsonReader.OperatorValueDelim);
+			
+			writer.WriteObjectProperty("CharacterId", CharacterId);
+			
+			writer.Writer.Write(JsonReader.OperatorValueDelim);
+			
 			writer.WriteObjectProperty("EnableQueue", EnableQueue);
 			
 			writer.Writer.Write(JsonReader.OperatorObjectEnd);
@@ -4589,6 +4555,8 @@ namespace PlayFab.ClientModels
 			Region = (Region?)JsonUtil.GetEnum<Region>(json, "Region");
 			GameMode = (string)JsonUtil.Get<string>(json, "GameMode");
 			LobbyId = (string)JsonUtil.Get<string>(json, "LobbyId");
+			StatisticName = (string)JsonUtil.Get<string>(json, "StatisticName");
+			CharacterId = (string)JsonUtil.Get<string>(json, "CharacterId");
 			EnableQueue = (bool?)JsonUtil.Get<bool?>(json, "EnableQueue");
 		}
 	}
@@ -5501,9 +5469,6 @@ namespace PlayFab.ClientModels
 		
 		public string Origination { get; set;}
 		
-		
-		public string PublisherId { get; set;}
-		
 		public override void WriteJson(JsonWriter writer)
 		{
 			writer.Writer.Write(JsonReader.OperatorObjectStart);
@@ -5526,10 +5491,6 @@ namespace PlayFab.ClientModels
 			
 			writer.WriteObjectProperty("Origination", Origination);
 			
-			writer.Writer.Write(JsonReader.OperatorValueDelim);
-			
-			writer.WriteObjectProperty("PublisherId", PublisherId);
-			
 			writer.Writer.Write(JsonReader.OperatorObjectEnd);
 		}
 		
@@ -5541,7 +5502,6 @@ namespace PlayFab.ClientModels
 			Email = (string)JsonUtil.Get<string>(json, "Email");
 			Password = (string)JsonUtil.Get<string>(json, "Password");
 			Origination = (string)JsonUtil.Get<string>(json, "Origination");
-			PublisherId = (string)JsonUtil.Get<string>(json, "PublisherId");
 		}
 	}
 	
@@ -6164,6 +6124,18 @@ namespace PlayFab.ClientModels
 		public string GameMode { get; set;}
 		
 		/// <summary>
+		/// player statistic for others to use in finding this game. May be null for no stat-based matching
+		/// </summary>
+		
+		public string StatisticName { get; set;}
+		
+		/// <summary>
+		/// character to use for stats based matching. Leave null to use account stats
+		/// </summary>
+		
+		public string CharacterId { get; set;}
+		
+		/// <summary>
 		/// custom command line argument when starting game server process
 		/// </summary>
 		
@@ -6185,6 +6157,14 @@ namespace PlayFab.ClientModels
 			
 			writer.Writer.Write(JsonReader.OperatorValueDelim);
 			
+			writer.WriteObjectProperty("StatisticName", StatisticName);
+			
+			writer.Writer.Write(JsonReader.OperatorValueDelim);
+			
+			writer.WriteObjectProperty("CharacterId", CharacterId);
+			
+			writer.Writer.Write(JsonReader.OperatorValueDelim);
+			
 			writer.WriteObjectProperty("CustomCommandLineData", CustomCommandLineData);
 			
 			writer.Writer.Write(JsonReader.OperatorObjectEnd);
@@ -6196,6 +6176,8 @@ namespace PlayFab.ClientModels
 			BuildVersion = (string)JsonUtil.Get<string>(json, "BuildVersion");
 			Region = (Region)JsonUtil.GetEnum<Region>(json, "Region");
 			GameMode = (string)JsonUtil.Get<string>(json, "GameMode");
+			StatisticName = (string)JsonUtil.Get<string>(json, "StatisticName");
+			CharacterId = (string)JsonUtil.Get<string>(json, "CharacterId");
 			CustomCommandLineData = (string)JsonUtil.Get<string>(json, "CustomCommandLineData");
 		}
 	}
@@ -6587,9 +6569,17 @@ namespace PlayFab.ClientModels
 	{
 		
 		
+		/// <summary>
+		/// Android device identifier for the user's device. If not specified, the most recently signed in Android Device ID will be used.
+		/// </summary>
+		
+		public string AndroidDeviceId { get; set;}
+		
 		public override void WriteJson(JsonWriter writer)
 		{
 			writer.Writer.Write(JsonReader.OperatorObjectStart);
+			
+			writer.WriteObjectProperty("AndroidDeviceId", AndroidDeviceId);
 			
 			writer.Writer.Write(JsonReader.OperatorObjectEnd);
 		}
@@ -6597,6 +6587,7 @@ namespace PlayFab.ClientModels
 		public override void Deserialize (Dictionary<string,object> json)
 		{
 			
+			AndroidDeviceId = (string)JsonUtil.Get<string>(json, "AndroidDeviceId");
 		}
 	}
 	
@@ -6739,9 +6730,17 @@ namespace PlayFab.ClientModels
 	{
 		
 		
+		/// <summary>
+		/// Vendor-specific iOS identifier for the user's device. If not specified, the most recently signed in iOS Device ID will be used.
+		/// </summary>
+		
+		public string DeviceId { get; set;}
+		
 		public override void WriteJson(JsonWriter writer)
 		{
 			writer.Writer.Write(JsonReader.OperatorObjectStart);
+			
+			writer.WriteObjectProperty("DeviceId", DeviceId);
 			
 			writer.Writer.Write(JsonReader.OperatorObjectEnd);
 		}
@@ -6749,6 +6748,7 @@ namespace PlayFab.ClientModels
 		public override void Deserialize (Dictionary<string,object> json)
 		{
 			
+			DeviceId = (string)JsonUtil.Get<string>(json, "DeviceId");
 		}
 	}
 	
@@ -7766,10 +7766,16 @@ namespace PlayFab.ClientModels
 		public int SecondsToRecharge { get; set;}
 		
 		/// <summary>
-		/// Server timestamp in UTC indicating the next time the virtual currency will be incremented
+		/// Server timestamp in UTC indicating the next time the virtual currency will be incremented.
 		/// </summary>
 		
 		public DateTime RechargeTime { get; set;}
+		
+		/// <summary>
+		/// Maximum value to which the regenerating currency will automatically increment. Note that it can exceed this value through use of the AddUserVirtualCurrency API call. However, it will not regenerate automatically until it has fallen below this value.
+		/// </summary>
+		
+		public int RechargeMax { get; set;}
 		
 		public override void WriteJson(JsonWriter writer)
 		{
@@ -7781,6 +7787,10 @@ namespace PlayFab.ClientModels
 			
 			writer.WriteObjectProperty("RechargeTime", RechargeTime);
 			
+			writer.Writer.Write(JsonReader.OperatorValueDelim);
+			
+			writer.WriteObjectProperty("RechargeMax", RechargeMax);
+			
 			writer.Writer.Write(JsonReader.OperatorObjectEnd);
 		}
 		
@@ -7789,6 +7799,7 @@ namespace PlayFab.ClientModels
 			
 			SecondsToRecharge = (int)JsonUtil.Get<double>(json, "SecondsToRecharge");
 			RechargeTime = (DateTime)JsonUtil.GetDateTime(json, "RechargeTime");
+			RechargeMax = (int)JsonUtil.Get<double>(json, "RechargeMax");
 		}
 	}
 	

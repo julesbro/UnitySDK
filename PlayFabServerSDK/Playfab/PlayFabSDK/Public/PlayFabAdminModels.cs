@@ -974,7 +974,7 @@ namespace PlayFab.AdminModels
 		
 		
 		/// <summary>
-		/// which catalog is being requested
+		/// Which catalog is being requested.
 		/// </summary>
 		
 		public string CatalogVersion { get; set;}
@@ -1002,7 +1002,7 @@ namespace PlayFab.AdminModels
 		
 		
 		/// <summary>
-		/// array of items which can be purchased
+		/// Array of items which can be purchased.
 		/// </summary>
 		
 		public List<CatalogItem> Catalog { get; set;}
@@ -1919,7 +1919,7 @@ namespace PlayFab.AdminModels
 		
 		
 		/// <summary>
-		/// unqiue identifier for the store which is being requested
+		/// Unqiue identifier for the store which is being requested.
 		/// </summary>
 		
 		public string StoreId { get; set;}
@@ -1947,7 +1947,7 @@ namespace PlayFab.AdminModels
 		
 		
 		/// <summary>
-		/// array of items which can be purchased from this store
+		/// Array of items which can be purchased from this store.
 		/// </summary>
 		
 		public List<StoreItem> Store { get; set;}
@@ -2109,7 +2109,7 @@ namespace PlayFab.AdminModels
 		public string PlayFabId { get; set;}
 		
 		/// <summary>
-		/// used to limit results to only those from a specific catalog version
+		/// Used to limit results to only those from a specific catalog version.
 		/// </summary>
 		
 		public string CatalogVersion { get; set;}
@@ -2142,13 +2142,13 @@ namespace PlayFab.AdminModels
 		
 		
 		/// <summary>
-		/// array of inventory items belonging to the user
+		/// Array of inventory items belonging to the user.
 		/// </summary>
 		
 		public List<ItemInstance> Inventory { get; set;}
 		
 		/// <summary>
-		/// array of virtual currency balance(s) belonging to the user
+		/// Array of virtual currency balance(s) belonging to the user.
 		/// </summary>
 		
 		public Dictionary<string,int> VirtualCurrency { get; set;}
@@ -2397,61 +2397,61 @@ namespace PlayFab.AdminModels
 		
 		
 		/// <summary>
-		/// unique identifier for the inventory item, as defined in the catalog
+		/// Unique identifier for the inventory item, as defined in the catalog.
 		/// </summary>
 		
 		public string ItemId { get; set;}
 		
 		/// <summary>
-		/// unique item identifier for this specific instance of the item
+		/// Unique item identifier for this specific instance of the item.
 		/// </summary>
 		
 		public string ItemInstanceId { get; set;}
 		
 		/// <summary>
-		/// class name for the inventory item, as defined in the catalog
+		/// Class name for the inventory item, as defined in the catalog.
 		/// </summary>
 		
 		public string ItemClass { get; set;}
 		
 		/// <summary>
-		/// timestamp for when this instance was purchased
+		/// Timestamp for when this instance was purchased.
 		/// </summary>
 		
 		public DateTime? PurchaseDate { get; set;}
 		
 		/// <summary>
-		/// timestamp for when this instance will expire
+		/// Timestamp for when this instance will expire.
 		/// </summary>
 		
 		public DateTime? Expiration { get; set;}
 		
 		/// <summary>
-		/// total number of remaining uses, if this is a consumable item
+		/// Total number of remaining uses, if this is a consumable item.
 		/// </summary>
 		
 		public int? RemainingUses { get; set;}
 		
 		/// <summary>
-		/// game specific comment associated with this instance when it was added to the user inventory
+		/// Game specific comment associated with this instance when it was added to the user inventory.
 		/// </summary>
 		
 		public string Annotation { get; set;}
 		
 		/// <summary>
-		/// catalog version for the inventory item, when this instance was created
+		/// Catalog version for the inventory item, when this instance was created.
 		/// </summary>
 		
 		public string CatalogVersion { get; set;}
 		
 		/// <summary>
-		/// unique identifier for the parent inventory item, as defined in the catalog, for object which were added from a bundle or container
+		/// Unique identifier for the parent inventory item, as defined in the catalog, for object which were added from a bundle or container.
 		/// </summary>
 		
 		public string BundleParent { get; set;}
 		
 		/// <summary>
-		/// a set of custom key-value pairs on the inventory item
+		/// A set of custom key-value pairs on the inventory item.
 		/// </summary>
 		
 		public Dictionary<string,string> CustomData { get; set;}
@@ -2632,9 +2632,6 @@ namespace PlayFab.AdminModels
 		
 		public string TitleDisplayName { get; set;}
 		
-		
-		public string PublisherId { get; set;}
-		
 		public override void WriteJson(JsonWriter writer)
 		{
 			writer.Writer.Write(JsonReader.OperatorObjectStart);
@@ -2653,10 +2650,6 @@ namespace PlayFab.AdminModels
 			
 			writer.WriteObjectProperty("TitleDisplayName", TitleDisplayName);
 			
-			writer.Writer.Write(JsonReader.OperatorValueDelim);
-			
-			writer.WriteObjectProperty("PublisherId", PublisherId);
-			
 			writer.Writer.Write(JsonReader.OperatorObjectEnd);
 		}
 		
@@ -2667,7 +2660,6 @@ namespace PlayFab.AdminModels
 			Email = (string)JsonUtil.Get<string>(json, "Email");
 			Username = (string)JsonUtil.Get<string>(json, "Username");
 			TitleDisplayName = (string)JsonUtil.Get<string>(json, "TitleDisplayName");
-			PublisherId = (string)JsonUtil.Get<string>(json, "PublisherId");
 		}
 	}
 	
@@ -3136,18 +3128,11 @@ namespace PlayFab.AdminModels
 		
 		public List<UserCredentials> Users { get; set;}
 		
-		
-		public string PublisherId { get; set;}
-		
 		public override void WriteJson(JsonWriter writer)
 		{
 			writer.Writer.Write(JsonReader.OperatorObjectStart);
 			
 			writer.WriteObjectProperty("Users", Users);
-			
-			writer.Writer.Write(JsonReader.OperatorValueDelim);
-			
-			writer.WriteObjectProperty("PublisherId", PublisherId);
 			
 			writer.Writer.Write(JsonReader.OperatorObjectEnd);
 		}
@@ -3156,7 +3141,6 @@ namespace PlayFab.AdminModels
 		{
 			
 			Users = JsonUtil.GetObjectList<UserCredentials>(json, "Users");
-			PublisherId = (string)JsonUtil.Get<string>(json, "PublisherId");
 		}
 	}
 	
@@ -3329,18 +3313,11 @@ namespace PlayFab.AdminModels
 		
 		public string Email { get; set;}
 		
-		
-		public string PublisherId { get; set;}
-		
 		public override void WriteJson(JsonWriter writer)
 		{
 			writer.Writer.Write(JsonReader.OperatorObjectStart);
 			
 			writer.WriteObjectProperty("Email", Email);
-			
-			writer.Writer.Write(JsonReader.OperatorValueDelim);
-			
-			writer.WriteObjectProperty("PublisherId", PublisherId);
 			
 			writer.Writer.Write(JsonReader.OperatorObjectEnd);
 		}
@@ -3349,7 +3326,6 @@ namespace PlayFab.AdminModels
 		{
 			
 			Email = (string)JsonUtil.Get<string>(json, "Email");
-			PublisherId = (string)JsonUtil.Get<string>(json, "PublisherId");
 		}
 	}
 	
@@ -4712,10 +4688,16 @@ namespace PlayFab.AdminModels
 		public int SecondsToRecharge { get; set;}
 		
 		/// <summary>
-		/// Server timestamp in UTC indicating the next time the virtual currency will be incremented
+		/// Server timestamp in UTC indicating the next time the virtual currency will be incremented.
 		/// </summary>
 		
 		public DateTime RechargeTime { get; set;}
+		
+		/// <summary>
+		/// Maximum value to which the regenerating currency will automatically increment. Note that it can exceed this value through use of the AddUserVirtualCurrency API call. However, it will not regenerate automatically until it has fallen below this value.
+		/// </summary>
+		
+		public int RechargeMax { get; set;}
 		
 		public override void WriteJson(JsonWriter writer)
 		{
@@ -4727,6 +4709,10 @@ namespace PlayFab.AdminModels
 			
 			writer.WriteObjectProperty("RechargeTime", RechargeTime);
 			
+			writer.Writer.Write(JsonReader.OperatorValueDelim);
+			
+			writer.WriteObjectProperty("RechargeMax", RechargeMax);
+			
 			writer.Writer.Write(JsonReader.OperatorObjectEnd);
 		}
 		
@@ -4735,6 +4721,7 @@ namespace PlayFab.AdminModels
 			
 			SecondsToRecharge = (int)JsonUtil.Get<double>(json, "SecondsToRecharge");
 			RechargeTime = (DateTime)JsonUtil.GetDateTime(json, "RechargeTime");
+			RechargeMax = (int)JsonUtil.Get<double>(json, "RechargeMax");
 		}
 	}
 	
